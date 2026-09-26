@@ -9,6 +9,9 @@ import androidx.camera.core.ImageProxy
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.sitesweep.SiteSweepApplication
+import com.sitesweep.capture.AutoCapture
+import com.sitesweep.capture.FrameStore
+import com.sitesweep.capture.GeoTagger
 import com.sitesweep.data.local.entity.CaptureEntity
 import com.sitesweep.data.local.entity.SessionEntity
 import com.sitesweep.data.repository.SiteSweepRepository
@@ -34,11 +37,14 @@ import java.util.Locale
 
 /**
  * ViewModel managing the active inspection sweep session, CameraX throttled inference,
- * severity classification with hysteresis, and running capture strip.
+ * severity classification with hysteresis, automated capture with 3-second debounce,
+ * and running capture strip.
  */
 class SweepViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: SiteSweepRepository = (application as SiteSweepApplication).repository
+    val frameStore = FrameStore(application)
+    val geoTagger = GeoTagger(application)
 
     private val _uiState = MutableStateFlow(SweepUiState())
     val uiState: StateFlow<SweepUiState> = _uiState.asStateFlow()
@@ -51,6 +57,23 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
     private var currentDetector: CrackDetector
 
     private var capturesObservationJob: Job? = null
+
+    // AutoCapture instance with 3-second debounce and clear-before-rearm rule
+    var autoCapture: AutoCapture = AutoCapture(
+        frameStore = frameStore,
+        geoTagger = geoTagger,
+        repository = repository,
+        debounceCooldownMs = 3000L,
+        onCaptureTriggered = { capture, severity ->
+            _onCaptureTriggeredListener?.invoke(capture, severity)
+        }
+    )
+
+    private var _onCaptureTriggeredListener: ((CaptureEntity, Severity) -> Unit)? = null
+
+    fun setOnCaptureTriggeredListener(listener: (CaptureEntity, Severity) -> Unit) {
+        _onCaptureTriggeredListener = listener
+    }
 
     init {
         val fake = FakeCrackDetector()
@@ -121,8 +144,28 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
                 val rawBitmap: Bitmap? = imageProxy.toBitmap()
                 if (rawBitmap != null) {
                     val preparedBitmap = prepareFrameBitmap(rawBitmap, rotationDegrees)
-                    val result = currentDetector.detect(preparedBitmap)
-                    updateInferenceResult(result)
+                    val rawResult = currentDetector.detect(preparedBitmap)
+                    val stabilizedResult = evaluateStabilizedResult(rawResult)
+                    
+                    updateInferenceResult(stabilizedResult)
+
+                    // Automated capture evaluation on active session
+                    val currentSessionId = _uiState.value.currentSession?.id
+                    if (currentSessionId != null) {
+                        autoCapture.evaluateFrame(
+                            bitmap = preparedBitmap,
+                            result = stabilizedResult,
+                            sessionId = currentSessionId,
+                            elapsedTimeMs = elapsed
+                        )
+                    }
+
+                    _uiState.update {
+                        it.copy(
+                            isAutoCaptureArmed = autoCapture.isArmed,
+                            lastCaptureTimestamp = autoCapture.lastCaptureElapsedRealtime
+                        )
+                    }
                 }
             } catch (e: Throwable) {
                 Log.e("SweepViewModel", "Inference error on frame: ${e.message}", e)
@@ -151,7 +194,7 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun updateInferenceResult(result: CrackDetectionResult) {
+    private fun evaluateStabilizedResult(result: CrackDetectionResult): CrackDetectionResult {
         val rawProb = result.crackProbability
         val smoothed = if (smoothedProbability < 0f) {
             rawProb
@@ -172,13 +215,22 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
             (1.0f - smoothed).coerceIn(0.0f, 1.0f)
         }
 
+        return result.copy(
+            crackClass = stabilizedClass,
+            severity = stabilizedSeverity,
+            confidence = displayConfidence,
+            crackProbability = smoothed
+        )
+    }
+
+    private fun updateInferenceResult(stabilizedResult: CrackDetectionResult) {
         _uiState.update {
             it.copy(
-                currentClass = stabilizedClass,
-                currentSeverity = stabilizedSeverity,
-                confidence = displayConfidence,
-                crackProbability = smoothed,
-                activeDelegate = result.delegateType
+                currentClass = stabilizedResult.crackClass,
+                currentSeverity = stabilizedResult.severity,
+                confidence = stabilizedResult.confidence,
+                crackProbability = stabilizedResult.crackProbability,
+                activeDelegate = stabilizedResult.delegateType
             )
         }
     }
