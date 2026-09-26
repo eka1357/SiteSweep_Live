@@ -50,7 +50,7 @@ open class FrameStore(private val context: Context? = null) {
     /**
      * Deletes a captured image file if it exists.
      */
-    suspend fun deleteFrame(filePath: String): Boolean {
+    open suspend fun deleteFrame(filePath: String): Boolean {
         return withContext(Dispatchers.IO) {
             try {
                 val file = File(filePath)

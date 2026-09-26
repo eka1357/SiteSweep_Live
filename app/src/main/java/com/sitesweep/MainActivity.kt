@@ -99,8 +99,23 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
+                val app = context.applicationContext as SiteSweepApplication
+                LaunchedEffect(Unit) {
+                    val seeder = com.sitesweep.data.demo.DemoSeeder(context, app.repository)
+                    if (!seeder.isSeeded()) {
+                        seeder.seed()
+                    }
+                }
+
                 if (hasCameraPermission) {
                     var currentScreen by remember { mutableStateOf<AppScreen>(AppScreen.SessionList) }
+                    var showSettingsDialog by remember { mutableStateOf(false) }
+
+                    if (showSettingsDialog) {
+                        com.sitesweep.ui.settings.DemoSettingsDialog(
+                            onDismiss = { showSettingsDialog = false }
+                        )
+                    }
 
                     when (val screen = currentScreen) {
                         is AppScreen.SessionList -> {
@@ -111,6 +126,9 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onSessionClick = { sessionId ->
                                     currentScreen = AppScreen.SessionDetail(sessionId)
+                                },
+                                onOpenSettings = {
+                                    showSettingsDialog = true
                                 }
                             )
                         }
