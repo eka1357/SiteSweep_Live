@@ -88,7 +88,10 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             Severity.STABLE -> {
-                lastAnnouncedSeverity = Severity.STABLE
+                if (lastAnnouncedSeverity != Severity.STABLE) {
+                    lastAnnouncedSeverity = Severity.STABLE
+                    hapticController.triggerSeverityHaptic(Severity.STABLE)
+                }
             }
         }
     }
@@ -225,6 +228,7 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
                     _uiState.update {
                         it.copy(
                             isAutoCaptureArmed = autoCapture.isArmed,
+                            autoCaptureState = autoCapture.state,
                             lastCaptureTimestamp = autoCapture.lastCaptureElapsedRealtime
                         )
                     }
@@ -258,10 +262,13 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun evaluateStabilizedResult(result: CrackDetectionResult): CrackDetectionResult {
         val rawProb = result.crackProbability
+        // Asymmetric response: fast attack (0.70f) so structural distress triggers immediately,
+        // slow release (0.25f) when returning to stable to prevent visual strobing/flickering
+        val alpha = if (smoothedProbability < 0f || rawProb > smoothedProbability) 0.70f else 0.25f
         val smoothed = if (smoothedProbability < 0f) {
             rawProb
         } else {
-            0.35f * rawProb + 0.65f * smoothedProbability
+            alpha * rawProb + (1.0f - alpha) * smoothedProbability
         }
         smoothedProbability = smoothed
 

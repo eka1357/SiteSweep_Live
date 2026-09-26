@@ -51,6 +51,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sitesweep.capture.AutoCaptureState
 import com.sitesweep.data.local.entity.CaptureEntity
 import com.sitesweep.detection.Severity
 import com.sitesweep.ui.theme.PaletteInk
@@ -262,6 +263,7 @@ fun SweepScreen(
         // 5. Running Capture Strip Along Bottom
         RunningCaptureStrip(
             captures = uiState.captures,
+            autoCaptureState = uiState.autoCaptureState,
             onCaptureClick = onCaptureClick,
             modifier = Modifier
                 .fillMaxWidth()
@@ -277,9 +279,16 @@ fun SweepScreen(
 @Composable
 private fun RunningCaptureStrip(
     captures: List<CaptureEntity>,
+    autoCaptureState: AutoCaptureState,
     onCaptureClick: (CaptureEntity) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val (statusLabel, statusColor) = when (autoCaptureState) {
+        AutoCaptureState.ARMED -> "AUTO-SWEEP ACTIVE" to PaletteSafetyOrange
+        AutoCaptureState.DEBOUNCE_COOLDOWN -> "CAPTURED • COOLDOWN" to TextLightTertiary
+        AutoCaptureState.AWAITING_CLEAR -> "PAN OFF TO RE-ARM" to SeverityAmber
+    }
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -305,8 +314,8 @@ private fun RunningCaptureStrip(
                 letterSpacing = 0.5.sp
             )
             Text(
-                text = "AUTO-SWEEP ACTIVE",
-                color = PaletteSafetyOrange,
+                text = statusLabel,
+                color = statusColor,
                 fontSize = 10.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Medium
@@ -428,8 +437,13 @@ private fun CaptureThumbnailItem(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            val severityLabel = when (capture.severity.uppercase(Locale.US)) {
+                "STRUCTURAL" -> "STRUCT"
+                "MONITOR" -> "MONITOR"
+                else -> "STABLE"
+            }
             Text(
-                text = capture.severity.take(4).uppercase(Locale.US),
+                text = severityLabel,
                 color = borderColor,
                 fontSize = 9.sp,
                 fontFamily = FontFamily.Monospace,

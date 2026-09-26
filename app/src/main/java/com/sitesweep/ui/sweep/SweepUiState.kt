@@ -18,6 +18,7 @@ data class SweepUiState(
     val currentSession: SessionEntity? = null,
     val captures: List<CaptureEntity> = emptyList(),
     val isAutoCaptureArmed: Boolean = true,
+    val autoCaptureState: com.sitesweep.capture.AutoCaptureState = com.sitesweep.capture.AutoCaptureState.ARMED,
     val lastCaptureTimestamp: Long = 0L,
     val statusText: String = "Scanning"
 )

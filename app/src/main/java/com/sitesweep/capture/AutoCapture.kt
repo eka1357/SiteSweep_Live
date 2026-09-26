@@ -39,11 +39,17 @@ class AutoCapture(
     var lastCaptureElapsedRealtime: Long = 0L
         private set
 
+    @Volatile
+    var lastCapturedSeverity: Severity = Severity.STABLE
+        private set
+
     val isArmed: Boolean
         get() = state == AutoCaptureState.ARMED
 
     /**
      * Evaluates a processed frame against the debounce and clear-before-rearm state machine.
+     * Supports escalation capture: if distress escalates to STRUCTURAL after an initial MONITOR,
+     * the structural capture is recorded rather than suppressed.
      * Executes capture and persistence on a background thread when triggered.
      * Returns the CaptureEntity if capture occurred, null otherwise.
      */
@@ -57,15 +63,25 @@ class AutoCapture(
                          result.severity == Severity.STRUCTURAL ||
                          result.crackClass != CrackClass.NONE
 
-        // Update state machine transitions based on elapsed time and signal clearing
+        val shouldCapture: Boolean
+
+        // Update state machine transitions based on elapsed time, signal clearing, and severity escalation
         synchronized(this) {
+            val elapsedSinceCapture = elapsedTimeMs - lastCaptureElapsedRealtime
+
+            // Escalation override: if distress escalates from MONITOR to STRUCTURAL,
+            // capture the critical structural distress even if previously in cooldown/awaiting clear
+            val isEscalation = result.severity == Severity.STRUCTURAL && 
+                               lastCapturedSeverity == Severity.MONITOR &&
+                               elapsedSinceCapture >= 800L
+
             when (state) {
                 AutoCaptureState.DEBOUNCE_COOLDOWN -> {
-                    val elapsedSinceCapture = elapsedTimeMs - lastCaptureElapsedRealtime
                     if (elapsedSinceCapture >= debounceCooldownMs) {
                         if (!isDistress) {
                             // Signal has cleared and cooldown is complete -> re-armed
                             state = AutoCaptureState.ARMED
+                            lastCapturedSeverity = Severity.STABLE
                         } else {
                             // 3s cooldown is over, but wall still shows distress -> await clear
                             state = AutoCaptureState.AWAITING_CLEAR
@@ -76,6 +92,7 @@ class AutoCapture(
                     if (!isDistress) {
                         // User panned away from crack -> clear condition satisfied, re-arm
                         state = AutoCaptureState.ARMED
+                        lastCapturedSeverity = Severity.STABLE
                     }
                 }
                 AutoCaptureState.ARMED -> {
@@ -83,13 +100,18 @@ class AutoCapture(
                 }
             }
 
-            if (state != AutoCaptureState.ARMED || !isDistress) {
-                return null
+            if (isEscalation || (state == AutoCaptureState.ARMED && isDistress)) {
+                state = AutoCaptureState.DEBOUNCE_COOLDOWN
+                lastCaptureElapsedRealtime = elapsedTimeMs
+                lastCapturedSeverity = result.severity
+                shouldCapture = true
+            } else {
+                shouldCapture = false
             }
+        }
 
-            // Trigger capture
-            state = AutoCaptureState.DEBOUNCE_COOLDOWN
-            lastCaptureElapsedRealtime = elapsedTimeMs
+        if (!shouldCapture) {
+            return null
         }
 
         return try {
@@ -122,6 +144,7 @@ class AutoCapture(
         synchronized(this) {
             state = AutoCaptureState.ARMED
             lastCaptureElapsedRealtime = 0L
+            lastCapturedSeverity = Severity.STABLE
         }
     }
 }

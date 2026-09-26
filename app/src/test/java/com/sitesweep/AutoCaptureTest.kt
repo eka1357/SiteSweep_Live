@@ -162,4 +162,22 @@ class AutoCaptureTest {
         assertTrue(fakeRepository.insertedCaptures.isEmpty())
         assertTrue(autoCapture.isArmed)
     }
+
+    @Test
+    fun escalationFromMonitorToStructural_triggersImmediateCapture() = runBlocking {
+        val monitor = createResult(CrackClass.HAIRLINE, Severity.MONITOR, 0.60f)
+        val structural = createResult(CrackClass.STRUCTURAL, Severity.STRUCTURAL, 0.88f)
+
+        // T = 1000ms: Monitor distress triggers capture
+        val c1 = autoCapture.evaluateFrame(dummyBitmap, monitor, "s1", elapsedTimeMs = 1000L)
+        assertNotNull(c1)
+        assertEquals("MONITOR", c1?.severity)
+        assertEquals(1, fakeRepository.insertedCaptures.size)
+
+        // T = 2000ms: Distress escalates to STRUCTURAL -> Must capture the critical structural distress!
+        val c2 = autoCapture.evaluateFrame(dummyBitmap, structural, "s1", elapsedTimeMs = 2000L)
+        assertNotNull("Severity escalation to STRUCTURAL must capture", c2)
+        assertEquals("STRUCTURAL", c2?.severity)
+        assertEquals(2, fakeRepository.insertedCaptures.size)
+    }
 }
