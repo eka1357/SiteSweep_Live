@@ -24,6 +24,8 @@ import com.sitesweep.detection.FrameThrottler
 import com.sitesweep.detection.LiteRTCrackDetector
 import com.sitesweep.detection.Severity
 import com.sitesweep.detection.SeverityClassifier
+import com.sitesweep.feedback.HapticController
+import com.sitesweep.feedback.VoiceAnnouncer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,6 +60,9 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
 
     private var capturesObservationJob: Job? = null
 
+    val hapticController = HapticController(application)
+    val voiceAnnouncer = VoiceAnnouncer(application)
+
     // AutoCapture instance with 3-second debounce and clear-before-rearm rule
     var autoCapture: AutoCapture = AutoCapture(
         frameStore = frameStore,
@@ -65,6 +70,8 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
         repository = repository,
         debounceCooldownMs = 3000L,
         onCaptureTriggered = { capture, severity ->
+            hapticController.triggerSeverityHaptic(severity)
+            voiceAnnouncer.announceSeverity(severity)
             _onCaptureTriggeredListener?.invoke(capture, severity)
         }
     )
@@ -237,6 +244,7 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
 
     override fun onCleared() {
         super.onCleared()
+        voiceAnnouncer.shutdown()
         liteRtDetector?.close()
         fakeDetector?.close()
     }
