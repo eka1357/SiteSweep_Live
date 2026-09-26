@@ -34,20 +34,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import com.sitesweep.ui.debug.DebugScreen
-import com.sitesweep.ui.debug.DebugViewModel
+import com.sitesweep.ui.sweep.SweepScreen
+import com.sitesweep.ui.sweep.SweepViewModel
 import com.sitesweep.ui.theme.PaletteInk
 import com.sitesweep.ui.theme.PaletteSafetyOrange
 import com.sitesweep.ui.theme.SiteSweepTheme
-import com.sitesweep.ui.theme.TextLightPrimary
 import com.sitesweep.ui.theme.TextLightSecondary
 
 /**
- * Single activity hosting the SiteSweep inference HUD.
+ * Single activity hosting the SiteSweep application.
+ * Launches into SweepScreen with CameraX analysis, severity edge glow,
+ * and running capture strip.
  */
 class MainActivity : ComponentActivity() {
 
-    private val debugViewModel: DebugViewModel by viewModels()
+    private val sweepViewModel: SweepViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,24 +65,46 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
-                val permissionLauncher = rememberLauncherForActivityResult(
-                    contract = ActivityResultContracts.RequestPermission()
-                ) { isGranted ->
-                    hasCameraPermission = isGranted
+                val permissionsLauncher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.RequestMultiplePermissions()
+                ) { permissions ->
+                    hasCameraPermission = permissions[Manifest.permission.CAMERA] == true
                 }
 
                 LaunchedEffect(Unit) {
                     if (!hasCameraPermission) {
-                        permissionLauncher.launch(Manifest.permission.CAMERA)
+                        permissionsLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.RECORD_AUDIO
+                            )
+                        )
                     }
                 }
 
                 if (hasCameraPermission) {
-                    DebugScreen(viewModel = debugViewModel)
+                    SweepScreen(
+                        viewModel = sweepViewModel,
+                        onNavigateToSessions = {
+                            // Downstream screens will attach here
+                        },
+                        onCaptureClick = { _ ->
+                            // RevisitScreen will attach here
+                        }
+                    )
                 } else {
                     CameraPermissionRequiredScreen(
                         onRequestPermission = {
-                            permissionLauncher.launch(Manifest.permission.CAMERA)
+                            permissionsLauncher.launch(
+                                arrayOf(
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                                    Manifest.permission.RECORD_AUDIO
+                                )
+                            )
                         }
                     )
                 }
@@ -115,7 +138,7 @@ fun CameraPermissionRequiredScreen(
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "SiteSweep requires continuous camera access for on-device structural distress inference.",
+                text = "SiteSweep requires camera access for on-device structural distress inference.",
                 color = TextLightSecondary,
                 fontSize = 14.sp
             )
