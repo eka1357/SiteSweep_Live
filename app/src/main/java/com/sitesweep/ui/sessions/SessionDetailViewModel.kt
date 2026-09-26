@@ -58,6 +58,19 @@ class SessionDetailViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
+    fun addVoiceNote(transcript: String, captureId: String? = null) {
+        val current = _uiState.value.session ?: return
+        viewModelScope.launch {
+            val entity = VoiceNoteEntity(
+                sessionId = current.id,
+                captureId = captureId,
+                transcript = transcript,
+                timestamp = System.currentTimeMillis()
+            )
+            repository.insertVoiceNote(entity)
+        }
+    }
+
     fun deleteSession(onDeleted: () -> Unit) {
         val current = _uiState.value.session ?: return
         viewModelScope.launch {

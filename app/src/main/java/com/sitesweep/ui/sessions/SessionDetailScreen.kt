@@ -57,8 +57,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.sitesweep.ui.voice.VoiceNoteDialog
+
 /**
- * Inspection session detail screen displaying session metadata and distress captures.
+ * Inspection session detail screen displaying session metadata, distress captures, and voice notes.
  * Tapping any capture navigates to RevisitScreen to query prior readings at that locationKey.
  */
 @Composable
@@ -69,7 +73,6 @@ fun SessionDetailScreen(
     onResumeSweep: (String) -> Unit,
     onCaptureClick: (String, String) -> Unit, // locationKey, captureId
     onExportClick: (String) -> Unit = {},
-    onRecordVoiceNote: ((String) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     LaunchedEffect(sessionId) {
@@ -78,6 +81,24 @@ fun SessionDetailScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val session = uiState.session
+
+    var showVoiceNoteDialog by remember { mutableStateOf(false) }
+    var voiceNoteTargetCaptureId by remember { mutableStateOf<String?>(null) }
+
+    if (showVoiceNoteDialog) {
+        VoiceNoteDialog(
+            title = if (voiceNoteTargetCaptureId != null) "CAPTURE NOTE" else "SESSION NOTE",
+            onSave = { transcript ->
+                viewModel.addVoiceNote(transcript, voiceNoteTargetCaptureId)
+                showVoiceNoteDialog = false
+                voiceNoteTargetCaptureId = null
+            },
+            onDismiss = {
+                showVoiceNoteDialog = false
+                voiceNoteTargetCaptureId = null
+            }
+        )
+    }
 
     Column(
         modifier = modifier
@@ -190,23 +211,45 @@ fun SessionDetailScreen(
                         )
                     }
 
-                    if (onRecordVoiceNote != null) {
-                        Button(
-                            onClick = { onRecordVoiceNote(sessionId) },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = PaletteSlate,
-                                contentColor = PaletteSafetyOrange
-                            ),
-                            shape = RoundedCornerShape(2.dp),
-                            modifier = Modifier.weight(1f).height(38.dp)
-                        ) {
-                            Text(
-                                text = "+ VOICE NOTE",
-                                fontSize = 11.sp,
-                                fontFamily = FontFamily.Monospace,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
+                    Button(
+                        onClick = {
+                            voiceNoteTargetCaptureId = null
+                            showVoiceNoteDialog = true
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = PaletteSlate,
+                            contentColor = PaletteSafetyOrange
+                        ),
+                        shape = RoundedCornerShape(2.dp),
+                        modifier = Modifier.weight(1f).height(38.dp)
+                    ) {
+                        Text(
+                            text = "+ VOICE NOTE",
+                            fontSize = 11.sp,
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+
+                if (uiState.voiceNotes.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = "SESSION VOICE NOTES (${uiState.voiceNotes.size}):",
+                        color = TextLightSecondary,
+                        fontSize = 10.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    uiState.voiceNotes.forEach { note ->
+                        Text(
+                            text = "• \"${note.transcript}\"",
+                            color = TextLightPrimary,
+                            fontSize = 11.sp,
+                            fontFamily = FontFamily.Monospace,
+                            modifier = Modifier.padding(vertical = 2.dp)
+                        )
                     }
                 }
             }
@@ -251,8 +294,14 @@ fun SessionDetailScreen(
                     items = uiState.captures,
                     key = { it.id }
                 ) { capture ->
+                    val captureNotes = uiState.voiceNotes.filter { it.captureId == capture.id }
                     CaptureDetailCard(
                         capture = capture,
+                        notes = captureNotes,
+                        onAddNote = {
+                            voiceNoteTargetCaptureId = capture.id
+                            showVoiceNoteDialog = true
+                        },
                         onClick = { onCaptureClick(capture.locationKey, capture.id) }
                     )
                 }
@@ -264,6 +313,8 @@ fun SessionDetailScreen(
 @Composable
 private fun CaptureDetailCard(
     capture: CaptureEntity,
+    notes: List<com.sitesweep.data.local.entity.VoiceNoteEntity>,
+    onAddNote: () -> Unit,
     onClick: () -> Unit
 ) {
     val severityColor = when (capture.severity.uppercase(Locale.US)) {
@@ -372,16 +423,47 @@ private fun CaptureDetailCard(
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Medium
             )
+
+            if (notes.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(4.dp))
+                notes.forEach { note ->
+                    Text(
+                        text = "NOTE: \"${note.transcript}\"",
+                        color = TextLightPrimary,
+                        fontSize = 10.sp,
+                        fontFamily = FontFamily.Monospace
+                    )
+                }
+            }
         }
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        Text(
-            text = "REVISIT >",
-            color = PaletteSafetyOrange,
-            fontSize = 10.sp,
-            fontFamily = FontFamily.Monospace,
-            fontWeight = FontWeight.Bold
-        )
+        Column(horizontalAlignment = Alignment.End) {
+            Box(
+                modifier = Modifier
+                    .background(PaletteSlate, RoundedCornerShape(2.dp))
+                    .clickable(onClick = onAddNote)
+                    .padding(horizontal = 6.dp, vertical = 3.dp)
+            ) {
+                Text(
+                    text = "+ NOTE",
+                    color = PaletteSafetyOrange,
+                    fontSize = 9.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "REVISIT >",
+                color = PaletteSafetyOrange,
+                fontSize = 10.sp,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Bold
+            )
+        }
     }
 }
