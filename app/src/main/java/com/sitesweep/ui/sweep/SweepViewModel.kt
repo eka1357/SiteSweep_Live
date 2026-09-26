@@ -63,6 +63,36 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
     val hapticController = HapticController(application)
     val voiceAnnouncer = VoiceAnnouncer(application)
 
+    private var lastAnnouncedSeverity: Severity = Severity.STABLE
+
+    /**
+     * Triggers distinct audio and haptic feedback on severity state transitions:
+     * - STRUCTURAL: Immediate aggressive alert (voice "Structural" + triple pulse)
+     * - MONITOR: Cautionary alert (voice "Monitor" + double pulse)
+     * - STABLE: Remains silent, resets detection episode
+     */
+    private fun checkDistressFeedback(severity: Severity) {
+        when (severity) {
+            Severity.STRUCTURAL -> {
+                if (lastAnnouncedSeverity != Severity.STRUCTURAL) {
+                    lastAnnouncedSeverity = Severity.STRUCTURAL
+                    voiceAnnouncer.announceSeverity(Severity.STRUCTURAL)
+                    hapticController.triggerSeverityHaptic(Severity.STRUCTURAL)
+                }
+            }
+            Severity.MONITOR -> {
+                if (lastAnnouncedSeverity == Severity.STABLE) {
+                    lastAnnouncedSeverity = Severity.MONITOR
+                    voiceAnnouncer.announceSeverity(Severity.MONITOR)
+                    hapticController.triggerSeverityHaptic(Severity.MONITOR)
+                }
+            }
+            Severity.STABLE -> {
+                lastAnnouncedSeverity = Severity.STABLE
+            }
+        }
+    }
+
     // AutoCapture instance with 3-second debounce and clear-before-rearm rule
     var autoCapture: AutoCapture = AutoCapture(
         frameStore = frameStore,
@@ -70,8 +100,16 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
         repository = repository,
         debounceCooldownMs = 3000L,
         onCaptureTriggered = { capture, severity ->
-            hapticController.triggerSeverityHaptic(severity)
-            voiceAnnouncer.announceSeverity(severity)
+            // Re-enforce feedback if not already announced by real-time transition
+            if (severity == Severity.STRUCTURAL && lastAnnouncedSeverity != Severity.STRUCTURAL) {
+                lastAnnouncedSeverity = Severity.STRUCTURAL
+                hapticController.triggerSeverityHaptic(severity)
+                voiceAnnouncer.announceSeverity(severity)
+            } else if (severity == Severity.MONITOR && lastAnnouncedSeverity == Severity.STABLE) {
+                lastAnnouncedSeverity = Severity.MONITOR
+                hapticController.triggerSeverityHaptic(severity)
+                voiceAnnouncer.announceSeverity(severity)
+            }
             _onCaptureTriggeredListener?.invoke(capture, severity)
         }
     )
@@ -155,6 +193,7 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
                     val stabilizedResult = evaluateStabilizedResult(rawResult)
                     
                     updateInferenceResult(stabilizedResult)
+                    checkDistressFeedback(stabilizedResult.severity)
 
                     // Automated capture evaluation on active session
                     val currentSessionId = _uiState.value.currentSession?.id

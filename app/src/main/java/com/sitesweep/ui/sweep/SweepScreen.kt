@@ -62,6 +62,7 @@ import com.sitesweep.ui.theme.SeverityRed
 import com.sitesweep.ui.theme.TextLightPrimary
 import com.sitesweep.ui.theme.TextLightSecondary
 import com.sitesweep.ui.theme.TextLightTertiary
+import com.sitesweep.ui.theme.getScreenTopPadding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -185,13 +186,15 @@ fun SweepScreen(
                 .border(1.dp, glowColor.copy(alpha = 0.5f), RoundedCornerShape(2.dp))
         )
 
+        val screenTopPadding = getScreenTopPadding()
+
         // 4. Industrial Top HUD Bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.TopCenter)
-                .background(PaletteInk.copy(alpha = 0.88f))
-                .padding(horizontal = 14.dp, vertical = 10.dp),
+                .background(PaletteInk.copy(alpha = 0.92f))
+                .padding(top = screenTopPadding, bottom = 12.dp, start = 14.dp, end = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

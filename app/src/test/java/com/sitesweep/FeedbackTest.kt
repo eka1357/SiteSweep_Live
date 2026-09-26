@@ -25,10 +25,10 @@ class FeedbackTest {
         val announcer = object : VoiceAnnouncer(null) {
             override fun announceSeverity(severity: Severity) {
                 val word = when (severity) {
-                    Severity.STABLE -> "Stable"
+                    Severity.STABLE -> null // STABLE remains silent as mandated
                     Severity.MONITOR -> "Monitor"
                     Severity.STRUCTURAL -> "Structural"
-                }
+                } ?: return
                 spokenWords.add(word)
             }
         }
@@ -37,7 +37,8 @@ class FeedbackTest {
         announcer.announceSeverity(Severity.MONITOR)
         announcer.announceSeverity(Severity.STRUCTURAL)
 
-        assertEquals(listOf("Stable", "Monitor", "Structural"), spokenWords)
+        // STABLE must remain silent; MONITOR and STRUCTURAL must speak
+        assertEquals(listOf("Monitor", "Structural"), spokenWords)
 
         for (word in spokenWords) {
             assertFalse("TTS must not include em-dashes", word.contains("—"))

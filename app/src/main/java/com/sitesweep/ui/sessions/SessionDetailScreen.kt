@@ -50,6 +50,7 @@ import com.sitesweep.ui.theme.SeverityRed
 import com.sitesweep.ui.theme.TextLightPrimary
 import com.sitesweep.ui.theme.TextLightSecondary
 import com.sitesweep.ui.theme.TextLightTertiary
+import com.sitesweep.ui.theme.getScreenTopPadding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -85,6 +86,7 @@ fun SessionDetailScreen(
 
     var showVoiceNoteDialog by remember { mutableStateOf(false) }
     var voiceNoteTargetCaptureId by remember { mutableStateOf<String?>(null) }
+    val screenTopPadding = getScreenTopPadding()
 
     if (showVoiceNoteDialog) {
         VoiceNoteDialog(
@@ -105,7 +107,7 @@ fun SessionDetailScreen(
         modifier = modifier
             .fillMaxSize()
             .background(PaletteInk)
-            .padding(16.dp)
+            .padding(top = screenTopPadding, start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         // Navigation Bar
         Row(

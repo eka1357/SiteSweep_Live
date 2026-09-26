@@ -17,6 +17,7 @@ open class VoiceAnnouncer(
 
     private var tts: TextToSpeech? = null
     private var isInitialized = false
+    private var pendingAnnouncement: String? = null
 
     init {
         context?.let { ctx ->
@@ -36,6 +37,10 @@ open class VoiceAnnouncer(
             } else {
                 tts?.setSpeechRate(1.15f) // Crisp, brisk cadence for on-site inspection
                 isInitialized = true
+                pendingAnnouncement?.let { pending ->
+                    tts?.speak(pending, TextToSpeech.QUEUE_FLUSH, null, "severity_callout")
+                    pendingAnnouncement = null
+                }
             }
         } else {
             Log.w("VoiceAnnouncer", "TTS initialization failed with code $status")
@@ -43,18 +48,22 @@ open class VoiceAnnouncer(
     }
 
     /**
-     * Speaks the severity band name and NOTHING ELSE.
-     * Guaranteed single-word callouts: "Stable", "Monitor", "Structural".
+     * Speaks the severity band name and NOTHING ELSE:
+     * - STABLE: Remains completely silent (no audio distraction).
+     * - MONITOR: Speaks "Monitor".
+     * - STRUCTURAL: Speaks "Structural" (urgent distress alert).
      */
     open fun announceSeverity(severity: Severity) {
         val word = when (severity) {
-            Severity.STABLE -> "Stable"
+            Severity.STABLE -> null // STABLE remains silent as mandated
             Severity.MONITOR -> "Monitor"
             Severity.STRUCTURAL -> "Structural"
-        }
+        } ?: return
 
         if (isInitialized && tts != null) {
             tts?.speak(word, TextToSpeech.QUEUE_FLUSH, null, "severity_callout")
+        } else {
+            pendingAnnouncement = word
         }
     }
 

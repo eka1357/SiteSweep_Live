@@ -40,6 +40,7 @@ import com.sitesweep.ui.theme.SeverityRed
 import com.sitesweep.ui.theme.TextLightPrimary
 import com.sitesweep.ui.theme.TextLightSecondary
 import com.sitesweep.ui.theme.TextLightTertiary
+import com.sitesweep.ui.theme.getScreenTopPadding
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -63,12 +64,13 @@ fun SessionListScreen(
 ) {
     val sessionItems by viewModel.sessionItems.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
+    val screenTopPadding = getScreenTopPadding()
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(PaletteInk)
-            .padding(16.dp)
+            .padding(top = screenTopPadding, start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         // App Header
         Row(
