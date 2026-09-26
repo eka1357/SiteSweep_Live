@@ -30,6 +30,7 @@ class SessionExporterTest {
         private val voiceNotes: List<VoiceNoteEntity>
     ) : SiteSweepRepository {
         override suspend fun createSession(label: String) = session
+        override suspend fun createSession(session: SessionEntity) = session
         override suspend fun endSession(id: String) {}
         override suspend fun getSessionById(id: String) = if (id == session.id) session else null
         override fun getAllSessions(): Flow<List<SessionEntity>> = flowOf(listOf(session))

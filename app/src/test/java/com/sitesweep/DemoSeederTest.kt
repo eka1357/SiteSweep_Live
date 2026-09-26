@@ -61,6 +61,10 @@ class DemoSeederTest {
             sessions.add(session)
             return session
         }
+        override suspend fun createSession(session: SessionEntity): SessionEntity {
+            sessions.add(session)
+            return session
+        }
         override suspend fun endSession(id: String) {}
         override suspend fun getSessionById(id: String) = sessions.find { it.id == id }
         override fun getAllSessions(): Flow<List<SessionEntity>> = flowOf(sessions)

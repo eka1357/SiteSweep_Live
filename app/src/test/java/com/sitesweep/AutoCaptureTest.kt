@@ -51,6 +51,7 @@ class AutoCaptureTest {
         val insertedCaptures = mutableListOf<CaptureEntity>()
 
         override suspend fun createSession(label: String) = SessionEntity(id = "s1", label = label)
+        override suspend fun createSession(session: SessionEntity) = session
         override suspend fun endSession(id: String) {}
         override suspend fun getSessionById(id: String) = SessionEntity(id = id, label = "Test")
         override fun getAllSessions(): Flow<List<SessionEntity>> = flowOf(emptyList())

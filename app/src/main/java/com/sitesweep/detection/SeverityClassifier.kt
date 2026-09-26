@@ -7,12 +7,17 @@ package com.sitesweep.detection
  */
 object SeverityClassifier {
 
-    // Tunable confidence thresholds
+    // Tunable confidence thresholds with dual hysteresis to prevent false alarms on cables/furniture
     const val CRACK_THRESHOLD: Float = 0.50f
     var structuralThreshold: Float = 0.65f
     var monitorThreshold: Float = 0.50f
     var hairlineMonitorThreshold: Float = 0.85f
     var structuralProbabilityThreshold: Float = 0.75f
+
+    const val ENTER_CRACK: Float = 0.54f
+    const val EXIT_CRACK: Float = 0.46f
+    const val ENTER_STRUCTURAL: Float = 0.78f
+    const val EXIT_STRUCTURAL: Float = 0.72f
 
     /**
      * Classifies single-value crack probability (0.0 to 1.0) as output by crack_model.tflite.
@@ -27,20 +32,21 @@ object SeverityClassifier {
     }
 
     /**
-     * Classifies crack probability with hysteresis deadband to prevent rapid flickering
-     * when the probability hovers around the 0.50 decision boundary.
+     * Classifies crack probability with hysteresis deadband on BOTH the crack and structural
+     * decision boundaries to prevent rapid flickering and false alarms on cables/clutter.
      */
     fun classifyProbabilityWithHysteresis(
         crackProbability: Float,
-        currentlyDetected: Boolean = false
+        currentlyDetected: Boolean = false,
+        currentSeverity: Severity = Severity.STABLE
     ): Pair<CrackClass, Severity> {
-        val enterThreshold = CRACK_THRESHOLD + 0.04f // 0.54f
-        val exitThreshold = CRACK_THRESHOLD - 0.04f  // 0.46f
-        val activeThreshold = if (currentlyDetected) exitThreshold else enterThreshold
+        val isStructuralActive = currentSeverity == Severity.STRUCTURAL
+        val activeStructural = if (isStructuralActive) EXIT_STRUCTURAL else ENTER_STRUCTURAL
+        val activeCrack = if (currentlyDetected) EXIT_CRACK else ENTER_CRACK
 
         return when {
-            crackProbability >= structuralProbabilityThreshold -> Pair(CrackClass.STRUCTURAL, Severity.STRUCTURAL)
-            crackProbability >= activeThreshold -> Pair(CrackClass.HAIRLINE, Severity.MONITOR)
+            crackProbability >= activeStructural -> Pair(CrackClass.STRUCTURAL, Severity.STRUCTURAL)
+            crackProbability >= activeCrack -> Pair(CrackClass.HAIRLINE, Severity.MONITOR)
             else -> Pair(CrackClass.NONE, Severity.STABLE)
         }
     }

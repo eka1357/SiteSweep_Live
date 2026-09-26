@@ -14,6 +14,7 @@ import java.util.UUID
 interface SiteSweepRepository {
     // Session operations
     suspend fun createSession(label: String): SessionEntity
+    suspend fun createSession(session: SessionEntity): SessionEntity = session
     suspend fun endSession(id: String)
     suspend fun getSessionById(id: String): SessionEntity?
     fun getAllSessions(): Flow<List<SessionEntity>>
@@ -51,6 +52,11 @@ class SiteSweepRepositoryImpl(
         return session
     }
 
+    override suspend fun createSession(session: SessionEntity): SessionEntity {
+        sessionDao.insertSession(session)
+        return session
+    }
+
     override suspend fun endSession(id: String) {
         sessionDao.endSession(id, System.currentTimeMillis())
     }
@@ -84,7 +90,8 @@ class SiteSweepRepositoryImpl(
     }
 
     override fun observeCapturesByLocationKey(locationKey: String): Flow<List<CaptureEntity>> {
-        return captureDao.observeCapturesByLocationKey(locationKey)
+        val parentPrefix = if (locationKey.length > 4) locationKey.dropLast(1) else locationKey
+        return captureDao.observeCapturesByLocationKey(locationKey, parentPrefix)
     }
 
     override fun getAllCaptures(): Flow<List<CaptureEntity>> {

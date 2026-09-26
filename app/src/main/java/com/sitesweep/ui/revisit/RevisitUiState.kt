@@ -5,7 +5,9 @@ import com.sitesweep.data.local.entity.CaptureEntity
 enum class TrendStatus(val label: String) {
     STABLE("STABLE • NO NOTABLE DRIFT"),
     MONITORING("MONITORING • MINOR DEGRADATION"),
-    WIDENING("ESCALATING • CRACK WIDENING DETECTED")
+    WIDENING("ESCALATING • CRACK WIDENING DETECTED"),
+    REGRESSED("REGRESSED • NO FURTHER GROWTH"),
+    NO_HISTORY("NO PRIOR OBSERVATIONS AT THIS SPOT")
 }
 
 data class RevisitUiState(

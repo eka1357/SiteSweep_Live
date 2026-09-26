@@ -49,19 +49,34 @@ class RevisitViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    private fun rank(severity: String) = when (severity.uppercase(Locale.US)) {
+        "STRUCTURAL" -> 2
+        "MONITOR" -> 1
+        else -> 0
+    }
+
     private fun calculateDistressTrend(captures: List<CaptureEntity>): TrendStatus {
-        if (captures.size < 2) return TrendStatus.STABLE
+        if (captures.isEmpty()) return TrendStatus.NO_HISTORY
 
-        val severities = captures.map { it.severity.uppercase(Locale.US) }
-        val first = severities.first()
-        val last = severities.last()
+        val ranks = captures.sortedBy { it.timestamp }.map { rank(it.severity) }
+        if (ranks.size == 1) {
+            return when (ranks[0]) {
+                2 -> TrendStatus.WIDENING
+                1 -> TrendStatus.MONITORING
+                else -> TrendStatus.STABLE
+            }
+        }
 
+        val first = ranks.first()
+        val last = ranks.last()
         return when {
-            last == "STRUCTURAL" && first != "STRUCTURAL" -> TrendStatus.WIDENING
-            last == "STRUCTURAL" || last == "MONITOR" && first == "STABLE" -> TrendStatus.MONITORING
-            severities.contains("STRUCTURAL") -> TrendStatus.WIDENING
-            severities.contains("MONITOR") -> TrendStatus.MONITORING
-            else -> TrendStatus.STABLE
+            last > first -> TrendStatus.WIDENING
+            last < first -> TrendStatus.REGRESSED
+            else -> when (last) {
+                2 -> TrendStatus.WIDENING
+                1 -> TrendStatus.MONITORING
+                else -> TrendStatus.STABLE
+            }
         }
     }
 }

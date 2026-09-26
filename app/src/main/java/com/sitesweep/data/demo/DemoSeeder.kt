@@ -65,7 +65,7 @@ class DemoSeeder(
                     endedAt = timeReading3,
                     label = "BASELINE WALL SURVEY"
                 )
-                repository.createSession(demoSession.label) // uses same repo path
+                repository.createSession(demoSession) // inserts with fixed DEMO_SESSION_ID to satisfy FK
 
                 val location = GeoTagger.DEFAULT_LOCATION_KEY
                 val lat = GeoTagger.DEFAULT_LAT

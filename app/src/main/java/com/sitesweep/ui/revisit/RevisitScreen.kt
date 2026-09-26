@@ -134,6 +134,8 @@ fun RevisitScreen(
             TrendStatus.WIDENING -> SeverityRed
             TrendStatus.MONITORING -> SeverityAmber
             TrendStatus.STABLE -> SeverityGreen
+            TrendStatus.REGRESSED -> SeverityGreen
+            TrendStatus.NO_HISTORY -> TextLightSecondary
         }
 
         Column(
@@ -196,20 +198,22 @@ fun RevisitScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         if (uiState.captures.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(PaletteInkElevated, RoundedCornerShape(2.dp))
-                    .border(1.dp, PaletteSlateBorder, RoundedCornerShape(2.dp))
-                    .padding(24.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "NO HISTORICAL CAPTURES RECORDED AT THIS GEOHASH",
-                    color = TextLightTertiary,
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily.Monospace
-                )
+            if (!uiState.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(PaletteInkElevated, RoundedCornerShape(2.dp))
+                        .border(1.dp, PaletteSlateBorder, RoundedCornerShape(2.dp))
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "NO HISTORICAL CAPTURES RECORDED AT THIS GEOHASH",
+                        color = TextLightTertiary,
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace
+                    )
+                }
             }
         } else {
             LazyColumn(

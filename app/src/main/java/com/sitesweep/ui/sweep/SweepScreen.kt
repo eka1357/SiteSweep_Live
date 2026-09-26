@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -40,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -95,9 +97,17 @@ fun SweepScreen(
         viewModel.initSession(sessionId)
     }
 
+    val view = LocalView.current
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
     DisposableEffect(Unit) {
+        view.keepScreenOn = true
         onDispose {
+            view.keepScreenOn = false
+            try {
+                ProcessCameraProvider.getInstance(context).get().unbindAll()
+            } catch (e: Exception) {
+                // Ignore if camera provider already unbound
+            }
             cameraExecutor.shutdown()
         }
     }
@@ -242,7 +252,9 @@ fun SweepScreen(
                     },
                     fontSize = 11.sp,
                     fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    softWrap = false
                 )
             }
         }
@@ -273,6 +285,7 @@ private fun RunningCaptureStrip(
             .fillMaxWidth()
             .background(PaletteInk.copy(alpha = 0.92f))
             .border(width = 1.dp, color = PaletteSlateBorder)
+            .navigationBarsPadding()
             .padding(vertical = 8.dp)
     ) {
         // Strip Header: Count and auto-capture status

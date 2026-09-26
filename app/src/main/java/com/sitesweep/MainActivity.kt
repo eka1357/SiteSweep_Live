@@ -135,12 +135,14 @@ class MainActivity : ComponentActivity() {
 
                         is AppScreen.Sweep -> {
                             BackHandler {
+                                sweepViewModel.endActiveSession()
                                 currentScreen = AppScreen.SessionList
                             }
                             SweepScreen(
                                 viewModel = sweepViewModel,
                                 sessionId = screen.sessionId,
                                 onNavigateToSessions = {
+                                    sweepViewModel.endActiveSession()
                                     currentScreen = AppScreen.SessionList
                                 },
                                 onCaptureClick = { capture ->

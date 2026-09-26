@@ -145,6 +145,12 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
      * Initializes or loads the target session. If sessionId is null, creates a new session.
      */
     fun initSession(sessionId: String? = null) {
+        // Reset state so old session cooldowns or smoothed probabilities do not leak
+        autoCapture.reset()
+        smoothedProbability = -1f
+        lastAnnouncedSeverity = Severity.STABLE
+        frameThrottler.reset()
+
         viewModelScope.launch {
             val session = if (sessionId != null) {
                 repository.getSessionById(sessionId) ?: createNewSession()
@@ -154,6 +160,16 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
 
             _uiState.update { it.copy(currentSession = session) }
             observeCapturesForSession(session.id)
+        }
+    }
+
+    /**
+     * Marks the currently active sweep session as ended with timestamp.
+     */
+    fun endActiveSession() {
+        val id = _uiState.value.currentSession?.id ?: return
+        viewModelScope.launch {
+            repository.endSession(id)
         }
     }
 
@@ -252,7 +268,8 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
         val currentlyDistress = _uiState.value.currentClass != CrackClass.NONE
         val (stabilizedClass, stabilizedSeverity) = SeverityClassifier.classifyProbabilityWithHysteresis(
             crackProbability = smoothed,
-            currentlyDetected = currentlyDistress
+            currentlyDetected = currentlyDistress,
+            currentSeverity = _uiState.value.currentSeverity
         )
 
         val displayConfidence = if (stabilizedClass != CrackClass.NONE) {
