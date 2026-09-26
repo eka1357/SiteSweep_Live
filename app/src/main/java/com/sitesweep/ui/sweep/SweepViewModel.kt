@@ -275,14 +275,7 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun evaluateStabilizedResult(result: CrackDetectionResult): CrackDetectionResult {
         val rawProb = result.crackProbability
-        // Asymmetric response: fast attack (0.85f) so distress triggers near-instantly when panning onto poster,
-        // slow release (0.25f) when returning to stable to prevent visual strobing/flickering
-        val alpha = if (smoothedProbability < 0f || rawProb > smoothedProbability) 0.85f else 0.25f
-        val smoothed = if (smoothedProbability < 0f) {
-            rawProb
-        } else {
-            alpha * rawProb + (1.0f - alpha) * smoothedProbability
-        }
+        val smoothed = computeEma(smoothedProbability, rawProb)
         smoothedProbability = smoothed
 
         val currentlyDistress = _uiState.value.currentClass != CrackClass.NONE
@@ -323,5 +316,34 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
         voiceAnnouncer.shutdown()
         liteRtDetector?.close()
         fakeDetector?.close()
+    }
+
+    companion object {
+        /**
+         * EMA attack alpha: 0.40f (within the requested 0.3-0.5 range).
+         * - Prevents single-frame and two-frame spurious spikes from glare, cables, or wood grain:
+         *   e.g., a momentary 0.68f spike on a 0.25f background baseline yields only 0.422f, safely below ENTER_CRACK (0.60f).
+         * - On a real crack poster (sustained 0.85-0.95f), crosses ENTER_CRACK (0.60f) on frame 2 (~200ms)
+         *   and STRUCTURAL (0.70f) on frame 3 (~400ms).
+         * - Delivers prompt, responsive feedback without false-triggering on desk clutter.
+         */
+        const val EMA_ATTACK_ALPHA = 0.40f
+
+        /**
+         * EMA release alpha: 0.25f.
+         * Smoothly decays probability when leaving a crack to prevent visual strobing/flickering.
+         */
+        const val EMA_RELEASE_ALPHA = 0.25f
+
+        fun computeEma(
+            currentSmoothed: Float,
+            rawProb: Float,
+            attackAlpha: Float = EMA_ATTACK_ALPHA,
+            releaseAlpha: Float = EMA_RELEASE_ALPHA
+        ): Float {
+            if (currentSmoothed < 0f) return rawProb
+            val alpha = if (rawProb > currentSmoothed) attackAlpha else releaseAlpha
+            return alpha * rawProb + (1.0f - alpha) * currentSmoothed
+        }
     }
 }
