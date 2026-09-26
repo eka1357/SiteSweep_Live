@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,6 +35,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import com.sitesweep.ui.sessions.SessionDetailScreen
+import com.sitesweep.ui.sessions.SessionDetailViewModel
+import com.sitesweep.ui.sessions.SessionListScreen
+import com.sitesweep.ui.sessions.SessionListViewModel
 import com.sitesweep.ui.sweep.SweepScreen
 import com.sitesweep.ui.sweep.SweepViewModel
 import com.sitesweep.ui.theme.PaletteInk
@@ -41,13 +46,20 @@ import com.sitesweep.ui.theme.PaletteSafetyOrange
 import com.sitesweep.ui.theme.SiteSweepTheme
 import com.sitesweep.ui.theme.TextLightSecondary
 
+sealed interface AppScreen {
+    data object SessionList : AppScreen
+    data class Sweep(val sessionId: String) : AppScreen
+    data class SessionDetail(val sessionId: String) : AppScreen
+    data class Revisit(val locationKey: String, val captureId: String) : AppScreen
+}
+
 /**
- * Single activity hosting the SiteSweep application.
- * Launches into SweepScreen with CameraX analysis, severity edge glow,
- * and running capture strip.
+ * Single activity hosting SiteSweep with clean state-based Compose navigation.
  */
 class MainActivity : ComponentActivity() {
 
+    private val sessionListViewModel: SessionListViewModel by viewModels()
+    private val sessionDetailViewModel: SessionDetailViewModel by viewModels()
     private val sweepViewModel: SweepViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,15 +97,93 @@ class MainActivity : ComponentActivity() {
                 }
 
                 if (hasCameraPermission) {
-                    SweepScreen(
-                        viewModel = sweepViewModel,
-                        onNavigateToSessions = {
-                            // Downstream screens will attach here
-                        },
-                        onCaptureClick = { _ ->
-                            // RevisitScreen will attach here
+                    var currentScreen by remember { mutableStateOf<AppScreen>(AppScreen.SessionList) }
+
+                    when (val screen = currentScreen) {
+                        is AppScreen.SessionList -> {
+                            SessionListScreen(
+                                viewModel = sessionListViewModel,
+                                onStartSweep = { sessionId ->
+                                    currentScreen = AppScreen.Sweep(sessionId)
+                                },
+                                onSessionClick = { sessionId ->
+                                    currentScreen = AppScreen.SessionDetail(sessionId)
+                                }
+                            )
                         }
-                    )
+
+                        is AppScreen.Sweep -> {
+                            BackHandler {
+                                currentScreen = AppScreen.SessionList
+                            }
+                            SweepScreen(
+                                viewModel = sweepViewModel,
+                                sessionId = screen.sessionId,
+                                onNavigateToSessions = {
+                                    currentScreen = AppScreen.SessionList
+                                },
+                                onCaptureClick = { capture ->
+                                    currentScreen = AppScreen.Revisit(capture.locationKey, capture.id)
+                                }
+                            )
+                        }
+
+                        is AppScreen.SessionDetail -> {
+                            BackHandler {
+                                currentScreen = AppScreen.SessionList
+                            }
+                            SessionDetailScreen(
+                                viewModel = sessionDetailViewModel,
+                                sessionId = screen.sessionId,
+                                onBack = {
+                                    currentScreen = AppScreen.SessionList
+                                },
+                                onResumeSweep = { sid ->
+                                    currentScreen = AppScreen.Sweep(sid)
+                                },
+                                onCaptureClick = { locationKey, captureId ->
+                                    currentScreen = AppScreen.Revisit(locationKey, captureId)
+                                }
+                            )
+                        }
+
+                        is AppScreen.Revisit -> {
+                            BackHandler {
+                                currentScreen = AppScreen.SessionList
+                            }
+                            // RevisitScreen will be attached in Item 5
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(PaletteInk)
+                                    .padding(24.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text(
+                                        text = "REVISIT LOCATION: ${screen.locationKey}",
+                                        color = PaletteSafetyOrange,
+                                        fontSize = 14.sp,
+                                        fontFamily = FontFamily.Monospace,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                    Button(
+                                        onClick = { currentScreen = AppScreen.SessionList },
+                                        colors = ButtonDefaults.buttonColors(containerColor = PaletteSafetyOrange),
+                                        shape = RoundedCornerShape(2.dp)
+                                    ) {
+                                        Text(
+                                            text = "BACK TO SESSIONS",
+                                            color = PaletteInk,
+                                            fontFamily = FontFamily.Monospace,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
                 } else {
                     CameraPermissionRequiredScreen(
                         onRequestPermission = {
