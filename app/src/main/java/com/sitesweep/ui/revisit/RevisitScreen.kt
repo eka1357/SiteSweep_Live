@@ -73,6 +73,7 @@ fun RevisitScreen(
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val exportStatus by viewModel.exportStatus.collectAsStateWithLifecycle()
     val screenTopPadding = getScreenTopPadding()
 
     Column(
@@ -91,7 +92,7 @@ fun RevisitScreen(
                 modifier = Modifier
                     .background(PaletteSlate, RoundedCornerShape(2.dp))
                     .clickable(onClick = onBack)
-                    .padding(horizontal = 10.dp, vertical = 6.dp)
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
                 Text(
                     text = "< BACK",
@@ -110,24 +111,78 @@ fun RevisitScreen(
                 fontWeight = FontWeight.Bold
             )
 
-            // Geohash badge
-            Box(
-                modifier = Modifier
-                    .background(PaletteInkElevated, RoundedCornerShape(2.dp))
-                    .border(1.dp, PaletteSlateBorder, RoundedCornerShape(2.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = locationKey.take(8),
-                    color = PaletteSafetyOrange,
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.Bold
-                )
+                // Geohash badge
+                Box(
+                    modifier = Modifier
+                        .background(PaletteInkElevated, RoundedCornerShape(2.dp))
+                        .border(1.dp, PaletteSlateBorder, RoundedCornerShape(2.dp))
+                        .padding(horizontal = 8.dp, vertical = 6.dp)
+                ) {
+                    Text(
+                        text = locationKey.take(8),
+                        color = PaletteSafetyOrange,
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                // Judge Demo Export Button
+                Box(
+                    modifier = Modifier
+                        .background(PaletteSafetyOrange, RoundedCornerShape(2.dp))
+                        .clickable(onClick = { viewModel.exportSession() })
+                        .padding(horizontal = 10.dp, vertical = 6.dp)
+                ) {
+                    Text(
+                        text = "EXPORT",
+                        color = PaletteInk,
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
 
-        Spacer(modifier = Modifier.height(14.dp))
+        Spacer(modifier = Modifier.height(10.dp))
+
+        // Export Feedback Banner
+        if (exportStatus != null) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(PaletteInkElevated, RoundedCornerShape(2.dp))
+                    .border(1.dp, PaletteSafetyOrange, RoundedCornerShape(2.dp))
+                    .clickable { viewModel.clearExportStatus() }
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = exportStatus ?: "",
+                        color = PaletteSafetyOrange,
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "✕",
+                        color = TextLightTertiary,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+        }
 
         // Distress Trend Card
         val trendColor = when (uiState.trend) {
@@ -218,7 +273,6 @@ fun RevisitScreen(
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
                 itemsIndexed(
@@ -232,6 +286,26 @@ fun RevisitScreen(
                         capture = capture,
                         isCurrent = isCurrent
                     )
+
+                    if (index < uiState.captures.size - 1) {
+                        // Industrial timeline connector showing sequential progression
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .width(2.dp)
+                                    .height(14.dp)
+                                    .background(PaletteSlateBorder)
+                            )
+                        }
+                    } else {
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
                 }
             }
         }

@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,9 +33,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import kotlinx.coroutines.delay
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -199,6 +203,21 @@ fun SweepScreen(
 
         val screenTopPadding = getScreenTopPadding()
 
+        // Session elapsed timer ticker
+        var elapsedSeconds by remember { mutableStateOf(0L) }
+        LaunchedEffect(uiState.currentSession?.startedAt) {
+            val start = uiState.currentSession?.startedAt ?: System.currentTimeMillis()
+            while (true) {
+                elapsedSeconds = ((System.currentTimeMillis() - start) / 1000L).coerceAtLeast(0L)
+                delay(1000L)
+            }
+        }
+        val timerFormatted = remember(elapsedSeconds) {
+            val mins = elapsedSeconds / 60L
+            val secs = elapsedSeconds % 60L
+            String.format(Locale.US, "%02d:%02d", mins, secs)
+        }
+
         // 4. Industrial Top HUD Bar
         Row(
             modifier = Modifier
@@ -209,12 +228,12 @@ fun SweepScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Sessions navigation button
+            // Sessions navigation button with accessible touch target
             Box(
                 modifier = Modifier
                     .background(PaletteSlate, RoundedCornerShape(2.dp))
                     .clickable(onClick = onNavigateToSessions)
-                    .padding(horizontal = 10.dp, vertical = 6.dp)
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
                 Text(
                     text = "< SESSIONS",
@@ -225,24 +244,40 @@ fun SweepScreen(
                 )
             }
 
-            // Session label
-            Text(
-                text = uiState.currentSession?.label?.uppercase(Locale.US) ?: "SWEEP ACTIVE",
-                color = TextLightSecondary,
-                fontSize = 12.sp,
-                fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
+            // Session label + Elapsed Timer + Capture count
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .weight(1f, fill = false)
+                    .padding(horizontal = 8.dp)
+            ) {
+                Text(
+                    text = uiState.currentSession?.label?.uppercase(Locale.US) ?: "SWEEP ACTIVE",
+                    color = TextLightSecondary,
+                    fontSize = 11.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = "$timerFormatted • ${uiState.captures.size} CAPTURES",
+                    color = PaletteSafetyOrange,
+                    fontSize = 10.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1
+                )
+            }
 
-            // Severity Live Badge
+            // Severity Live Badge with guaranteed min-width to prevent clipping
             Box(
                 modifier = Modifier
+                    .widthIn(min = 96.dp)
                     .background(glowColor.copy(alpha = 0.25f), RoundedCornerShape(2.dp))
                     .border(1.dp, glowColor, RoundedCornerShape(2.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(horizontal = 8.dp, vertical = 6.dp),
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = uiState.currentSeverity.label,
@@ -283,17 +318,20 @@ private fun RunningCaptureStrip(
     onCaptureClick: (CaptureEntity) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val isCooldown = autoCaptureState == AutoCaptureState.DEBOUNCE_COOLDOWN
     val (statusLabel, statusColor) = when (autoCaptureState) {
         AutoCaptureState.ARMED -> "AUTO-SWEEP ACTIVE" to PaletteSafetyOrange
-        AutoCaptureState.DEBOUNCE_COOLDOWN -> "CAPTURED • COOLDOWN" to TextLightTertiary
+        AutoCaptureState.DEBOUNCE_COOLDOWN -> "CAPTURED • SAVED" to PaletteSafetyOrange
         AutoCaptureState.AWAITING_CLEAR -> "PAN OFF TO RE-ARM" to SeverityAmber
     }
+
+    val stripBorderColor = if (isCooldown) PaletteSafetyOrange else PaletteSlateBorder
 
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(PaletteInk.copy(alpha = 0.92f))
-            .border(width = 1.dp, color = PaletteSlateBorder)
+            .border(width = 1.dp, color = stripBorderColor)
             .navigationBarsPadding()
             .padding(vertical = 8.dp)
     ) {
@@ -399,16 +437,16 @@ private fun CaptureThumbnailItem(
 
     Column(
         modifier = Modifier
-            .width(76.dp)
+            .width(82.dp)
             .clickable(onClick = onClick)
             .background(PaletteInkElevated, RoundedCornerShape(2.dp))
             .border(1.5.dp, borderColor, RoundedCornerShape(2.dp))
-            .padding(3.dp),
+            .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = Modifier
-                .size(70.dp, 56.dp)
+                .size(74.dp, 56.dp)
                 .background(PaletteSlate, RoundedCornerShape(1.dp)),
             contentAlignment = Alignment.Center
         ) {
@@ -439,7 +477,7 @@ private fun CaptureThumbnailItem(
         ) {
             val severityLabel = when (capture.severity.uppercase(Locale.US)) {
                 "STRUCTURAL" -> "STRUCT"
-                "MONITOR" -> "MONITOR"
+                "MONITOR" -> "MON"
                 else -> "STABLE"
             }
             Text(

@@ -53,6 +53,11 @@ class LiteRTCrackDetector(
     private val numClasses: Int
     private val isOutputQuantized: Boolean
 
+    private val inputByteBuffer: ByteBuffer
+    private val intPixelValues: IntArray
+    private val outputScale: Float
+    private val outputZeroPoint: Int
+
     init {
         val modelBuffer = loadModelFile(context, modelAssetPath)
 
@@ -140,6 +145,16 @@ class LiteRTCrackDetector(
         numClasses = if (isSingleProbabilityOutput) 1 else if (outputShape.size >= 2) outputShape[1] else 2
         isOutputQuantized = outputTensor.dataType() == DataType.UINT8
 
+        val quantParams = outputTensor.quantizationParams()
+        outputScale = if (quantParams != null && quantParams.scale > 0f) quantParams.scale else DEFAULT_QUANT_SCALE
+        outputZeroPoint = quantParams?.zeroPoint ?: DEFAULT_ZERO_POINT
+
+        val bytesPerChannel = if (isInputQuantized) 1 else 4
+        inputByteBuffer = ByteBuffer.allocateDirect(1 * inputWidth * inputHeight * NUM_CHANNELS * bytesPerChannel).apply {
+            order(ByteOrder.nativeOrder())
+        }
+        intPixelValues = IntArray(inputWidth * inputHeight)
+
         Log.i(
             TAG,
             "Model Loaded: input=[$inputWidth x $inputHeight x $NUM_CHANNELS, quantized=$isInputQuantized], " +
@@ -156,76 +171,89 @@ class LiteRTCrackDetector(
             Bitmap.createScaledBitmap(bitmap, inputWidth, inputHeight, true)
         }
 
-        val inputBuffer = convertBitmapToByteBuffer(scaledBitmap)
+        val crackClass: CrackClass
+        val confidence: Float
+        val severity: Severity
+        val crackProbability: Float
 
-        val outputTensor = interpreter.getOutputTensor(0)
-        val quantParams = outputTensor.quantizationParams()
-        val scale = if (quantParams != null && quantParams.scale > 0f) quantParams.scale else DEFAULT_QUANT_SCALE
-        val zeroPoint = quantParams?.zeroPoint ?: DEFAULT_ZERO_POINT
+        synchronized(this) {
+            inputByteBuffer.rewind()
+            loadBitmapIntoByteBuffer(scaledBitmap, inputByteBuffer, intPixelValues)
 
-        val (crackClass, confidence, severity, crackProbability) = if (isSingleProbabilityOutput) {
-            val crackProb = if (isOutputQuantized) {
-                val outputArray = Array(1) { ByteArray(1) }
-                interpreter.run(inputBuffer, outputArray)
-                val rawVal = outputArray[0][0].toInt() and 0xFF
-                // Dequantize formula: prob = (raw_value - zero_point) * scale
-                ((rawVal - zeroPoint) * scale).coerceIn(0.0f, 1.0f)
+            val scale = outputScale
+            val zeroPoint = outputZeroPoint
+
+            if (isSingleProbabilityOutput) {
+                val crackProb = if (isOutputQuantized) {
+                    val outputArray = Array(1) { ByteArray(1) }
+                    interpreter.run(inputByteBuffer, outputArray)
+                    val rawVal = outputArray[0][0].toInt() and 0xFF
+                    // Dequantize formula: prob = (raw_value - zero_point) * scale
+                    ((rawVal - zeroPoint) * scale).coerceIn(0.0f, 1.0f)
+                } else {
+                    val outputArray = Array(1) { FloatArray(1) }
+                    interpreter.run(inputByteBuffer, outputArray)
+                    outputArray[0][0].coerceIn(0.0f, 1.0f)
+                }
+
+                val (cls, sev) = SeverityClassifier.classifyProbability(crackProb)
+                val conf = if (cls != CrackClass.NONE) crackProb else (1.0f - crackProb).coerceIn(0.0f, 1.0f)
+                crackClass = cls
+                confidence = conf
+                severity = sev
+                crackProbability = crackProb
             } else {
-                val outputArray = Array(1) { FloatArray(1) }
-                interpreter.run(inputBuffer, outputArray)
-                outputArray[0][0].coerceIn(0.0f, 1.0f)
-            }
+                // Multi-class classification fallback
+                val (rawClassIndex, maxConfidence) = if (isOutputQuantized) {
+                    val outputArray = Array(1) { ByteArray(numClasses) }
+                    interpreter.run(inputByteBuffer, outputArray)
 
-            val (cls, sev) = SeverityClassifier.classifyProbability(crackProb)
-            // Confidence reflects predicted state certainty:
-            // For distress: crack probability
-            // For clear surface: clear certainty (1.0 - crackProb)
-            val conf = if (cls != CrackClass.NONE) crackProb else (1.0f - crackProb).coerceIn(0.0f, 1.0f)
-            DetectionTuple(cls, conf, sev, crackProb)
-        } else {
-            // Multi-class classification fallback
-            val (rawClassIndex, maxConfidence) = if (isOutputQuantized) {
-                val outputArray = Array(1) { ByteArray(numClasses) }
-                interpreter.run(inputBuffer, outputArray)
+                    var maxIndex = 0
+                    var maxProb = -1.0f
+                    for (i in 0 until numClasses) {
+                        val byteVal = outputArray[0][i].toInt() and 0xFF
+                        val prob = (byteVal - zeroPoint) * scale
+                        if (prob > maxProb) {
+                            maxProb = prob
+                            maxIndex = i
+                        }
+                    }
+                    Pair(maxIndex, maxProb.coerceIn(0.0f, 1.0f))
+                } else {
+                    val outputArray = Array(1) { FloatArray(numClasses) }
+                    interpreter.run(inputByteBuffer, outputArray)
 
-                var maxIndex = 0
-                var maxProb = -1.0f
-                for (i in 0 until numClasses) {
-                    val byteVal = outputArray[0][i].toInt() and 0xFF
-                    val prob = (byteVal - zeroPoint) * scale
-                    if (prob > maxProb) {
-                        maxProb = prob
-                        maxIndex = i
+                    var maxIndex = 0
+                    var maxProb = -1.0f
+                    for (i in 0 until numClasses) {
+                        val prob = outputArray[0][i]
+                        if (prob > maxProb) {
+                            maxProb = prob
+                            maxIndex = i
+                        }
+                    }
+                    Pair(maxIndex, maxProb.coerceIn(0.0f, 1.0f))
+                }
+
+                val cls = when (numClasses) {
+                    2 -> if (rawClassIndex == 1) CrackClass.STRUCTURAL else CrackClass.HAIRLINE
+                    else -> when (rawClassIndex) {
+                        2 -> CrackClass.STRUCTURAL
+                        1 -> CrackClass.HAIRLINE
+                        else -> CrackClass.NONE
                     }
                 }
-                Pair(maxIndex, maxProb.coerceIn(0.0f, 1.0f))
-            } else {
-                val outputArray = Array(1) { FloatArray(numClasses) }
-                interpreter.run(inputBuffer, outputArray)
-
-                var maxIndex = 0
-                var maxProb = -1.0f
-                for (i in 0 until numClasses) {
-                    val prob = outputArray[0][i]
-                    if (prob > maxProb) {
-                        maxProb = prob
-                        maxIndex = i
-                    }
-                }
-                Pair(maxIndex, maxProb.coerceIn(0.0f, 1.0f))
+                val sev = SeverityClassifier.classify(cls, maxConfidence)
+                val crackProb = if (cls != CrackClass.NONE) maxConfidence else (1.0f - maxConfidence)
+                crackClass = cls
+                confidence = maxConfidence
+                severity = sev
+                crackProbability = crackProb
             }
+        }
 
-            val cls = when (numClasses) {
-                2 -> if (rawClassIndex == 1) CrackClass.STRUCTURAL else CrackClass.HAIRLINE
-                else -> when (rawClassIndex) {
-                    2 -> CrackClass.STRUCTURAL
-                    1 -> CrackClass.HAIRLINE
-                    else -> CrackClass.NONE
-                }
-            }
-            val sev = SeverityClassifier.classify(cls, maxConfidence)
-            val crackProb = if (cls != CrackClass.NONE) maxConfidence else (1.0f - maxConfidence)
-            DetectionTuple(cls, maxConfidence, sev, crackProb)
+        if (scaledBitmap !== bitmap) {
+            scaledBitmap.recycle()
         }
 
         val latency = SystemClock.elapsedRealtime() - startTime
@@ -241,12 +269,7 @@ class LiteRTCrackDetector(
         )
     }
 
-    private fun convertBitmapToByteBuffer(bitmap: Bitmap): ByteBuffer {
-        val bytesPerChannel = if (isInputQuantized) 1 else 4
-        val byteBuffer = ByteBuffer.allocateDirect(1 * inputWidth * inputHeight * NUM_CHANNELS * bytesPerChannel)
-        byteBuffer.order(ByteOrder.nativeOrder())
-
-        val intValues = IntArray(inputWidth * inputHeight)
+    private fun loadBitmapIntoByteBuffer(bitmap: Bitmap, byteBuffer: ByteBuffer, intValues: IntArray) {
         bitmap.getPixels(intValues, 0, inputWidth, 0, 0, inputWidth, inputHeight)
 
         var pixel = 0
@@ -268,14 +291,12 @@ class LiteRTCrackDetector(
                 }
             }
         }
-        return byteBuffer
     }
 
     private fun loadModelFile(context: Context, assetPath: String): MappedByteBuffer {
         val candidates = listOf(
             assetPath,
-            "crack_model.tflite",
-            "models/crack_model.tflite"
+            "crack_model.tflite"
         ).distinct()
 
         var lastException: Exception? = null

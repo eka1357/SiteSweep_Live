@@ -153,7 +153,7 @@ class DemoSeeder(
      * Generates a concrete-textured bitmap with an authentic crack fissure.
      * Guarantees realistic visual assets for the demo inspection comparison.
      */
-    open fun createConcreteCrackBitmap(crackWidthPx: Float, crackIntensity: Float): Bitmap? {
+    fun createConcreteCrackBitmap(crackWidthPx: Float, crackIntensity: Float): Bitmap? {
         return try {
             val width = 320
             val height = 320

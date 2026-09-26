@@ -37,4 +37,12 @@ class ManifestSecurityTest {
         assertTrue("Must declare VIBRATE permission", content.contains("android.permission.VIBRATE"))
         assertTrue("Must declare RECORD_AUDIO permission", content.contains("android.permission.RECORD_AUDIO"))
     }
+
+    @Test
+    fun assets_containsSingleModelFile() {
+        val modelFile = File("src/main/assets/crack_model.tflite")
+        assertTrue("Primary model file must exist in assets", modelFile.exists())
+        val duplicateDir = File("src/main/assets/models")
+        assertFalse("Duplicate model directory must not exist", duplicateDir.exists())
+    }
 }

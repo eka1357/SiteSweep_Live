@@ -14,8 +14,8 @@ object SeverityClassifier {
     var hairlineMonitorThreshold: Float = 0.85f
     var structuralProbabilityThreshold: Float = 0.75f
 
-    const val ENTER_CRACK: Float = 0.54f
-    const val EXIT_CRACK: Float = 0.46f
+    const val ENTER_CRACK: Float = 0.60f
+    const val EXIT_CRACK: Float = 0.48f
     const val ENTER_STRUCTURAL: Float = 0.78f
     const val EXIT_STRUCTURAL: Float = 0.72f
 

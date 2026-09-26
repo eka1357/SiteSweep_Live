@@ -20,11 +20,39 @@ import java.util.Locale
 class RevisitViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: SiteSweepRepository = (application as SiteSweepApplication).repository
+    val exporter = com.sitesweep.report.SessionExporter(application, repository)
 
     private val _uiState = MutableStateFlow(RevisitUiState())
     val uiState: StateFlow<RevisitUiState> = _uiState.asStateFlow()
 
+    private val _exportStatus = MutableStateFlow<String?>(null)
+    val exportStatus: StateFlow<String?> = _exportStatus.asStateFlow()
+
     private var observationJob: Job? = null
+
+    fun exportSession(onComplete: ((java.io.File) -> Unit)? = null) {
+        val currentSessionId = _uiState.value.captures.find { it.id == _uiState.value.targetCaptureId }?.sessionId
+            ?: _uiState.value.captures.lastOrNull()?.sessionId
+
+        if (currentSessionId == null) {
+            _exportStatus.value = "NO CAPTURES AVAILABLE TO EXPORT"
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                val result = exporter.exportSession(currentSessionId)
+                _exportStatus.value = "EXPORTED TO: ${result.exportDirectory.name}"
+                onComplete?.invoke(result.exportDirectory)
+            } catch (e: Exception) {
+                _exportStatus.value = "EXPORT FAILED: ${e.message}"
+            }
+        }
+    }
+
+    fun clearExportStatus() {
+        _exportStatus.value = null
+    }
 
     fun loadLocationHistory(locationKey: String, targetCaptureId: String? = null) {
         _uiState.value = _uiState.value.copy(

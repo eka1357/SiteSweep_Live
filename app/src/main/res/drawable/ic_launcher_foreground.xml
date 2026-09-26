@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Viewfinder Reticle Corners -->
+    <path
+        android:strokeColor="#FF6A13"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="square"
+        android:pathData="M34,42 L34,34 L42,34" />
+    <path
+        android:strokeColor="#FF6A13"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="square"
+        android:pathData="M66,34 L74,34 L74,42" />
+    <path
+        android:strokeColor="#FF6A13"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="square"
+        android:pathData="M34,66 L34,74 L42,74" />
+    <path
+        android:strokeColor="#FF6A13"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="square"
+        android:pathData="M66,74 L74,74 L74,66" />
+
+    <!-- Center Inspection Reticle Marks -->
+    <path
+        android:strokeColor="#3A3F44"
+        android:strokeWidth="1.5"
+        android:pathData="M54,32 L54,38" />
+    <path
+        android:strokeColor="#3A3F44"
+        android:strokeWidth="1.5"
+        android:pathData="M54,70 L54,76" />
+    <path
+        android:strokeColor="#3A3F44"
+        android:strokeWidth="1.5"
+        android:pathData="M32,54 L38,54" />
+    <path
+        android:strokeColor="#3A3F44"
+        android:strokeWidth="1.5"
+        android:pathData="M70,54 L76,54" />
+
+    <!-- Structural Distress Fracture Glyph -->
+    <path
+        android:strokeColor="#FF6A13"
+        android:strokeWidth="3.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="bevel"
+        android:pathData="M53,37 L56,47 L50,56 L55,64 L53,71" />
+</vector>

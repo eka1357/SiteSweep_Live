@@ -204,39 +204,46 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
         val rotationDegrees = imageProxy.imageInfo.rotationDegrees
 
         viewModelScope.launch(Dispatchers.Default) {
+            var rawBitmap: Bitmap? = null
+            var preparedBitmap: Bitmap? = null
             try {
-                val rawBitmap: Bitmap? = imageProxy.toBitmap()
-                if (rawBitmap != null) {
-                    val preparedBitmap = prepareFrameBitmap(rawBitmap, rotationDegrees)
-                    val rawResult = currentDetector.detect(preparedBitmap)
-                    val stabilizedResult = evaluateStabilizedResult(rawResult)
-                    
-                    updateInferenceResult(stabilizedResult)
-                    checkDistressFeedback(stabilizedResult.severity)
+                val raw = imageProxy.toBitmap()
+                rawBitmap = raw
+                preparedBitmap = prepareFrameBitmap(raw, rotationDegrees)
+                val rawResult = currentDetector.detect(preparedBitmap)
+                val stabilizedResult = evaluateStabilizedResult(rawResult)
+                
+                updateInferenceResult(stabilizedResult)
+                checkDistressFeedback(stabilizedResult.severity)
 
-                    // Automated capture evaluation on active session
-                    val currentSessionId = _uiState.value.currentSession?.id
-                    if (currentSessionId != null) {
-                        autoCapture.evaluateFrame(
-                            bitmap = preparedBitmap,
-                            result = stabilizedResult,
-                            sessionId = currentSessionId,
-                            elapsedTimeMs = elapsed
-                        )
-                    }
+                // Automated capture evaluation on active session
+                val currentSessionId = _uiState.value.currentSession?.id
+                if (currentSessionId != null) {
+                    autoCapture.evaluateFrame(
+                        bitmap = preparedBitmap,
+                        result = stabilizedResult,
+                        sessionId = currentSessionId,
+                        elapsedTimeMs = elapsed
+                    )
+                }
 
-                    _uiState.update {
-                        it.copy(
-                            isAutoCaptureArmed = autoCapture.isArmed,
-                            autoCaptureState = autoCapture.state,
-                            lastCaptureTimestamp = autoCapture.lastCaptureElapsedRealtime
-                        )
-                    }
+                _uiState.update {
+                    it.copy(
+                        isAutoCaptureArmed = autoCapture.isArmed,
+                        autoCaptureState = autoCapture.state,
+                        lastCaptureTimestamp = autoCapture.lastCaptureElapsedRealtime
+                    )
                 }
             } catch (e: Throwable) {
                 Log.e("SweepViewModel", "Inference error on frame: ${e.message}", e)
             } finally {
                 imageProxy.close()
+                if (rawBitmap != null && rawBitmap !== preparedBitmap && !rawBitmap.isRecycled) {
+                    rawBitmap.recycle()
+                }
+                if (preparedBitmap != null && !preparedBitmap.isRecycled) {
+                    preparedBitmap.recycle()
+                }
             }
         }
     }
@@ -253,18 +260,24 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
         val x = (rotated.width - size) / 2
         val y = (rotated.height - size) / 2
 
-        return if (rotated.width == size && rotated.height == size) {
+        val cropped = if (rotated.width == size && rotated.height == size) {
             rotated
         } else {
             Bitmap.createBitmap(rotated, x, y, size, size)
         }
+
+        if (rotated !== bitmap && rotated !== cropped && !rotated.isRecycled) {
+            rotated.recycle()
+        }
+
+        return cropped
     }
 
     private fun evaluateStabilizedResult(result: CrackDetectionResult): CrackDetectionResult {
         val rawProb = result.crackProbability
-        // Asymmetric response: fast attack (0.70f) so structural distress triggers immediately,
+        // Asymmetric response: fast attack (0.85f) so distress triggers near-instantly when panning onto poster,
         // slow release (0.25f) when returning to stable to prevent visual strobing/flickering
-        val alpha = if (smoothedProbability < 0f || rawProb > smoothedProbability) 0.70f else 0.25f
+        val alpha = if (smoothedProbability < 0f || rawProb > smoothedProbability) 0.85f else 0.25f
         val smoothed = if (smoothedProbability < 0f) {
             rawProb
         } else {

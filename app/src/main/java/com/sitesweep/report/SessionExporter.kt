@@ -83,9 +83,18 @@ class SessionExporter(
                 }
             }
 
-            // Generate self-contained markdown report
+            // Fetch historical location revisit context for each distinct locationKey
+            val locationHistories = mutableMapOf<String, List<CaptureEntity>>()
+            for (capture in captures) {
+                if (!locationHistories.containsKey(capture.locationKey)) {
+                    val history = repository.getCapturesByLocationKey(capture.locationKey)
+                    locationHistories[capture.locationKey] = history.sortedBy { it.timestamp }
+                }
+            }
+
+            // Generate self-contained markdown report with revisit history
             val mdFile = File(exportFolder, "report.md")
-            val mdContent = generateMarkdownReport(session, captures, voiceNotes, relativeImagePaths)
+            val mdContent = generateMarkdownReport(session, captures, voiceNotes, relativeImagePaths, locationHistories)
             mdFile.writeText(mdContent)
 
             // Generate machine-readable JSON metadata for Office Kit laptop agent
@@ -108,7 +117,8 @@ class SessionExporter(
         session: SessionEntity,
         captures: List<CaptureEntity>,
         voiceNotes: List<VoiceNoteEntity>,
-        imagePaths: Map<String, String>
+        imagePaths: Map<String, String>,
+        locationHistories: Map<String, List<CaptureEntity>> = emptyMap()
     ): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
         val startedDate = dateFormat.format(Date(session.startedAt))
@@ -133,6 +143,31 @@ class SessionExporter(
                 sb.appendLine("- *[$time]*: ${note.transcript}")
             }
             sb.appendLine()
+        }
+
+        // Revisit Analysis Section (M-6)
+        val multiObservationLocations = locationHistories.filter { it.value.isNotEmpty() }
+        if (multiObservationLocations.isNotEmpty()) {
+            sb.appendLine("## Location History & Revisit Analysis")
+            sb.appendLine()
+            for ((locKey, history) in multiObservationLocations) {
+                val severities = history.map { it.severity.uppercase(Locale.US) }
+                val trendVerdict = when {
+                    severities.contains("STRUCTURAL") && severities.firstOrNull() != "STRUCTURAL" -> "WIDENING • ESCALATING SEVERITY"
+                    severities.contains("STRUCTURAL") -> "STRUCTURAL DEFECT CONFIRMED"
+                    severities.contains("MONITOR") -> "MONITORING • MODERATE DISTRESS"
+                    else -> "STABLE"
+                }
+                val progression = history.joinToString(" -> ") {
+                    val date = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date(it.timestamp))
+                    "${it.severity} ($date)"
+                }
+                sb.appendLine("### Location Key: `$locKey`")
+                sb.appendLine("- **Prior Observations**: ${history.size} inspection readings recorded")
+                sb.appendLine("- **Distress Trend**: $trendVerdict")
+                sb.appendLine("- **Chronological Progression**: $progression")
+                sb.appendLine()
+            }
         }
 
         sb.appendLine("## Distress Observations")
@@ -177,53 +212,42 @@ class SessionExporter(
         voiceNotes: List<VoiceNoteEntity>,
         imagePaths: Map<String, String>
     ): String {
-        val sb = StringBuilder()
-        sb.appendLine("{")
-        sb.appendLine("  \"version\": \"1.0.0\",")
-        sb.appendLine("  \"session\": {")
-        sb.appendLine("    \"id\": \"${session.id}\",")
-        sb.appendLine("    \"label\": \"${escapeJson(session.label)}\",")
-        sb.appendLine("    \"startedAt\": ${session.startedAt},")
-        sb.appendLine("    \"endedAt\": ${session.endedAt ?: "null"}")
-        sb.appendLine("  },")
+        val root = org.json.JSONObject().apply {
+            put("version", "1.0.0")
+            put("session", org.json.JSONObject().apply {
+                put("id", session.id)
+                put("label", session.label)
+                put("startedAt", session.startedAt)
+                put("endedAt", session.endedAt ?: org.json.JSONObject.NULL)
+            })
 
-        sb.appendLine("  \"captures\": [")
-        captures.forEachIndexed { index, c ->
-            val isLast = index == captures.size - 1
-            sb.appendLine("    {")
-            sb.appendLine("      \"id\": \"${c.id}\",")
-            sb.appendLine("      \"timestamp\": ${c.timestamp},")
-            sb.appendLine("      \"severity\": \"${c.severity}\",")
-            sb.appendLine("      \"confidence\": ${c.confidence},")
-            sb.appendLine("      \"locationKey\": \"${c.locationKey}\",")
-            sb.appendLine("      \"latitude\": ${c.lat},")
-            sb.appendLine("      \"longitude\": ${c.lng},")
-            sb.appendLine("      \"imagePath\": \"${imagePaths[c.id] ?: ""}\"")
-            sb.appendLine("    }${if (isLast) "" else ","}")
+            val capturesArray = org.json.JSONArray()
+            for (c in captures) {
+                capturesArray.put(org.json.JSONObject().apply {
+                    put("id", c.id)
+                    put("timestamp", c.timestamp)
+                    put("severity", c.severity)
+                    put("confidence", c.confidence)
+                    put("locationKey", c.locationKey)
+                    put("latitude", c.lat)
+                    put("longitude", c.lng)
+                    put("imagePath", imagePaths[c.id] ?: "")
+                })
+            }
+            put("captures", capturesArray)
+
+            val notesArray = org.json.JSONArray()
+            for (v in voiceNotes) {
+                notesArray.put(org.json.JSONObject().apply {
+                    put("id", v.id)
+                    put("captureId", v.captureId ?: org.json.JSONObject.NULL)
+                    put("transcript", v.transcript)
+                    put("timestamp", v.timestamp)
+                })
+            }
+            put("voiceNotes", notesArray)
         }
-        sb.appendLine("  ],")
-
-        sb.appendLine("  \"voiceNotes\": [")
-        voiceNotes.forEachIndexed { index, v ->
-            val isLast = index == voiceNotes.size - 1
-            sb.appendLine("    {")
-            sb.appendLine("      \"id\": \"${v.id}\",")
-            sb.appendLine("      \"captureId\": ${if (v.captureId != null) "\"${v.captureId}\"" else "null"},")
-            sb.appendLine("      \"transcript\": \"${escapeJson(v.transcript)}\",")
-            sb.appendLine("      \"timestamp\": ${v.timestamp}")
-            sb.appendLine("    }${if (isLast) "" else ","}")
-        }
-        sb.appendLine("  ]")
-        sb.appendLine("}")
-        return sb.toString()
-    }
-
-    private fun escapeJson(str: String): String {
-        return str.replace("\\", "\\\\")
-            .replace("\"", "\\\"")
-            .replace("\n", "\\n")
-            .replace("\r", "\\r")
-            .replace("\t", "\\t")
+        return root.toString(2)
     }
 
     private fun copyFile(source: File, dest: File) {

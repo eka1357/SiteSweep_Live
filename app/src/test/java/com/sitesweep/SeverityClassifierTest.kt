@@ -119,18 +119,18 @@ class SeverityClassifierTest {
 
     @Test
     fun hysteresis_preventsBoundaryFlicker() {
-        // At 0.51, if previously clear (currentlyDetected = false), does not trip false alarm (requires >= 0.54)
-        val (cClear, sClear) = SeverityClassifier.classifyProbabilityWithHysteresis(0.51f, currentlyDetected = false)
+        // At 0.55, if previously clear (currentlyDetected = false), does not trip false alarm (requires >= 0.60)
+        val (cClear, sClear) = SeverityClassifier.classifyProbabilityWithHysteresis(0.55f, currentlyDetected = false)
         assertEquals(CrackClass.NONE, cClear)
         assertEquals(Severity.STABLE, sClear)
 
-        // At 0.55, trips alarm
-        val (cAlarm, sAlarm) = SeverityClassifier.classifyProbabilityWithHysteresis(0.55f, currentlyDetected = false)
+        // At 0.61, trips alarm
+        val (cAlarm, sAlarm) = SeverityClassifier.classifyProbabilityWithHysteresis(0.61f, currentlyDetected = false)
         assertEquals(CrackClass.HAIRLINE, cAlarm)
         assertEquals(Severity.MONITOR, sAlarm)
 
-        // At 0.49, if already in distress (currentlyDetected = true), stays in distress (requires < 0.46 to exit)
-        val (cStay, sStay) = SeverityClassifier.classifyProbabilityWithHysteresis(0.49f, currentlyDetected = true)
+        // At 0.50, if already in distress (currentlyDetected = true), stays in distress (requires < 0.48 to exit)
+        val (cStay, sStay) = SeverityClassifier.classifyProbabilityWithHysteresis(0.50f, currentlyDetected = true)
         assertEquals(CrackClass.HAIRLINE, cStay)
         assertEquals(Severity.MONITOR, sStay)
 
