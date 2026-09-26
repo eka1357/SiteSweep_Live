@@ -35,6 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import com.sitesweep.ui.revisit.RevisitScreen
+import com.sitesweep.ui.revisit.RevisitViewModel
 import com.sitesweep.ui.sessions.SessionDetailScreen
 import com.sitesweep.ui.sessions.SessionDetailViewModel
 import com.sitesweep.ui.sessions.SessionListScreen
@@ -61,6 +63,7 @@ class MainActivity : ComponentActivity() {
     private val sessionListViewModel: SessionListViewModel by viewModels()
     private val sessionDetailViewModel: SessionDetailViewModel by viewModels()
     private val sweepViewModel: SweepViewModel by viewModels()
+    private val revisitViewModel: RevisitViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,37 +154,14 @@ class MainActivity : ComponentActivity() {
                             BackHandler {
                                 currentScreen = AppScreen.SessionList
                             }
-                            // RevisitScreen will be attached in Item 5
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(PaletteInk)
-                                    .padding(24.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Text(
-                                        text = "REVISIT LOCATION: ${screen.locationKey}",
-                                        color = PaletteSafetyOrange,
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily.Monospace,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                    Button(
-                                        onClick = { currentScreen = AppScreen.SessionList },
-                                        colors = ButtonDefaults.buttonColors(containerColor = PaletteSafetyOrange),
-                                        shape = RoundedCornerShape(2.dp)
-                                    ) {
-                                        Text(
-                                            text = "BACK TO SESSIONS",
-                                            color = PaletteInk,
-                                            fontFamily = FontFamily.Monospace,
-                                            fontWeight = FontWeight.Bold
-                                        )
-                                    }
+                            RevisitScreen(
+                                viewModel = revisitViewModel,
+                                locationKey = screen.locationKey,
+                                targetCaptureId = screen.captureId,
+                                onBack = {
+                                    currentScreen = AppScreen.SessionList
                                 }
-                            }
+                            )
                         }
                     }
                 } else {
