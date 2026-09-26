@@ -26,9 +26,30 @@ data class SessionDetailUiState(
 class SessionDetailViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: SiteSweepRepository = (application as SiteSweepApplication).repository
+    val exporter = com.sitesweep.report.SessionExporter(application, repository)
 
     private val _uiState = MutableStateFlow(SessionDetailUiState())
     val uiState: StateFlow<SessionDetailUiState> = _uiState.asStateFlow()
+
+    private val _exportStatus = MutableStateFlow<String?>(null)
+    val exportStatus: StateFlow<String?> = _exportStatus.asStateFlow()
+
+    fun exportSession(onComplete: ((java.io.File) -> Unit)? = null) {
+        val current = _uiState.value.session ?: return
+        viewModelScope.launch {
+            try {
+                val result = exporter.exportSession(current.id)
+                _exportStatus.value = "EXPORTED TO: ${result.exportDirectory.name}"
+                onComplete?.invoke(result.exportDirectory)
+            } catch (e: Exception) {
+                _exportStatus.value = "EXPORT FAILED: ${e.message}"
+            }
+        }
+    }
+
+    fun clearExportStatus() {
+        _exportStatus.value = null
+    }
 
     fun loadSession(sessionId: String) {
         viewModelScope.launch {

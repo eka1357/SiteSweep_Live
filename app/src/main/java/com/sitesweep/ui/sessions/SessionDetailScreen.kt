@@ -80,6 +80,7 @@ fun SessionDetailScreen(
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val exportStatus by viewModel.exportStatus.collectAsStateWithLifecycle()
     val session = uiState.session
 
     var showVoiceNoteDialog by remember { mutableStateOf(false) }
@@ -139,7 +140,10 @@ fun SessionDetailScreen(
             Box(
                 modifier = Modifier
                     .background(PaletteSafetyOrange, RoundedCornerShape(2.dp))
-                    .clickable(onClick = { onExportClick(sessionId) })
+                    .clickable(onClick = {
+                        viewModel.exportSession()
+                        onExportClick(sessionId)
+                    })
                     .padding(horizontal = 10.dp, vertical = 6.dp)
             ) {
                 Text(
@@ -149,6 +153,38 @@ fun SessionDetailScreen(
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Bold
                 )
+            }
+        }
+
+        if (exportStatus != null) {
+            Spacer(modifier = Modifier.height(10.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(PaletteInkElevated, RoundedCornerShape(2.dp))
+                    .border(1.dp, PaletteSafetyOrange, RoundedCornerShape(2.dp))
+                    .padding(10.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = exportStatus ?: "",
+                        color = PaletteSafetyOrange,
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "[OK]",
+                        color = TextLightSecondary,
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        modifier = Modifier.clickable { viewModel.clearExportStatus() }
+                    )
+                }
             }
         }
 
