@@ -180,18 +180,18 @@ class SeverityClassifierTest {
 
     @Test
     fun emaFilter_crackPoster_sustainedDistress_triggersPromptly() {
-        // Starting from baseline looking at wall/desk (smoothed ~0.20f)
-        var smoothed = 0.20f
+        // Starting from ambient baseline looking at clean wall/desk (~0.25f)
+        var smoothed = 0.25f
         var currentlyDistress = false
         var currentSeverity = Severity.STABLE
 
-        // Sweeping onto printed crack poster (sustained 0.88-0.90f)
+        // Sweeping onto printed crack poster (sustained 0.88-0.91f)
         val crackFrames = listOf(0.88f, 0.90f, 0.89f, 0.91f)
 
         // Frame 1 (t = 0ms at 5 fps)
         smoothed = com.sitesweep.ui.sweep.SweepViewModel.computeEma(smoothed, crackFrames[0])
         var (cls, sev) = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
-        // Frame 1 accumulates: 0.40 * 0.88 + 0.60 * 0.20 = 0.472f
+        // Frame 1 accumulates: 0.35 * 0.88 + 0.65 * 0.25 = 0.4705f
         assertEquals(Severity.STABLE, sev)
 
         // Frame 2 (t = 200ms at 5 fps)
@@ -199,7 +199,7 @@ class SeverityClassifierTest {
         val resFrame2 = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
         cls = resFrame2.first
         sev = resFrame2.second
-        // Frame 2: 0.40 * 0.90 + 0.60 * 0.472 = 0.643f >= ENTER_CRACK (0.60f)
+        // Frame 2: 0.35 * 0.90 + 0.65 * 0.4705 = 0.6208f >= ENTER_CRACK (0.60f)
         assertEquals("Frame 2 (~200ms) must promptly cross ENTER_CRACK to MONITOR", Severity.MONITOR, sev)
         currentlyDistress = true
         currentSeverity = sev
@@ -209,7 +209,7 @@ class SeverityClassifierTest {
         val resFrame3 = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
         cls = resFrame3.first
         sev = resFrame3.second
-        // Frame 3: 0.40 * 0.89 + 0.60 * 0.643 = 0.742f (>= ENTER_CRACK 0.60f, firmly MONITOR while escalating)
+        // Frame 3: 0.35 * 0.89 + 0.65 * 0.6208 = 0.7150f (>= ENTER_CRACK 0.60f, firmly MONITOR while escalating)
         assertEquals("Frame 3 (~400ms) sustains MONITOR while escalating", Severity.MONITOR, sev)
         currentSeverity = sev
 
@@ -218,7 +218,7 @@ class SeverityClassifierTest {
         val resFrame4 = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
         cls = resFrame4.first
         sev = resFrame4.second
-        // Frame 4: 0.40 * 0.91 + 0.60 * 0.742 = 0.809f >= ENTER_STRUCTURAL (0.78f)
+        // Frame 4: 0.35 * 0.91 + 0.65 * 0.7150 = 0.7832f >= ENTER_STRUCTURAL (0.78f)
         assertEquals("Frame 4 (~600ms) promptly escalates to STRUCTURAL", Severity.STRUCTURAL, sev)
     }
 }

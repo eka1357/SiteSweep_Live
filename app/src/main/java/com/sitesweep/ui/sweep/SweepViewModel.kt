@@ -320,29 +320,29 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
 
     companion object {
         /**
-         * EMA attack alpha: 0.40f (within the requested 0.3-0.5 range).
-         * - Prevents single-frame and two-frame spurious spikes from glare, cables, or wood grain:
-         *   e.g., a momentary 0.68f spike on a 0.25f background baseline yields only 0.422f, safely below ENTER_CRACK (0.60f).
-         * - On a real crack poster (sustained 0.85-0.95f), crosses ENTER_CRACK (0.60f) on frame 2 (~200ms)
-         *   and STRUCTURAL (0.70f) on frame 3 (~400ms).
-         * - Delivers prompt, responsive feedback without false-triggering on desk clutter.
+         * Pure symmetric EMA smoothing factor (0.35f).
+         * Restored from known-good baseline (commit 1136717).
+         *
+         * Mathematical rationale:
+         * Asymmetric attack/release (e.g. attack 0.85/0.40, release 0.25) behaves as a peak-detector
+         * charge pump on natural texture fluctuations (wood grain, desk clutter, cable edges).
+         * Because release is slower than attack, normal texture variance ratchets the smoothed probability
+         * upward over consecutive frames until it falsely breaches ENTER_CRACK.
+         *
+         * Pure symmetric smoothing (0.35f on both rise and fall):
+         * 1. Accurately tracks the central tendency of background textures (averaging ~0.20-0.35),
+         *    keeping wood grain and clutter firmly below ENTER_CRACK (0.60f) even over 10+ seconds.
+         * 2. On sustained crack posters (0.88-0.92), reaches MONITOR at frame 2 (~200ms) and
+         *    escalates to STRUCTURAL at frame 4 (~600ms), delivering prompt, reliable detection.
          */
-        const val EMA_ATTACK_ALPHA = 0.40f
-
-        /**
-         * EMA release alpha: 0.25f.
-         * Smoothly decays probability when leaving a crack to prevent visual strobing/flickering.
-         */
-        const val EMA_RELEASE_ALPHA = 0.25f
+        const val EMA_ALPHA = 0.35f
 
         fun computeEma(
             currentSmoothed: Float,
             rawProb: Float,
-            attackAlpha: Float = EMA_ATTACK_ALPHA,
-            releaseAlpha: Float = EMA_RELEASE_ALPHA
+            alpha: Float = EMA_ALPHA
         ): Float {
             if (currentSmoothed < 0f) return rawProb
-            val alpha = if (rawProb > currentSmoothed) attackAlpha else releaseAlpha
             return alpha * rawProb + (1.0f - alpha) * currentSmoothed
         }
     }
