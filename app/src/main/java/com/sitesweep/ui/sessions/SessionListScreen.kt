@@ -16,12 +16,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
@@ -65,6 +69,7 @@ fun SessionListScreen(
     val sessionItems by viewModel.sessionItems.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val screenTopPadding = getScreenTopPadding()
+    var sessionPendingDelete by remember { mutableStateOf<SessionItemUiModel?>(null) }
 
     Column(
         modifier = modifier
@@ -198,10 +203,76 @@ fun SessionListScreen(
                 ) { item ->
                     SessionRowItem(
                         item = item,
-                        onClick = { onSessionClick(item.session.id) }
+                        onClick = { onSessionClick(item.session.id) },
+                        onDelete = { sessionPendingDelete = item }
                     )
                 }
             }
+        }
+
+        // Industrial Confirmation Dialog for Deleting Inspection Session
+        if (sessionPendingDelete != null) {
+            val target = sessionPendingDelete!!
+            AlertDialog(
+                onDismissRequest = { sessionPendingDelete = null },
+                title = {
+                    Text(
+                        text = "DELETE INSPECTION LOG",
+                        color = PaletteSafetyOrange,
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 0.5.sp
+                    )
+                },
+                text = {
+                    Text(
+                        text = "Permanently remove ${target.session.label.uppercase(Locale.US)} and all ${target.captureCount} associated captures? This action cannot be undone.",
+                        color = TextLightSecondary,
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.Monospace
+                    )
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            viewModel.deleteSession(target.session.id)
+                            sessionPendingDelete = null
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = SeverityRed,
+                            contentColor = PaletteInk
+                        ),
+                        shape = RoundedCornerShape(2.dp)
+                    ) {
+                        Text(
+                            text = "DELETE",
+                            fontSize = 11.sp,
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = { sessionPendingDelete = null },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = PaletteSlate,
+                            contentColor = TextLightPrimary
+                        ),
+                        shape = RoundedCornerShape(2.dp)
+                    ) {
+                        Text(
+                            text = "CANCEL",
+                            fontSize = 11.sp,
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                },
+                containerColor = PaletteInkElevated,
+                shape = RoundedCornerShape(2.dp)
+            )
         }
     }
 }
@@ -209,7 +280,8 @@ fun SessionListScreen(
 @Composable
 private fun SessionRowItem(
     item: SessionItemUiModel,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDelete: () -> Unit
 ) {
     val dateFormatted = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         .format(Date(item.session.startedAt))
@@ -270,15 +342,39 @@ private fun SessionRowItem(
                 text = "$dateFormatted • ${item.captureCount} CAPTURES",
                 color = TextLightSecondary,
                 fontSize = 11.sp,
-                fontFamily = FontFamily.Monospace
-            )
-            Text(
-                text = "VIEW >",
-                color = PaletteSafetyOrange,
-                fontSize = 11.sp,
                 fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.Bold
+                modifier = Modifier.weight(1f)
             )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                // Delete button for this log
+                Box(
+                    modifier = Modifier
+                        .background(PaletteSlate.copy(alpha = 0.6f), RoundedCornerShape(2.dp))
+                        .border(1.dp, PaletteSlateBorder, RoundedCornerShape(2.dp))
+                        .clickable(onClick = onDelete)
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                ) {
+                    Text(
+                        text = "DELETE",
+                        color = SeverityRed,
+                        fontSize = 10.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Text(
+                    text = "VIEW >",
+                    color = PaletteSafetyOrange,
+                    fontSize = 11.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }

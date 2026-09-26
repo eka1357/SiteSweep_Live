@@ -59,8 +59,8 @@ class SeverityClassifierTest {
 
     @Test
     fun classifyProbability_structuralBand() {
-        // >= 0.75f -> STRUCTURAL distress
-        val (c1, s1) = SeverityClassifier.classifyProbability(0.75f)
+        // >= 0.90f -> STRUCTURAL distress
+        val (c1, s1) = SeverityClassifier.classifyProbability(0.90f)
         assertEquals(CrackClass.STRUCTURAL, c1)
         assertEquals(Severity.STRUCTURAL, s1)
 
@@ -71,20 +71,20 @@ class SeverityClassifierTest {
 
     @Test
     fun classifyProbability_hairlineMonitorBand() {
-        // >= 0.50f and < 0.75f -> HAIRLINE distress, MONITOR severity
-        val (c1, s1) = SeverityClassifier.classifyProbability(0.50f)
+        // >= 0.78f and < 0.90f -> HAIRLINE distress, MONITOR severity
+        val (c1, s1) = SeverityClassifier.classifyProbability(0.78f)
         assertEquals(CrackClass.HAIRLINE, c1)
         assertEquals(Severity.MONITOR, s1)
 
-        val (c2, s2) = SeverityClassifier.classifyProbability(0.74f)
+        val (c2, s2) = SeverityClassifier.classifyProbability(0.89f)
         assertEquals(CrackClass.HAIRLINE, c2)
         assertEquals(Severity.MONITOR, s2)
     }
 
     @Test
     fun classifyProbability_belowThreshold_stableBand() {
-        // < 0.50f -> NONE distress, STABLE severity
-        val (c1, s1) = SeverityClassifier.classifyProbability(0.49f)
+        // < 0.78f -> NONE distress, STABLE severity
+        val (c1, s1) = SeverityClassifier.classifyProbability(0.77f)
         assertEquals(CrackClass.NONE, c1)
         assertEquals(Severity.STABLE, s1)
 
@@ -97,46 +97,44 @@ class SeverityClassifierTest {
     fun dequantization_crackModelFormula_verifiesThresholds() {
         val scale = 0.00390625f // 1 / 256
 
-        // raw_value = 128 -> 128 * 0.00390625 = 0.50 (exact threshold)
-        val probAtThreshold = 128 * scale
-        assertEquals(0.50f, probAtThreshold, 1e-5f)
-        val (c128, s128) = SeverityClassifier.classifyProbability(probAtThreshold)
-        assertEquals(CrackClass.HAIRLINE, c128)
-        assertEquals(Severity.MONITOR, s128)
+        // raw_value = 200 -> 200 * 0.00390625 = 0.78125 (at threshold)
+        val probAtThreshold = 200 * scale
+        val (c200, s200) = SeverityClassifier.classifyProbability(probAtThreshold)
+        assertEquals(CrackClass.HAIRLINE, c200)
+        assertEquals(Severity.MONITOR, s200)
 
-        // raw_value = 127 -> 127 * 0.00390625 = 0.49609375 (below threshold)
-        val probBelowThreshold = 127 * scale
-        val (c127, s127) = SeverityClassifier.classifyProbability(probBelowThreshold)
-        assertEquals(CrackClass.NONE, c127)
-        assertEquals(Severity.STABLE, s127)
+        // raw_value = 199 -> 199 * 0.00390625 = 0.77734375 (below threshold)
+        val probBelowThreshold = 199 * scale
+        val (c199, s199) = SeverityClassifier.classifyProbability(probBelowThreshold)
+        assertEquals(CrackClass.NONE, c199)
+        assertEquals(Severity.STABLE, s199)
 
-        // raw_value = 192 -> 192 * 0.00390625 = 0.75 (structural threshold)
-        val probStructural = 192 * scale
-        assertEquals(0.75f, probStructural, 1e-5f)
-        val (c192, s192) = SeverityClassifier.classifyProbability(probStructural)
-        assertEquals(CrackClass.STRUCTURAL, c192)
-        assertEquals(Severity.STRUCTURAL, s192)
+        // raw_value = 231 -> 231 * 0.00390625 = 0.90234375 (structural threshold)
+        val probStructural = 231 * scale
+        val (c231, s231) = SeverityClassifier.classifyProbability(probStructural)
+        assertEquals(CrackClass.STRUCTURAL, c231)
+        assertEquals(Severity.STRUCTURAL, s231)
     }
 
     @Test
     fun hysteresis_preventsBoundaryFlicker() {
-        // At 0.55, if previously clear (currentlyDetected = false), does not trip false alarm (requires >= 0.60)
-        val (cClear, sClear) = SeverityClassifier.classifyProbabilityWithHysteresis(0.55f, currentlyDetected = false)
+        // At 0.75, if previously clear (currentlyDetected = false), does not trip false alarm (requires >= 0.78)
+        val (cClear, sClear) = SeverityClassifier.classifyProbabilityWithHysteresis(0.75f, currentlyDetected = false)
         assertEquals(CrackClass.NONE, cClear)
         assertEquals(Severity.STABLE, sClear)
 
-        // At 0.61, trips alarm
-        val (cAlarm, sAlarm) = SeverityClassifier.classifyProbabilityWithHysteresis(0.61f, currentlyDetected = false)
+        // At 0.80, trips alarm (>= 0.78)
+        val (cAlarm, sAlarm) = SeverityClassifier.classifyProbabilityWithHysteresis(0.80f, currentlyDetected = false)
         assertEquals(CrackClass.HAIRLINE, cAlarm)
         assertEquals(Severity.MONITOR, sAlarm)
 
-        // At 0.50, if already in distress (currentlyDetected = true), stays in distress (requires < 0.48 to exit)
-        val (cStay, sStay) = SeverityClassifier.classifyProbabilityWithHysteresis(0.50f, currentlyDetected = true)
+        // At 0.70, if already in distress (currentlyDetected = true), stays in distress (requires < 0.65 to exit)
+        val (cStay, sStay) = SeverityClassifier.classifyProbabilityWithHysteresis(0.70f, currentlyDetected = true)
         assertEquals(CrackClass.HAIRLINE, cStay)
         assertEquals(Severity.MONITOR, sStay)
 
-        // At 0.45, exits distress back to clear
-        val (cExit, sExit) = SeverityClassifier.classifyProbabilityWithHysteresis(0.45f, currentlyDetected = true)
+        // At 0.60, exits distress back to clear (< 0.65)
+        val (cExit, sExit) = SeverityClassifier.classifyProbabilityWithHysteresis(0.60f, currentlyDetected = true)
         assertEquals(CrackClass.NONE, cExit)
         assertEquals(Severity.STABLE, sExit)
     }
@@ -185,40 +183,56 @@ class SeverityClassifierTest {
         var currentlyDistress = false
         var currentSeverity = Severity.STABLE
 
-        // Sweeping onto printed crack poster (sustained 0.88-0.91f)
-        val crackFrames = listOf(0.88f, 0.90f, 0.89f, 0.91f)
+        // Sweeping onto printed crack poster (sustained 0.98f)
+        val crackFrames = listOf(0.98f, 0.98f, 0.98f, 0.98f, 0.98f, 0.98f)
 
-        // Frame 1 (t = 0ms at 5 fps)
+        // Frame 1 (t = 0ms at 5 fps): 0.35 * 0.98 + 0.65 * 0.25 = 0.5055f (< 0.78f)
         smoothed = com.sitesweep.ui.sweep.SweepViewModel.computeEma(smoothed, crackFrames[0])
-        var (cls, sev) = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
-        // Frame 1 accumulates: 0.35 * 0.88 + 0.65 * 0.25 = 0.4705f
+        var (_, sev) = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
         assertEquals(Severity.STABLE, sev)
 
-        // Frame 2 (t = 200ms at 5 fps)
+        // Frame 2 (t = 200ms at 5 fps): 0.35 * 0.98 + 0.65 * 0.5055 = 0.6716f (< 0.78f)
         smoothed = com.sitesweep.ui.sweep.SweepViewModel.computeEma(smoothed, crackFrames[1])
-        val resFrame2 = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
-        cls = resFrame2.first
-        sev = resFrame2.second
-        // Frame 2: 0.35 * 0.90 + 0.65 * 0.4705 = 0.6208f >= ENTER_CRACK (0.60f)
-        assertEquals("Frame 2 (~200ms) must promptly cross ENTER_CRACK to MONITOR", Severity.MONITOR, sev)
-        currentlyDistress = true
-        currentSeverity = sev
+        var res = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
+        assertEquals(Severity.STABLE, res.second)
 
-        // Frame 3 (t = 400ms at 5 fps)
+        // Frame 3 (t = 400ms at 5 fps): 0.35 * 0.98 + 0.65 * 0.6716 = 0.7795f
         smoothed = com.sitesweep.ui.sweep.SweepViewModel.computeEma(smoothed, crackFrames[2])
-        val resFrame3 = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
-        cls = resFrame3.first
-        sev = resFrame3.second
-        // Frame 3: 0.35 * 0.89 + 0.65 * 0.6208 = 0.7150f (>= ENTER_CRACK 0.60f, firmly MONITOR while escalating)
-        assertEquals("Frame 3 (~400ms) sustains MONITOR while escalating", Severity.MONITOR, sev)
-        currentSeverity = sev
+        res = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
 
-        // Frame 4 (t = 600ms at 5 fps)
+        // Frame 4 (t = 600ms at 5 fps): 0.35 * 0.98 + 0.65 * 0.7795 = 0.8497f (>= ENTER_CRACK 0.78f -> prompt MONITOR)
         smoothed = com.sitesweep.ui.sweep.SweepViewModel.computeEma(smoothed, crackFrames[3])
-        val resFrame4 = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
-        cls = resFrame4.first
-        sev = resFrame4.second
-        // Frame 4: 0.35 * 0.91 + 0.65 * 0.7150 = 0.7832f >= ENTER_STRUCTURAL (0.78f)
-        assertEquals("Frame 4 (~600ms) promptly escalates to STRUCTURAL", Severity.STRUCTURAL, sev)
+        res = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
+        assertEquals("Frame 4 (~600ms) promptly crosses ENTER_CRACK to MONITOR", Severity.MONITOR, res.second)
+        currentlyDistress = true
+        currentSeverity = res.second
+
+        // Frame 5 (t = 800ms): 0.35 * 0.98 + 0.65 * 0.8497 = 0.8953f (sustains MONITOR)
+        smoothed = com.sitesweep.ui.sweep.SweepViewModel.computeEma(smoothed, crackFrames[4])
+        res = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
+        assertEquals("Frame 5 (~800ms) sustains MONITOR", Severity.MONITOR, res.second)
+        currentSeverity = res.second
+
+        // Frame 6 (t = 1000ms): 0.35 * 0.98 + 0.65 * 0.8953 = 0.9249f (>= ENTER_STRUCTURAL 0.90f -> STRUCTURAL)
+        smoothed = com.sitesweep.ui.sweep.SweepViewModel.computeEma(smoothed, crackFrames[5])
+        res = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, currentlyDistress, currentSeverity)
+        assertEquals("Frame 6 (~1000ms) promptly escalates to STRUCTURAL", Severity.STRUCTURAL, res.second)
+    }
+
+    @Test
+    fun emaFilter_isolatedSpikes_neverTriggerDistress() {
+        // Ambient background ~0.25f
+        var smoothed = 0.25f
+
+        // Single isolated spike (e.g. edge of laptop, cable at 0.75)
+        smoothed = com.sitesweep.ui.sweep.SweepViewModel.computeEma(smoothed, 0.75f)
+        val (_, s1) = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, false)
+        assertEquals("Single frame spike smoothed to ~0.425 must remain STABLE", Severity.STABLE, s1)
+        assertTrue(smoothed < SeverityClassifier.ENTER_CRACK)
+
+        // Frame returns to normal background (0.25)
+        smoothed = com.sitesweep.ui.sweep.SweepViewModel.computeEma(smoothed, 0.25f)
+        val (_, s2) = SeverityClassifier.classifyProbabilityWithHysteresis(smoothed, false)
+        assertEquals(Severity.STABLE, s2)
     }
 }

@@ -148,6 +148,7 @@ class LiteRTCrackDetector(
         val quantParams = outputTensor.quantizationParams()
         outputScale = if (quantParams != null && quantParams.scale > 0f) quantParams.scale else DEFAULT_QUANT_SCALE
         outputZeroPoint = quantParams?.zeroPoint ?: DEFAULT_ZERO_POINT
+        Log.i(TAG, "Cached output quant params: scale=$outputScale, zeroPoint=$outputZeroPoint")
 
         val bytesPerChannel = if (isInputQuantized) 1 else 4
         inputByteBuffer = ByteBuffer.allocateDirect(1 * inputWidth * inputHeight * NUM_CHANNELS * bytesPerChannel).apply {
@@ -155,10 +156,16 @@ class LiteRTCrackDetector(
         }
         intPixelValues = IntArray(inputWidth * inputHeight)
 
+        val inputQuant = inputTensor.quantizationParams()
         Log.i(
             TAG,
-            "Model Loaded: input=[$inputWidth x $inputHeight x $NUM_CHANNELS, quantized=$isInputQuantized], " +
-                    "outputShape=${outputShape.contentToString()}, singleProb=$isSingleProbabilityOutput, quantized=$isOutputQuantized"
+            "Input Tensor: name=${inputTensor.name()}, dataType=${inputTensor.dataType()}, " +
+                    "shape=${inputShape.contentToString()}, scale=${inputQuant?.scale}, zeroPoint=${inputQuant?.zeroPoint}"
+        )
+        Log.i(
+            TAG,
+            "Output Tensor: name=${outputTensor.name()}, dataType=${outputTensor.dataType()}, " +
+                    "shape=${outputShape.contentToString()}, scale=$outputScale, zeroPoint=$outputZeroPoint"
         )
     }
 
@@ -179,6 +186,7 @@ class LiteRTCrackDetector(
         synchronized(this) {
             inputByteBuffer.rewind()
             loadBitmapIntoByteBuffer(scaledBitmap, inputByteBuffer, intPixelValues)
+            inputByteBuffer.rewind()
 
             val scale = outputScale
             val zeroPoint = outputZeroPoint
@@ -202,6 +210,7 @@ class LiteRTCrackDetector(
                 confidence = conf
                 severity = sev
                 crackProbability = crackProb
+                Log.d(TAG, "INFERENCE: crackProb=$crackProb, cls=$cls, sev=$sev")
             } else {
                 // Multi-class classification fallback
                 val (rawClassIndex, maxConfidence) = if (isOutputQuantized) {

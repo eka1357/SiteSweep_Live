@@ -20,5 +20,8 @@ data class SweepUiState(
     val isAutoCaptureArmed: Boolean = true,
     val autoCaptureState: com.sitesweep.capture.AutoCaptureState = com.sitesweep.capture.AutoCaptureState.ARMED,
     val lastCaptureTimestamp: Long = 0L,
+    val latencyMs: Long = 0L,
+    val rollingLatencyMs: Float = 0.0f,
+    val fpsEstimate: Float = 0.0f,
     val statusText: String = "Scanning"
 )

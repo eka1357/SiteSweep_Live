@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -85,6 +86,7 @@ fun SessionDetailScreen(
     val session = uiState.session
 
     var showVoiceNoteDialog by remember { mutableStateOf(false) }
+    var showDeleteConfirmDialog by remember { mutableStateOf(false) }
     var voiceNoteTargetCaptureId by remember { mutableStateOf<String?>(null) }
     val screenTopPadding = getScreenTopPadding()
 
@@ -100,6 +102,69 @@ fun SessionDetailScreen(
                 showVoiceNoteDialog = false
                 voiceNoteTargetCaptureId = null
             }
+        )
+    }
+
+    if (showDeleteConfirmDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirmDialog = false },
+            title = {
+                Text(
+                    text = "DELETE INSPECTION LOG",
+                    color = PaletteSafetyOrange,
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.5.sp
+                )
+            },
+            text = {
+                Text(
+                    text = "Permanently remove this inspection log and all ${uiState.captures.size} associated captures? This action cannot be undone.",
+                    color = TextLightSecondary,
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily.Monospace
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDeleteConfirmDialog = false
+                        viewModel.deleteSession(onDeleted = onBack)
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = SeverityRed,
+                        contentColor = PaletteInk
+                    ),
+                    shape = RoundedCornerShape(2.dp)
+                ) {
+                    Text(
+                        text = "DELETE",
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { showDeleteConfirmDialog = false },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = PaletteSlate,
+                        contentColor = TextLightPrimary
+                    ),
+                    shape = RoundedCornerShape(2.dp)
+                ) {
+                    Text(
+                        text = "CANCEL",
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            },
+            containerColor = PaletteInkElevated,
+            shape = RoundedCornerShape(2.dp)
         )
     }
 
@@ -138,23 +203,45 @@ fun SessionDetailScreen(
                 fontWeight = FontWeight.Bold
             )
 
-            // Export button
-            Box(
-                modifier = Modifier
-                    .background(PaletteSafetyOrange, RoundedCornerShape(2.dp))
-                    .clickable(onClick = {
-                        viewModel.exportSession()
-                        onExportClick(sessionId)
-                    })
-                    .padding(horizontal = 10.dp, vertical = 6.dp)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "EXPORT",
-                    color = PaletteInk,
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.Bold
-                )
+                // Delete button
+                Box(
+                    modifier = Modifier
+                        .background(PaletteSlate.copy(alpha = 0.6f), RoundedCornerShape(2.dp))
+                        .border(1.dp, PaletteSlateBorder, RoundedCornerShape(2.dp))
+                        .clickable(onClick = { showDeleteConfirmDialog = true })
+                        .padding(horizontal = 8.dp, vertical = 6.dp)
+                ) {
+                    Text(
+                        text = "DELETE",
+                        color = SeverityRed,
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                // Export button
+                Box(
+                    modifier = Modifier
+                        .background(PaletteSafetyOrange, RoundedCornerShape(2.dp))
+                        .clickable(onClick = {
+                            viewModel.exportSession()
+                            onExportClick(sessionId)
+                        })
+                        .padding(horizontal = 10.dp, vertical = 6.dp)
+                ) {
+                    Text(
+                        text = "EXPORT",
+                        color = PaletteInk,
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
 

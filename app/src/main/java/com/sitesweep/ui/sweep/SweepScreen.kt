@@ -57,6 +57,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sitesweep.capture.AutoCaptureState
 import com.sitesweep.data.local.entity.CaptureEntity
+import com.sitesweep.detection.CrackClass
+import com.sitesweep.detection.DelegateType
 import com.sitesweep.detection.Severity
 import com.sitesweep.ui.theme.PaletteInk
 import com.sitesweep.ui.theme.PaletteInkElevated
@@ -193,13 +195,41 @@ fun SweepScreen(
                 )
         )
 
-        // 3. Viewfinder Focus Reticle (Indicates center inference area)
+        // 3. Viewfinder Focus Reticle (Indicates center inference area) with live detection readout
+        val probPercent = (uiState.crackProbability * 100).toInt()
         Box(
             modifier = Modifier
-                .size(200.dp)
+                .size(220.dp)
                 .align(Alignment.Center)
-                .border(1.dp, glowColor.copy(alpha = 0.5f), RoundedCornerShape(2.dp))
-        )
+                .border(1.5.dp, glowColor.copy(alpha = 0.65f), RoundedCornerShape(4.dp))
+        ) {
+            // Live probability / confidence number readout inside reticle
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp)
+                    .background(PaletteInk.copy(alpha = 0.88f), RoundedCornerShape(2.dp))
+                    .border(1.dp, glowColor.copy(alpha = 0.6f), RoundedCornerShape(2.dp))
+                    .padding(horizontal = 8.dp, vertical = 3.dp)
+            ) {
+                Text(
+                    text = if (uiState.currentSeverity != Severity.STABLE) {
+                        "${uiState.currentSeverity.label} $probPercent%"
+                    } else {
+                        "PROB $probPercent%"
+                    },
+                    color = when (uiState.currentSeverity) {
+                        Severity.STABLE -> TextLightSecondary
+                        Severity.MONITOR -> SeverityAmber
+                        Severity.STRUCTURAL -> SeverityRed
+                    },
+                    fontSize = 11.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.5.sp
+                )
+            }
+        }
 
         val screenTopPadding = getScreenTopPadding()
 
@@ -270,17 +300,22 @@ fun SweepScreen(
                 )
             }
 
-            // Severity Live Badge with guaranteed min-width to prevent clipping
+            // Severity Live Badge with live percentage
             Box(
                 modifier = Modifier
-                    .widthIn(min = 96.dp)
+                    .widthIn(min = 100.dp)
                     .background(glowColor.copy(alpha = 0.25f), RoundedCornerShape(2.dp))
                     .border(1.dp, glowColor, RoundedCornerShape(2.dp))
                     .padding(horizontal = 8.dp, vertical = 6.dp),
                 contentAlignment = Alignment.Center
             ) {
+                val badgeText = if (uiState.currentSeverity != Severity.STABLE) {
+                    "${uiState.currentSeverity.label} $probPercent%"
+                } else {
+                    uiState.currentSeverity.label
+                }
                 Text(
-                    text = uiState.currentSeverity.label,
+                    text = badgeText,
                     color = when (uiState.currentSeverity) {
                         Severity.STABLE -> SeverityGreen
                         Severity.MONITOR -> SeverityAmber
@@ -295,15 +330,165 @@ fun SweepScreen(
             }
         }
 
-        // 5. Running Capture Strip Along Bottom
-        RunningCaptureStrip(
-            captures = uiState.captures,
-            autoCaptureState = uiState.autoCaptureState,
-            onCaptureClick = onCaptureClick,
+        // 5. Bottom Section: Live Telemetry Bar (Class, Confidence, Latency, Rate) + Running Capture Strip
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-        )
+        ) {
+            SweepTelemetryBar(uiState = uiState)
+            RunningCaptureStrip(
+                captures = uiState.captures,
+                autoCaptureState = uiState.autoCaptureState,
+                onCaptureClick = onCaptureClick,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+}
+
+/**
+ * Live inference telemetry bar displaying detection class, confidence, rolling latency,
+ * execution rate (fps), and active hardware acceleration delegate.
+ */
+@Composable
+private fun SweepTelemetryBar(
+    uiState: SweepUiState,
+    modifier: Modifier = Modifier
+) {
+    val delegateColor = when (uiState.activeDelegate) {
+        DelegateType.NNAPI -> SeverityGreen
+        DelegateType.GPU -> PaletteSafetyOrange
+        DelegateType.CPU -> TextLightSecondary
+    }
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(PaletteInkElevated.copy(alpha = 0.95f))
+            .border(width = 1.dp, color = PaletteSlateBorder)
+            .padding(horizontal = 14.dp, vertical = 7.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // Detection Class
+        Column(modifier = Modifier.weight(1.1f)) {
+            Text(
+                text = "CLASS",
+                color = TextLightTertiary,
+                fontSize = 9.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = FontFamily.Monospace,
+                letterSpacing = 0.5.sp
+            )
+            Spacer(modifier = Modifier.height(1.dp))
+            val classLabel = when (uiState.currentClass) {
+                CrackClass.STRUCTURAL -> "STRUCTURAL"
+                CrackClass.HAIRLINE -> "HAIRLINE"
+                CrackClass.NONE -> "NONE"
+            }
+            val classColor = when (uiState.currentSeverity) {
+                Severity.STABLE -> TextLightPrimary
+                Severity.MONITOR -> SeverityAmber
+                Severity.STRUCTURAL -> SeverityRed
+            }
+            Text(
+                text = classLabel,
+                color = classColor,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace,
+                maxLines = 1
+            )
+        }
+
+        // Confidence
+        Column(modifier = Modifier.weight(0.9f)) {
+            Text(
+                text = "CONFIDENCE",
+                color = TextLightTertiary,
+                fontSize = 9.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = FontFamily.Monospace,
+                letterSpacing = 0.5.sp
+            )
+            Spacer(modifier = Modifier.height(1.dp))
+            Text(
+                text = String.format(Locale.US, "%.1f%%", uiState.confidence * 100f),
+                color = TextLightPrimary,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace
+            )
+        }
+
+        // Latency (Rolling)
+        Column(modifier = Modifier.weight(0.9f)) {
+            Text(
+                text = "LATENCY",
+                color = TextLightTertiary,
+                fontSize = 9.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = FontFamily.Monospace,
+                letterSpacing = 0.5.sp
+            )
+            Spacer(modifier = Modifier.height(1.dp))
+            val latencyFormatted = if (uiState.rollingLatencyMs > 0f) {
+                String.format(Locale.US, "%.0f ms", uiState.rollingLatencyMs)
+            } else if (uiState.latencyMs > 0L) {
+                "${uiState.latencyMs} ms"
+            } else {
+                "-- ms"
+            }
+            Text(
+                text = latencyFormatted,
+                color = PaletteSafetyOrange,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace
+            )
+        }
+
+        // Rate (FPS)
+        Column(modifier = Modifier.weight(0.8f)) {
+            Text(
+                text = "RATE",
+                color = TextLightTertiary,
+                fontSize = 9.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = FontFamily.Monospace,
+                letterSpacing = 0.5.sp
+            )
+            Spacer(modifier = Modifier.height(1.dp))
+            val fpsFormatted = if (uiState.fpsEstimate > 0f) {
+                String.format(Locale.US, "%.1f fps", uiState.fpsEstimate)
+            } else {
+                "5.0 fps"
+            }
+            Text(
+                text = fpsFormatted,
+                color = TextLightSecondary,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace
+            )
+        }
+
+        // Hardware Acceleration Delegate
+        Box(
+            modifier = Modifier
+                .background(delegateColor.copy(alpha = 0.2f), RoundedCornerShape(2.dp))
+                .border(1.dp, delegateColor, RoundedCornerShape(2.dp))
+                .padding(horizontal = 6.dp, vertical = 3.dp)
+        ) {
+            Text(
+                text = uiState.activeDelegate.name,
+                color = delegateColor,
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace
+            )
+        }
     }
 }
 

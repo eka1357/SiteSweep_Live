@@ -53,6 +53,8 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
 
     private val frameThrottler = FrameThrottler(targetFps = 5)
     private var smoothedProbability: Float = -1f
+    private val latencyHistory = java.util.ArrayDeque<Long>(15)
+    private val frameTimestamps = java.util.ArrayDeque<Long>(10)
 
     private var liteRtDetector: LiteRTCrackDetector? = null
     private var fakeDetector: FakeCrackDetector? = null
@@ -153,6 +155,8 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
         smoothedProbability = -1f
         lastAnnouncedSeverity = Severity.STABLE
         frameThrottler.reset()
+        synchronized(latencyHistory) { latencyHistory.clear() }
+        synchronized(frameTimestamps) { frameTimestamps.clear() }
 
         viewModelScope.launch {
             val session = if (sessionId != null) {
@@ -212,6 +216,7 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
                 preparedBitmap = prepareFrameBitmap(raw, rotationDegrees)
                 val rawResult = currentDetector.detect(preparedBitmap)
                 val stabilizedResult = evaluateStabilizedResult(rawResult)
+                Log.i("SweepPipeline", "RAW: ${rawResult.crackProbability} | SMOOTH: ${stabilizedResult.crackProbability} | CLASS: ${stabilizedResult.crackClass} | SEV: ${stabilizedResult.severity}")
                 
                 updateInferenceResult(stabilizedResult)
                 checkDistressFeedback(stabilizedResult.severity)
@@ -300,13 +305,37 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun updateInferenceResult(stabilizedResult: CrackDetectionResult) {
+        val now = SystemClock.elapsedRealtime()
+
+        val rollingLatency = synchronized(latencyHistory) {
+            if (latencyHistory.size >= 15) {
+                latencyHistory.removeFirst()
+            }
+            latencyHistory.addLast(stabilizedResult.latencyMs)
+            if (latencyHistory.isNotEmpty()) latencyHistory.average().toFloat() else 0f
+        }
+
+        val fps = synchronized(frameTimestamps) {
+            if (frameTimestamps.size >= 10) {
+                frameTimestamps.removeFirst()
+            }
+            frameTimestamps.addLast(now)
+            if (frameTimestamps.size >= 2) {
+                val durationSec = (frameTimestamps.last() - frameTimestamps.first()) / 1000f
+                if (durationSec > 0f) (frameTimestamps.size - 1) / durationSec else 0f
+            } else 0f
+        }
+
         _uiState.update {
             it.copy(
                 currentClass = stabilizedResult.crackClass,
                 currentSeverity = stabilizedResult.severity,
                 confidence = stabilizedResult.confidence,
                 crackProbability = stabilizedResult.crackProbability,
-                activeDelegate = stabilizedResult.delegateType
+                activeDelegate = stabilizedResult.delegateType,
+                latencyMs = stabilizedResult.latencyMs,
+                rollingLatencyMs = rollingLatency,
+                fpsEstimate = fps
             )
         }
     }
@@ -342,8 +371,11 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
             rawProb: Float,
             alpha: Float = EMA_ALPHA
         ): Float {
-            if (currentSmoothed < 0f) return rawProb
-            return alpha * rawProb + (1.0f - alpha) * currentSmoothed
+            if (currentSmoothed < 0f) {
+                // Guard against startup spikes: do not jump directly to rawProb on frame 1
+                return (alpha * rawProb).coerceIn(0f, 1f)
+            }
+            return (alpha * rawProb + (1.0f - alpha) * currentSmoothed).coerceIn(0f, 1f)
         }
     }
 }
