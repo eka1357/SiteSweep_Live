@@ -21,6 +21,8 @@ class RevisitViewModel(application: Application) : AndroidViewModel(application)
 
     private val repository: SiteSweepRepository = (application as SiteSweepApplication).repository
     val exporter = com.sitesweep.report.SessionExporter(application, repository)
+    val aiInsightManager = com.sitesweep.insight.AiInsightManager(application)
+    val aiInsightState = aiInsightManager.state
 
     private val _uiState = MutableStateFlow(RevisitUiState())
     val uiState: StateFlow<RevisitUiState> = _uiState.asStateFlow()
@@ -29,6 +31,34 @@ class RevisitViewModel(application: Application) : AndroidViewModel(application)
     val exportStatus: StateFlow<String?> = _exportStatus.asStateFlow()
 
     private var observationJob: Job? = null
+
+    fun requestAiInsight(userNotes: String? = null) {
+        val captures = _uiState.value.captures
+        val target = captures.find { it.id == _uiState.value.targetCaptureId } ?: captures.lastOrNull()
+        val previous = if (target != null) captures.filter { it.id != target.id } else emptyList()
+
+        val evidence = com.sitesweep.insight.InspectionEvidence(
+            currentCrackProbability = target?.confidence ?: 0f,
+            currentSeverity = target?.severity ?: "STABLE",
+            currentClass = target?.severity ?: "STABLE",
+            timestamp = target?.timestamp ?: System.currentTimeMillis(),
+            locationKey = _uiState.value.locationKey,
+            historicalObservations = previous.map {
+                com.sitesweep.insight.HistoricalObservation(
+                    timestamp = it.timestamp,
+                    crackProbability = it.confidence,
+                    severity = it.severity
+                )
+            },
+            trendStatus = _uiState.value.trend.label,
+            userNotes = userNotes
+        )
+        aiInsightManager.requestInsight(evidence, viewModelScope)
+    }
+
+    fun dismissAiInsight() {
+        aiInsightManager.reset()
+    }
 
     fun exportSession(onComplete: ((java.io.File) -> Unit)? = null) {
         val currentSessionId = _uiState.value.captures.find { it.id == _uiState.value.targetCaptureId }?.sessionId
@@ -66,44 +96,13 @@ class RevisitViewModel(application: Application) : AndroidViewModel(application)
             repository.observeCapturesByLocationKey(locationKey).collect { rawCaptures ->
                 // Sort chronologically (oldest to newest) to display progression
                 val chronological = rawCaptures.sortedBy { it.timestamp }
-                val trend = calculateDistressTrend(chronological)
+                val trend = TrendStatus.calculate(chronological)
 
                 _uiState.value = _uiState.value.copy(
                     captures = chronological,
                     trend = trend,
                     isLoading = false
                 )
-            }
-        }
-    }
-
-    private fun rank(severity: String) = when (severity.uppercase(Locale.US)) {
-        "STRUCTURAL" -> 2
-        "MONITOR" -> 1
-        else -> 0
-    }
-
-    private fun calculateDistressTrend(captures: List<CaptureEntity>): TrendStatus {
-        if (captures.isEmpty()) return TrendStatus.NO_HISTORY
-
-        val ranks = captures.sortedBy { it.timestamp }.map { rank(it.severity) }
-        if (ranks.size == 1) {
-            return when (ranks[0]) {
-                2 -> TrendStatus.WIDENING
-                1 -> TrendStatus.MONITORING
-                else -> TrendStatus.STABLE
-            }
-        }
-
-        val first = ranks.first()
-        val last = ranks.last()
-        return when {
-            last > first -> TrendStatus.WIDENING
-            last < first -> TrendStatus.REGRESSED
-            else -> when (last) {
-                2 -> TrendStatus.WIDENING
-                1 -> TrendStatus.MONITORING
-                else -> TrendStatus.STABLE
             }
         }
     }

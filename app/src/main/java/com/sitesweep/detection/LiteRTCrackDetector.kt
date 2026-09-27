@@ -19,11 +19,11 @@ import java.nio.channels.FileChannel
 /**
  * Hardware-accelerated on-device inference engine using LiteRT / TFLite.
  * Strictly adheres to AGENTS.md requirements:
- * 1. Loads crack_model.tflite from assets.
+ * 1. Loads crack_model.tflite (V2 fine-tuned with hard negatives) from assets.
  * 2. Input: 160x160x3, uint8 (0-255), no normalization.
  * 3. Output: single uint8 value, dequantize with scale=0.00390625, zero_point=0
  *    to get a 0.0-1.0 crack probability (prob = raw_value * 0.00390625).
- *    Threshold >= 0.5 = crack detected.
+ *    Threshold calibrated via SeverityClassifier.
  * 4. Tries NNAPI delegate first, falls back to GPU delegate, then CPU multi-threading.
  * 5. Logs which delegate won at init.
  * 6. Strictly on-device: zero network dependencies or cloud vision calls.
@@ -205,7 +205,7 @@ class LiteRTCrackDetector(
                 }
 
                 val (cls, sev) = SeverityClassifier.classifyProbability(crackProb)
-                val conf = if (cls != CrackClass.NONE) crackProb else (1.0f - crackProb).coerceIn(0.0f, 1.0f)
+                val conf = crackProb // Unified: confidence represents calibrated crack probability
                 crackClass = cls
                 confidence = conf
                 severity = sev

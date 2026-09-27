@@ -24,6 +24,13 @@ val SeverityGreen = Color(0xFF2E7D32)
 val SeverityAmber = Color(0xFFD97706)
 val SeverityRed = Color(0xFFDC2626)
 
+// Flowbite-inspired status tokens for operations dashboard
+val StatusOpen = SeverityAmber
+val StatusAssigned = Color(0xFF3B82F6)
+val StatusInRepair = PaletteSafetyOrange
+val StatusReinspection = Color(0xFF8B5CF6)
+val StatusResolved = Color(0xFF10B981)
+
 val TextLightPrimary = Color(0xFFF2F4F7)
 val TextLightSecondary = Color(0xFFA0A6AD)
 val TextLightTertiary = Color(0xFF6C737C)

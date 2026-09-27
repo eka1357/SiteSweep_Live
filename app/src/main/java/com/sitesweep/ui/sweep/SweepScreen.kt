@@ -93,10 +93,12 @@ fun SweepScreen(
     viewModel: SweepViewModel,
     sessionId: String? = null,
     onNavigateToSessions: () -> Unit = {},
+    backButtonLabel: String = "< SESSIONS",
     onCaptureClick: (CaptureEntity) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val aiInsightState by viewModel.aiInsightState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -196,14 +198,31 @@ fun SweepScreen(
         )
 
         // 3. Viewfinder Focus Reticle (Indicates center inference area) with live detection readout
-        val probPercent = (uiState.crackProbability * 100).toInt()
+        val probPercent = kotlin.math.round(uiState.crackProbability * 100f).toInt().coerceIn(0, 100)
         Box(
             modifier = Modifier
                 .size(220.dp)
                 .align(Alignment.Center)
                 .border(1.5.dp, glowColor.copy(alpha = 0.65f), RoundedCornerShape(4.dp))
         ) {
-            // Live probability / confidence number readout inside reticle
+            // Explanatory label indicating on-device inference region
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 6.dp)
+                    .background(PaletteInk.copy(alpha = 0.85f), RoundedCornerShape(2.dp))
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    text = "ON-DEVICE INFERENCE",
+                    color = TextLightTertiary,
+                    fontSize = 8.sp,
+                    fontFamily = FontFamily.Monospace,
+                    letterSpacing = 0.4.sp
+                )
+            }
+
+            // Live probability readout inside reticle
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -212,22 +231,30 @@ fun SweepScreen(
                     .border(1.dp, glowColor.copy(alpha = 0.6f), RoundedCornerShape(2.dp))
                     .padding(horizontal = 8.dp, vertical = 3.dp)
             ) {
-                Text(
-                    text = if (uiState.currentSeverity != Severity.STABLE) {
-                        "${uiState.currentSeverity.label} $probPercent%"
-                    } else {
-                        "PROB $probPercent%"
-                    },
-                    color = when (uiState.currentSeverity) {
-                        Severity.STABLE -> TextLightSecondary
-                        Severity.MONITOR -> SeverityAmber
-                        Severity.STRUCTURAL -> SeverityRed
-                    },
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 0.5.sp
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = "CRACK PROB",
+                        color = TextLightTertiary,
+                        fontSize = 9.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Text(
+                        text = "$probPercent%",
+                        color = when (uiState.currentSeverity) {
+                            Severity.STABLE -> SeverityGreen
+                            Severity.MONITOR -> SeverityAmber
+                            Severity.STRUCTURAL -> SeverityRed
+                        },
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 0.5.sp
+                    )
+                }
             }
         }
 
@@ -266,7 +293,7 @@ fun SweepScreen(
                     .padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
                 Text(
-                    text = "< SESSIONS",
+                    text = backButtonLabel,
                     color = TextLightPrimary,
                     fontSize = 11.sp,
                     fontFamily = FontFamily.Monospace,
@@ -300,33 +327,58 @@ fun SweepScreen(
                 )
             }
 
-            // Severity Live Badge with live percentage
-            Box(
-                modifier = Modifier
-                    .widthIn(min = 100.dp)
-                    .background(glowColor.copy(alpha = 0.25f), RoundedCornerShape(2.dp))
-                    .border(1.dp, glowColor, RoundedCornerShape(2.dp))
-                    .padding(horizontal = 8.dp, vertical = 6.dp),
-                contentAlignment = Alignment.Center
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                val badgeText = if (uiState.currentSeverity != Severity.STABLE) {
-                    "${uiState.currentSeverity.label} $probPercent%"
-                } else {
-                    uiState.currentSeverity.label
+                // Secondary AI Insight trigger (clearly marked as advisory)
+                Box(
+                    modifier = Modifier
+                        .background(PaletteInkElevated, RoundedCornerShape(2.dp))
+                        .border(1.dp, PaletteSlateBorder, RoundedCornerShape(2.dp))
+                        .clickable(onClick = { viewModel.requestAiInsight() })
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = "AI INSIGHT",
+                            color = PaletteSafetyOrange,
+                            fontSize = 11.sp,
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "ADVISORY",
+                            color = TextLightTertiary,
+                            fontSize = 7.sp,
+                            fontFamily = FontFamily.Monospace
+                        )
+                    }
                 }
-                Text(
-                    text = badgeText,
-                    color = when (uiState.currentSeverity) {
-                        Severity.STABLE -> SeverityGreen
-                        Severity.MONITOR -> SeverityAmber
-                        Severity.STRUCTURAL -> SeverityRed
-                    },
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    softWrap = false
-                )
+
+                // Severity Live Badge (Follows classifier state cleanly without redundant percentage)
+                Box(
+                    modifier = Modifier
+                        .widthIn(min = 90.dp)
+                        .background(glowColor.copy(alpha = 0.25f), RoundedCornerShape(2.dp))
+                        .border(1.dp, glowColor, RoundedCornerShape(2.dp))
+                        .padding(horizontal = 10.dp, vertical = 6.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = uiState.currentSeverity.label,
+                        color = when (uiState.currentSeverity) {
+                            Severity.STABLE -> SeverityGreen
+                            Severity.MONITOR -> SeverityAmber
+                            Severity.STRUCTURAL -> SeverityRed
+                        },
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        softWrap = false
+                    )
+                }
             }
         }
 
@@ -342,6 +394,14 @@ fun SweepScreen(
                 autoCaptureState = uiState.autoCaptureState,
                 onCaptureClick = onCaptureClick,
                 modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        if (aiInsightState !is com.sitesweep.insight.AiInsightState.Idle) {
+            com.sitesweep.insight.AiInsightDialog(
+                state = aiInsightState,
+                onRetry = { viewModel.requestAiInsight() },
+                onDismiss = { viewModel.dismissAiInsight() }
             )
         }
     }
@@ -371,15 +431,43 @@ private fun SweepTelemetryBar(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Detection Class
-        Column(modifier = Modifier.weight(1.1f)) {
+        // 1. Crack Probability (Primary Numerical Metric)
+        Column(modifier = Modifier.weight(1.3f)) {
             Text(
-                text = "CLASS",
+                text = "CRACK PROB",
                 color = TextLightTertiary,
-                fontSize = 9.sp,
+                fontSize = 8.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = FontFamily.Monospace,
-                letterSpacing = 0.5.sp
+                letterSpacing = 0.3.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(modifier = Modifier.height(1.dp))
+            val probPercent = kotlin.math.round(uiState.crackProbability * 100f).toInt().coerceIn(0, 100)
+            val probColor = when (uiState.currentSeverity) {
+                Severity.STABLE -> SeverityGreen
+                Severity.MONITOR -> SeverityAmber
+                Severity.STRUCTURAL -> SeverityRed
+            }
+            Text(
+                text = "$probPercent%",
+                color = probColor,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace
+            )
+        }
+
+        // 2. Class / Severity Band
+        Column(modifier = Modifier.weight(1.0f)) {
+            Text(
+                text = "SEVERITY",
+                color = TextLightTertiary,
+                fontSize = 8.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = FontFamily.Monospace,
+                letterSpacing = 0.3.sp
             )
             Spacer(modifier = Modifier.height(1.dp))
             val classLabel = when (uiState.currentClass) {
@@ -388,7 +476,7 @@ private fun SweepTelemetryBar(
                 CrackClass.NONE -> "NONE"
             }
             val classColor = when (uiState.currentSeverity) {
-                Severity.STABLE -> TextLightPrimary
+                Severity.STABLE -> SeverityGreen
                 Severity.MONITOR -> SeverityAmber
                 Severity.STRUCTURAL -> SeverityRed
             }
@@ -402,35 +490,15 @@ private fun SweepTelemetryBar(
             )
         }
 
-        // Confidence
-        Column(modifier = Modifier.weight(0.9f)) {
-            Text(
-                text = "CONFIDENCE",
-                color = TextLightTertiary,
-                fontSize = 9.sp,
-                fontWeight = FontWeight.SemiBold,
-                fontFamily = FontFamily.Monospace,
-                letterSpacing = 0.5.sp
-            )
-            Spacer(modifier = Modifier.height(1.dp))
-            Text(
-                text = String.format(Locale.US, "%.1f%%", uiState.confidence * 100f),
-                color = TextLightPrimary,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Monospace
-            )
-        }
-
-        // Latency (Rolling)
-        Column(modifier = Modifier.weight(0.9f)) {
+        // 3. Latency (Rolling)
+        Column(modifier = Modifier.weight(0.85f)) {
             Text(
                 text = "LATENCY",
                 color = TextLightTertiary,
-                fontSize = 9.sp,
+                fontSize = 8.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = FontFamily.Monospace,
-                letterSpacing = 0.5.sp
+                letterSpacing = 0.3.sp
             )
             Spacer(modifier = Modifier.height(1.dp))
             val latencyFormatted = if (uiState.rollingLatencyMs > 0f) {
@@ -449,21 +517,21 @@ private fun SweepTelemetryBar(
             )
         }
 
-        // Rate (FPS)
-        Column(modifier = Modifier.weight(0.8f)) {
+        // 4. Rate (FPS)
+        Column(modifier = Modifier.weight(0.85f)) {
             Text(
                 text = "RATE",
                 color = TextLightTertiary,
-                fontSize = 9.sp,
+                fontSize = 8.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = FontFamily.Monospace,
-                letterSpacing = 0.5.sp
+                letterSpacing = 0.3.sp
             )
             Spacer(modifier = Modifier.height(1.dp))
             val fpsFormatted = if (uiState.fpsEstimate > 0f) {
-                String.format(Locale.US, "%.1f fps", uiState.fpsEstimate)
+                String.format(Locale.US, "%.1f FPS", uiState.fpsEstimate)
             } else {
-                "5.0 fps"
+                "5.0 FPS"
             }
             Text(
                 text = fpsFormatted,

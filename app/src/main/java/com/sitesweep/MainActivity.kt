@@ -35,6 +35,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.sitesweep.ui.issues.CreateIssueScreen
+import com.sitesweep.ui.issues.CreateIssueViewModel
+import com.sitesweep.ui.issues.DashboardScreen
+import com.sitesweep.ui.issues.DashboardViewModel
+import com.sitesweep.ui.issues.IssueDetailScreen
+import com.sitesweep.ui.issues.IssueDetailViewModel
+import com.sitesweep.ui.issues.SelectCaptureScreen
 import com.sitesweep.ui.revisit.RevisitScreen
 import com.sitesweep.ui.revisit.RevisitViewModel
 import com.sitesweep.ui.sessions.SessionDetailScreen
@@ -47,12 +55,18 @@ import com.sitesweep.ui.theme.PaletteInk
 import com.sitesweep.ui.theme.PaletteSafetyOrange
 import com.sitesweep.ui.theme.SiteSweepTheme
 import com.sitesweep.ui.theme.TextLightSecondary
+import kotlinx.coroutines.launch
+import java.util.UUID
 
 sealed interface AppScreen {
     data object SessionList : AppScreen
-    data class Sweep(val sessionId: String) : AppScreen
+    data class Sweep(val sessionId: String, val reinspectIssueId: String? = null) : AppScreen
     data class SessionDetail(val sessionId: String) : AppScreen
-    data class Revisit(val locationKey: String, val captureId: String) : AppScreen
+    data class Revisit(val locationKey: String, val captureId: String, val returnScreen: AppScreen = SessionList) : AppScreen
+    data object Dashboard : AppScreen
+    data class IssueDetail(val issueId: String) : AppScreen
+    data class CreateIssue(val captureId: String) : AppScreen
+    data object SelectCaptureForIssue : AppScreen
 }
 
 /**
@@ -64,6 +78,9 @@ class MainActivity : ComponentActivity() {
     private val sessionDetailViewModel: SessionDetailViewModel by viewModels()
     private val sweepViewModel: SweepViewModel by viewModels()
     private val revisitViewModel: RevisitViewModel by viewModels()
+    private val dashboardViewModel: DashboardViewModel by viewModels()
+    private val issueDetailViewModel: IssueDetailViewModel by viewModels()
+    private val createIssueViewModel: CreateIssueViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,8 +144,84 @@ class MainActivity : ComponentActivity() {
                                 onSessionClick = { sessionId ->
                                     currentScreen = AppScreen.SessionDetail(sessionId)
                                 },
+                                onOpenDashboard = {
+                                    currentScreen = AppScreen.Dashboard
+                                },
                                 onOpenSettings = {
                                     showSettingsDialog = true
+                                }
+                            )
+                        }
+
+                        is AppScreen.Dashboard -> {
+                            BackHandler {
+                                currentScreen = AppScreen.SessionList
+                            }
+                            DashboardScreen(
+                                viewModel = dashboardViewModel,
+                                onIssueClick = { issueId ->
+                                    currentScreen = AppScreen.IssueDetail(issueId)
+                                },
+                                onStartSweep = {
+                                    val newSid = UUID.randomUUID().toString()
+                                    currentScreen = AppScreen.Sweep(newSid)
+                                },
+                                onCreateIssue = {
+                                    currentScreen = AppScreen.SelectCaptureForIssue
+                                },
+                                onBack = {
+                                    currentScreen = AppScreen.SessionList
+                                }
+                            )
+                        }
+
+                        is AppScreen.IssueDetail -> {
+                            BackHandler {
+                                currentScreen = AppScreen.Dashboard
+                            }
+                            IssueDetailScreen(
+                                viewModel = issueDetailViewModel,
+                                issueId = screen.issueId,
+                                onBack = {
+                                    currentScreen = AppScreen.Dashboard
+                                },
+                                onStartReinspection = { targetIssueId ->
+                                    val sweepSessionId = UUID.randomUUID().toString()
+                                    currentScreen = AppScreen.Sweep(
+                                        sessionId = sweepSessionId,
+                                        reinspectIssueId = targetIssueId
+                                    )
+                                }
+                            )
+                        }
+
+                        is AppScreen.SelectCaptureForIssue -> {
+                            BackHandler {
+                                currentScreen = AppScreen.Dashboard
+                            }
+                            SelectCaptureScreen(
+                                viewModel = createIssueViewModel,
+                                onCaptureSelected = { captureId ->
+                                    currentScreen = AppScreen.CreateIssue(captureId)
+                                },
+                                onBack = {
+                                    currentScreen = AppScreen.Dashboard
+                                }
+                            )
+                        }
+
+                        is AppScreen.CreateIssue -> {
+                            BackHandler {
+                                currentScreen = AppScreen.Dashboard
+                            }
+                            CreateIssueScreen(
+                                viewModel = createIssueViewModel,
+                                captureId = screen.captureId,
+                                onIssueCreated = { newIssueId ->
+                                    currentScreen = AppScreen.IssueDetail(newIssueId)
+                                },
+                                onCancel = {
+                                    currentScreen = AppScreen.Dashboard
                                 }
                             )
                         }
@@ -136,17 +229,52 @@ class MainActivity : ComponentActivity() {
                         is AppScreen.Sweep -> {
                             BackHandler {
                                 sweepViewModel.endActiveSession()
-                                currentScreen = AppScreen.SessionList
+                                currentScreen = if (screen.reinspectIssueId != null) {
+                                    AppScreen.IssueDetail(screen.reinspectIssueId)
+                                } else {
+                                    AppScreen.SessionList
+                                }
                             }
+
+                            // If in reinspection mode, configure listener to automatically link capture to issue
+                            LaunchedEffect(screen.sessionId, screen.reinspectIssueId) {
+                                if (screen.reinspectIssueId != null) {
+                                    sweepViewModel.setOnCaptureTriggeredListener { capture, _ ->
+                                        lifecycleScope.launch {
+                                            app.repository.attachCaptureToIssue(screen.reinspectIssueId, capture.id)
+                                            currentScreen = AppScreen.IssueDetail(screen.reinspectIssueId)
+                                        }
+                                    }
+                                } else {
+                                    sweepViewModel.setOnCaptureTriggeredListener { _, _ -> }
+                                }
+                            }
+
                             SweepScreen(
                                 viewModel = sweepViewModel,
                                 sessionId = screen.sessionId,
+                                backButtonLabel = if (screen.reinspectIssueId != null) "< ISSUE" else "< SESSIONS",
                                 onNavigateToSessions = {
                                     sweepViewModel.endActiveSession()
-                                    currentScreen = AppScreen.SessionList
+                                    currentScreen = if (screen.reinspectIssueId != null) {
+                                        AppScreen.IssueDetail(screen.reinspectIssueId)
+                                    } else {
+                                        AppScreen.SessionList
+                                    }
                                 },
                                 onCaptureClick = { capture ->
-                                    currentScreen = AppScreen.Revisit(capture.locationKey, capture.id)
+                                    if (screen.reinspectIssueId != null) {
+                                        lifecycleScope.launch {
+                                            app.repository.attachCaptureToIssue(screen.reinspectIssueId, capture.id)
+                                            currentScreen = AppScreen.IssueDetail(screen.reinspectIssueId)
+                                        }
+                                    } else {
+                                        currentScreen = AppScreen.Revisit(
+                                            locationKey = capture.locationKey,
+                                            captureId = capture.id,
+                                            returnScreen = AppScreen.Sweep(screen.sessionId)
+                                        )
+                                    }
                                 }
                             )
                         }
@@ -165,21 +293,28 @@ class MainActivity : ComponentActivity() {
                                     currentScreen = AppScreen.Sweep(sid)
                                 },
                                 onCaptureClick = { locationKey, captureId ->
-                                    currentScreen = AppScreen.Revisit(locationKey, captureId)
+                                    currentScreen = AppScreen.Revisit(
+                                        locationKey = locationKey,
+                                        captureId = captureId,
+                                        returnScreen = AppScreen.SessionDetail(screen.sessionId)
+                                    )
                                 }
                             )
                         }
 
                         is AppScreen.Revisit -> {
                             BackHandler {
-                                currentScreen = AppScreen.SessionList
+                                currentScreen = screen.returnScreen
                             }
                             RevisitScreen(
                                 viewModel = revisitViewModel,
                                 locationKey = screen.locationKey,
                                 targetCaptureId = screen.captureId,
                                 onBack = {
-                                    currentScreen = AppScreen.SessionList
+                                    currentScreen = screen.returnScreen
+                                },
+                                onCreateIssue = { capId ->
+                                    currentScreen = AppScreen.CreateIssue(capId)
                                 }
                             )
                         }

@@ -9,16 +9,16 @@ object SeverityClassifier {
 
     // Centralized classification and hysteresis thresholds
     // Clutter/chair/mat smoothed max is ~0.64; real crack posters reach 0.90-0.99
-    const val CRACK_THRESHOLD: Float = 0.78f
+    const val CRACK_THRESHOLD: Float = 0.75f
     var structuralThreshold: Float = 0.65f
     var monitorThreshold: Float = 0.50f
     var hairlineMonitorThreshold: Float = 0.85f
     var structuralProbabilityThreshold: Float = 0.90f
 
-    const val ENTER_CRACK: Float = 0.78f
-    const val EXIT_CRACK: Float = 0.65f
+    const val ENTER_CRACK: Float = 0.75f
+    const val EXIT_CRACK: Float = 0.62f
     const val ENTER_STRUCTURAL: Float = 0.90f
-    const val EXIT_STRUCTURAL: Float = 0.82f
+    const val EXIT_STRUCTURAL: Float = 0.80f
 
     /**
      * Classifies single-value crack probability (0.0 to 1.0) as output by crack_model.tflite.

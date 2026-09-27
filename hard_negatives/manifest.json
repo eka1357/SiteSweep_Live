@@ -1,0 +1,5659 @@
+{
+  "dataset_name": "SiteSweep Hard Negatives Dataset",
+  "description": "Representative indoor non-crack surfaces and edges extracted from real SiteSweep camera captures and false-positive scenes.",
+  "total_images": 376,
+  "classes": [
+    "negative"
+  ],
+  "category_distribution": {
+    "wood": 210,
+    "tables": 70,
+    "furniture": 42,
+    "cables": 24,
+    "floor_textures": 8,
+    "chairs": 18,
+    "wall_textures": 4
+  },
+  "images": [
+    {
+      "id": 1,
+      "filename": "neg_wood_0001_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_0039d2d5-5180-42c1-b5ef-02449337759f.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x480907631e06c6e6"
+    },
+    {
+      "id": 2,
+      "filename": "neg_wood_0002_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_0039d2d5-5180-42c1-b5ef-02449337759f.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x134ff89b1c3c0c9c"
+    },
+    {
+      "id": 3,
+      "filename": "neg_tables_0003_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_00d974ee-d74e-4b1c-a72c-f740fab8bb97.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5a9d593b0e0d343c"
+    },
+    {
+      "id": 4,
+      "filename": "neg_tables_0004_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_00d974ee-d74e-4b1c-a72c-f740fab8bb97.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd3c63c303999d9f8"
+    },
+    {
+      "id": 5,
+      "filename": "neg_tables_0005_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_01492638-dfbe-4215-8c63-535d1c99aa41.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xdfde3d8d9c9e1f3f"
+    },
+    {
+      "id": 6,
+      "filename": "neg_tables_0006_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_01492638-dfbe-4215-8c63-535d1c99aa41.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x595bf2787dfb76ed"
+    },
+    {
+      "id": 7,
+      "filename": "neg_furniture_0007_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_0169440a-9b4a-48bb-bd0d-939f28cc3650.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x323418fadebcbd18"
+    },
+    {
+      "id": 8,
+      "filename": "neg_furniture_0008_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_0169440a-9b4a-48bb-bd0d-939f28cc3650.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x646cfcfcd8f2e060"
+    },
+    {
+      "id": 9,
+      "filename": "neg_wood_0009_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_047fb388-6266-48f7-9317-9c669ea5b741.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb3d95bfe3afcdcf4"
+    },
+    {
+      "id": 10,
+      "filename": "neg_wood_0010_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_047fb388-6266-48f7-9317-9c669ea5b741.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xddfdecdc6cecac58"
+    },
+    {
+      "id": 11,
+      "filename": "neg_wood_0011_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_05aa2f75-61e0-4d83-9223-092f9ecd9736.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x830367cb9bb71e1b"
+    },
+    {
+      "id": 12,
+      "filename": "neg_wood_0012_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_05aa2f75-61e0-4d83-9223-092f9ecd9736.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3737fbe7dcba6fcf"
+    },
+    {
+      "id": 13,
+      "filename": "neg_wood_0013_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_066893a0-abd7-414d-b0b6-a66181e6978d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa8acc88880844837"
+    },
+    {
+      "id": 14,
+      "filename": "neg_wood_0014_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_066893a0-abd7-414d-b0b6-a66181e6978d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4020a0a03034209f"
+    },
+    {
+      "id": 15,
+      "filename": "neg_cables_0015_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_0b53db2b-655c-4c98-9d5f-06482f20254a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x11582c352da5d33f"
+    },
+    {
+      "id": 16,
+      "filename": "neg_cables_0016_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_0b53db2b-655c-4c98-9d5f-06482f20254a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x91b231319bcbe6fc"
+    },
+    {
+      "id": 17,
+      "filename": "neg_wood_0017_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_0c345c51-091d-46e1-b7e2-3e5598efc932.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xdcdcbdb8d8caa868"
+    },
+    {
+      "id": 18,
+      "filename": "neg_wood_0018_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_0c345c51-091d-46e1-b7e2-3e5598efc932.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf2f0606c20202224"
+    },
+    {
+      "id": 19,
+      "filename": "neg_wood_0019_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_0d0e16ef-79eb-4b36-b43f-ca3244dda1f2.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3d57b5c4e4e0c082"
+    },
+    {
+      "id": 20,
+      "filename": "neg_wood_0020_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_0d0e16ef-79eb-4b36-b43f-ca3244dda1f2.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb0b09020a0a18252"
+    },
+    {
+      "id": 21,
+      "filename": "neg_wood_0021_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_0d856cef-06cc-4988-8671-212025da75a8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1e1c3e3e0686c6e8"
+    },
+    {
+      "id": 22,
+      "filename": "neg_wood_0022_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_0d856cef-06cc-4988-8671-212025da75a8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xfc9c1c1c1c1c1e22"
+    },
+    {
+      "id": 23,
+      "filename": "neg_wood_0023_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_0dbaf7a1-e5ca-4cf4-850b-61361f1091f9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5f9fc5c0c8824d37"
+    },
+    {
+      "id": 24,
+      "filename": "neg_wood_0024_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_0dbaf7a1-e5ca-4cf4-850b-61361f1091f9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb030a0a9a2117fbc"
+    },
+    {
+      "id": 25,
+      "filename": "neg_wood_0025_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_0ded83ae-41dd-4820-a42d-44a1e591edbf.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2d3fbfc9e8b89e1d"
+    },
+    {
+      "id": 26,
+      "filename": "neg_wood_0026_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_0ded83ae-41dd-4820-a42d-44a1e591edbf.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3f20606a5272b5bd"
+    },
+    {
+      "id": 27,
+      "filename": "neg_wood_0027_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_0f34871e-5364-4fef-a01d-c86b026d00cd.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x808086f6f0801b00"
+    },
+    {
+      "id": 28,
+      "filename": "neg_wood_0028_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_0f34871e-5364-4fef-a01d-c86b026d00cd.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x984880009010b600"
+    },
+    {
+      "id": 29,
+      "filename": "neg_tables_0029_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_107fc575-9396-4316-a29d-13023af7d30c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4747c7c6e2e2f8e0"
+    },
+    {
+      "id": 30,
+      "filename": "neg_tables_0030_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_107fc575-9396-4316-a29d-13023af7d30c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1e0e06040de48008"
+    },
+    {
+      "id": 31,
+      "filename": "neg_wood_0031_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_16a2308b-ba37-4f76-a9a9-82b121e2500f.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc8c0e0a02343c381"
+    },
+    {
+      "id": 32,
+      "filename": "neg_wood_0032_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_16a2308b-ba37-4f76-a9a9-82b121e2500f.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8000030706070f13"
+    },
+    {
+      "id": 33,
+      "filename": "neg_wood_0033_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_17deae9a-28e7-4147-a085-484642aa310c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9e1783a339c88c1c"
+    },
+    {
+      "id": 34,
+      "filename": "neg_wood_0034_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_17deae9a-28e7-4147-a085-484642aa310c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf24d260206078f8"
+    },
+    {
+      "id": 35,
+      "filename": "neg_furniture_0035_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_1a07ce70-3496-4ce4-9fa4-4e640910d8bc.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf74b230a2e0c2622"
+    },
+    {
+      "id": 36,
+      "filename": "neg_furniture_0036_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_1a07ce70-3496-4ce4-9fa4-4e640910d8bc.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2624e41978ec0d04"
+    },
+    {
+      "id": 37,
+      "filename": "neg_wood_0037_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_1dfe4148-12f6-4cba-8841-4bf5f92e7b28.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xfc79232b0b8b0b87"
+    },
+    {
+      "id": 38,
+      "filename": "neg_wood_0038_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_1dfe4148-12f6-4cba-8841-4bf5f92e7b28.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x363637373737271e"
+    },
+    {
+      "id": 39,
+      "filename": "neg_cables_0039_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_1f8cb30d-9d2a-49c9-b860-942a2fd611ba.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9e89ad97b3a9a70e"
+    },
+    {
+      "id": 40,
+      "filename": "neg_cables_0040_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_1f8cb30d-9d2a-49c9-b860-942a2fd611ba.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd35bdb633307bf7c"
+    },
+    {
+      "id": 41,
+      "filename": "neg_wood_0041_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_203d9420-4543-4032-9038-31542a391b65.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4f9fa3abdbd4d4e4"
+    },
+    {
+      "id": 42,
+      "filename": "neg_wood_0042_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_203d9420-4543-4032-9038-31542a391b65.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa6666cc9d095a9a8"
+    },
+    {
+      "id": 43,
+      "filename": "neg_furniture_0043_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_2194b6a1-0d37-46b8-85a3-1cb26dd8c635.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x206464341d3dff01"
+    },
+    {
+      "id": 44,
+      "filename": "neg_furniture_0044_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_2194b6a1-0d37-46b8-85a3-1cb26dd8c635.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x94d075fd83ff010f"
+    },
+    {
+      "id": 45,
+      "filename": "neg_wood_0045_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_2213d4e0-31d3-4808-976b-df9b5ccc458b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x37cd272703ccdfd3"
+    },
+    {
+      "id": 46,
+      "filename": "neg_wood_0046_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_2213d4e0-31d3-4808-976b-df9b5ccc458b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9f0b0739387ccf4c"
+    },
+    {
+      "id": 47,
+      "filename": "neg_wood_0047_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_246701d1-f587-48b5-80d2-42c9886512d7.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1b193b7303030604"
+    },
+    {
+      "id": 48,
+      "filename": "neg_wood_0048_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_246701d1-f587-48b5-80d2-42c9886512d7.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x87070707072c1851"
+    },
+    {
+      "id": 49,
+      "filename": "neg_tables_0049_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_24ac40b4-d1e9-413b-bf91-8a2edf59e9a0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x70f0e0f17070f0f0"
+    },
+    {
+      "id": 50,
+      "filename": "neg_tables_0050_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_24ac40b4-d1e9-413b-bf91-8a2edf59e9a0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x818180c1c0c0c0e0"
+    },
+    {
+      "id": 51,
+      "filename": "neg_wood_0051_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_2507e3aa-23de-498b-b704-d93232acf890.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd5c7c7e48e9c9c9d"
+    },
+    {
+      "id": 52,
+      "filename": "neg_wood_0052_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_2507e3aa-23de-498b-b704-d93232acf890.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x16102ca0b4b4f9f9"
+    },
+    {
+      "id": 53,
+      "filename": "neg_wood_0053_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_25091342-bda9-4b0f-902f-6d369bab058e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe35f3e78c0654483"
+    },
+    {
+      "id": 54,
+      "filename": "neg_wood_0054_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_25091342-bda9-4b0f-902f-6d369bab058e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9c61c199130695a6"
+    },
+    {
+      "id": 55,
+      "filename": "neg_wood_0055_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_250bf2b0-aa44-4397-8527-bafc9c51712d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1c74271f970f2f33"
+    },
+    {
+      "id": 56,
+      "filename": "neg_wood_0056_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_250bf2b0-aa44-4397-8527-bafc9c51712d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb9d7bffc7f7fc0ce"
+    },
+    {
+      "id": 57,
+      "filename": "neg_wood_0057_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_291da8fd-73e4-447c-b979-794176d4e484.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe5e33079bcf0787"
+    },
+    {
+      "id": 58,
+      "filename": "neg_wood_0058_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_291da8fd-73e4-447c-b979-794176d4e484.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1f7fe54f6f399f7f"
+    },
+    {
+      "id": 59,
+      "filename": "neg_wood_0059_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_291f58bc-deb0-4cb4-ae7d-c799c5c8933e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1ebecac8c4c24467"
+    },
+    {
+      "id": 60,
+      "filename": "neg_wood_0060_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_291f58bc-deb0-4cb4-ae7d-c799c5c8933e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa6322808120e090f"
+    },
+    {
+      "id": 61,
+      "filename": "neg_floor_textures_0061_center.jpg",
+      "category": "floor_textures",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_2c2a0d2f-e080-4786-9451-b547776462f3.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x703010024e6f031"
+    },
+    {
+      "id": 62,
+      "filename": "neg_floor_textures_0062_detail.jpg",
+      "category": "floor_textures",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_2c2a0d2f-e080-4786-9451-b547776462f3.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x11010bc9cca4a4b"
+    },
+    {
+      "id": 63,
+      "filename": "neg_wood_0063_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_2e7315ad-0226-4622-ab1c-ceed5c3247b0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3038181a180c0d0c"
+    },
+    {
+      "id": 64,
+      "filename": "neg_wood_0064_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_2e7315ad-0226-4622-ab1c-ceed5c3247b0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe8e0663672737078"
+    },
+    {
+      "id": 65,
+      "filename": "neg_wood_0065_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_2e7bf40f-5c93-4364-87e6-89b9e784a491.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa52d0b1b120303a2"
+    },
+    {
+      "id": 66,
+      "filename": "neg_wood_0066_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_2e7bf40f-5c93-4364-87e6-89b9e784a491.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe3ebca8d8f0f0606"
+    },
+    {
+      "id": 67,
+      "filename": "neg_wood_0067_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_30ac0f65-51b4-44b9-9ab9-dbb0819f5e3a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6040e8bc16896ce"
+    },
+    {
+      "id": 68,
+      "filename": "neg_wood_0068_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_30ac0f65-51b4-44b9-9ab9-dbb0819f5e3a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6f41120169914634"
+    },
+    {
+      "id": 69,
+      "filename": "neg_wood_0069_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_30b5ecbe-1602-4e0e-9b37-443cbc974add.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe3737b7e77372390"
+    },
+    {
+      "id": 70,
+      "filename": "neg_wood_0070_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_30b5ecbe-1602-4e0e-9b37-443cbc974add.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xfbbc9e8f8f078300"
+    },
+    {
+      "id": 71,
+      "filename": "neg_wood_0071_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_30be691b-4b04-49c9-8739-3363dd9af767.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6e87c3c2e2d8f0c1"
+    },
+    {
+      "id": 72,
+      "filename": "neg_wood_0072_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_30be691b-4b04-49c9-8739-3363dd9af767.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe0e0ec260f80301"
+    },
+    {
+      "id": 73,
+      "filename": "neg_cables_0073_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_30c26465-8de9-49db-afec-b04b282d6d6c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6b362dfbfafebc5d"
+    },
+    {
+      "id": 74,
+      "filename": "neg_cables_0074_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_30c26465-8de9-49db-afec-b04b282d6d6c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb666ec7eecd9f279"
+    },
+    {
+      "id": 75,
+      "filename": "neg_wood_0075_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_30e9f458-c05d-4598-93bf-4e8acefd3313.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x281e9f8ac8018d8d"
+    },
+    {
+      "id": 76,
+      "filename": "neg_wood_0076_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_30e9f458-c05d-4598-93bf-4e8acefd3313.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6e626044555549fb"
+    },
+    {
+      "id": 77,
+      "filename": "neg_wood_0077_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_32650468-a58d-4e5d-8984-3f5aaf43c200.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x80cb6a263a18aa9a"
+    },
+    {
+      "id": 78,
+      "filename": "neg_wood_0078_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_32650468-a58d-4e5d-8984-3f5aaf43c200.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x389d6cec60206e6c"
+    },
+    {
+      "id": 79,
+      "filename": "neg_tables_0079_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_32dd4784-5840-46f6-8f5a-7f118ee70a70.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xcd45e4ec6c597d3f"
+    },
+    {
+      "id": 80,
+      "filename": "neg_tables_0080_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_32dd4784-5840-46f6-8f5a-7f118ee70a70.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc8286ae2eaf2fba7"
+    },
+    {
+      "id": 81,
+      "filename": "neg_tables_0081_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_36a273c9-663e-42e7-a854-5c11c1757a22.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x37372f0f0f1f1f1f"
+    },
+    {
+      "id": 82,
+      "filename": "neg_tables_0082_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_36a273c9-663e-42e7-a854-5c11c1757a22.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3f3f3f5f5fbf7fff"
+    },
+    {
+      "id": 83,
+      "filename": "neg_wood_0083_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_3a019fbf-ba56-420a-bc1c-96c26e75225e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x834691190c87e323"
+    },
+    {
+      "id": 84,
+      "filename": "neg_wood_0084_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_3a019fbf-ba56-420a-bc1c-96c26e75225e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc3f233b93e260e86"
+    },
+    {
+      "id": 85,
+      "filename": "neg_wood_0085_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_3ca85d23-0460-4d77-b2e2-995492cc9eb8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6340c0c000118192"
+    },
+    {
+      "id": 86,
+      "filename": "neg_wood_0086_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_3ca85d23-0460-4d77-b2e2-995492cc9eb8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x200641a31b0c25"
+    },
+    {
+      "id": 87,
+      "filename": "neg_wood_0087_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_3d38272f-3b04-4229-b8fc-55f183caad61.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe1717bb38706cdcb"
+    },
+    {
+      "id": 88,
+      "filename": "neg_wood_0088_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_3d38272f-3b04-4229-b8fc-55f183caad61.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc5cb962d5a755b77"
+    },
+    {
+      "id": 89,
+      "filename": "neg_furniture_0089_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_3fb59635-2a0a-4637-9c1a-21e77d2f0ed8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x230c2e363a32696d"
+    },
+    {
+      "id": 90,
+      "filename": "neg_furniture_0090_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_3fb59635-2a0a-4637-9c1a-21e77d2f0ed8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9cec6c5c4ca671b9"
+    },
+    {
+      "id": 91,
+      "filename": "neg_tables_0091_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_4180dbd7-58e1-42ad-b003-1a28d5231345.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x313150707070301"
+    },
+    {
+      "id": 92,
+      "filename": "neg_tables_0092_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_4180dbd7-58e1-42ad-b003-1a28d5231345.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x191f0f1e17172422"
+    },
+    {
+      "id": 93,
+      "filename": "neg_cables_0093_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_42e61171-e327-47c3-9265-d160e4535eeb.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7e6e8e971d0a3200"
+    },
+    {
+      "id": 94,
+      "filename": "neg_cables_0094_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_42e61171-e327-47c3-9265-d160e4535eeb.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xcccf716d4c248409"
+    },
+    {
+      "id": 95,
+      "filename": "neg_wood_0095_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_4305b071-7caf-4842-9883-24c307c1a0dd.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf99b8b9393938ece"
+    },
+    {
+      "id": 96,
+      "filename": "neg_wood_0096_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_4305b071-7caf-4842-9883-24c307c1a0dd.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x96165626163c3c9c"
+    },
+    {
+      "id": 97,
+      "filename": "neg_wood_0097_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_45fc6345-5783-4972-871a-23b73690ecd4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf47271f9bcb592b"
+    },
+    {
+      "id": 98,
+      "filename": "neg_wood_0098_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_45fc6345-5783-4972-871a-23b73690ecd4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xfef4b6f637e3b627"
+    },
+    {
+      "id": 99,
+      "filename": "neg_cables_0099_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_46a6734a-60bf-4c31-b9ed-6f7f389414e4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x567c5c3432392d17"
+    },
+    {
+      "id": 100,
+      "filename": "neg_cables_0100_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_46a6734a-60bf-4c31-b9ed-6f7f389414e4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x50c85c4cb359054f"
+    },
+    {
+      "id": 101,
+      "filename": "neg_wood_0101_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_480c8962-0e17-4bf1-a043-8bc77c8ec10b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe7cdc6c70d032939"
+    },
+    {
+      "id": 102,
+      "filename": "neg_wood_0102_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_480c8962-0e17-4bf1-a043-8bc77c8ec10b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x242d511b8393b3e3"
+    },
+    {
+      "id": 103,
+      "filename": "neg_furniture_0103_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_485a9ab0-ae02-44e2-ac75-bd8c0dae3039.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x468b03201b0f393b"
+    },
+    {
+      "id": 104,
+      "filename": "neg_furniture_0104_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_485a9ab0-ae02-44e2-ac75-bd8c0dae3039.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4530e36e3ea5f3e7"
+    },
+    {
+      "id": 105,
+      "filename": "neg_wood_0105_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_4b48acbc-d959-49ea-a338-a69eefe68994.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x14032309c38c8c8"
+    },
+    {
+      "id": 106,
+      "filename": "neg_wood_0106_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_4b48acbc-d959-49ea-a338-a69eefe68994.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x90c0c1f050642130"
+    },
+    {
+      "id": 107,
+      "filename": "neg_wood_0107_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_4c466e2c-d5e4-4364-b2f8-2f05322c3bc1.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc7c3cb6363230f1c"
+    },
+    {
+      "id": 108,
+      "filename": "neg_wood_0108_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_4c466e2c-d5e4-4364-b2f8-2f05322c3bc1.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x67278f8f23f359f9"
+    },
+    {
+      "id": 109,
+      "filename": "neg_tables_0109_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_4dac89a8-3225-46be-a6be-99bc605ddef4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x968682929a9493ab"
+    },
+    {
+      "id": 110,
+      "filename": "neg_tables_0110_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_4dac89a8-3225-46be-a6be-99bc605ddef4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xce2e2c84d8996763"
+    },
+    {
+      "id": 111,
+      "filename": "neg_furniture_0111_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_4e2f66b1-78d6-482c-95ec-ba6340a7d4a4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xbe3f232f2b270f33"
+    },
+    {
+      "id": 112,
+      "filename": "neg_furniture_0112_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_4e2f66b1-78d6-482c-95ec-ba6340a7d4a4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x271736e61b37cfc3"
+    },
+    {
+      "id": 113,
+      "filename": "neg_wood_0113_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_5294cee4-c9ec-4faf-a6df-893c1c7de23c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1c1c0c0c5b23139b"
+    },
+    {
+      "id": 114,
+      "filename": "neg_wood_0114_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_5294cee4-c9ec-4faf-a6df-893c1c7de23c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7979768633cfcbf5"
+    },
+    {
+      "id": 115,
+      "filename": "neg_wood_0115_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_5433b1c0-74ab-4457-b5e7-2e01344bcca7.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x38e106748dffef4f"
+    },
+    {
+      "id": 116,
+      "filename": "neg_wood_0116_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_5433b1c0-74ab-4457-b5e7-2e01344bcca7.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xcc8a53f6b63e7b7f"
+    },
+    {
+      "id": 117,
+      "filename": "neg_chairs_0117_center.jpg",
+      "category": "chairs",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_59e9fcda-98f2-4dcf-8100-a7155f1675a1.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x61f8fc6b79e1b0c4"
+    },
+    {
+      "id": 118,
+      "filename": "neg_chairs_0118_detail.jpg",
+      "category": "chairs",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_59e9fcda-98f2-4dcf-8100-a7155f1675a1.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x36b6c32b0bc0601a"
+    },
+    {
+      "id": 119,
+      "filename": "neg_wood_0119_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_5b6a2769-6d80-49f8-bac5-2d3f952adbad.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb0e05c5a6f2c8c8"
+    },
+    {
+      "id": 120,
+      "filename": "neg_wood_0120_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_5b6a2769-6d80-49f8-bac5-2d3f952adbad.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1b12b6aec3252862"
+    },
+    {
+      "id": 121,
+      "filename": "neg_wood_0121_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_60d1193e-cd56-4c53-9d02-1be4b20b3111.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x50d0713a94b07c3"
+    },
+    {
+      "id": 122,
+      "filename": "neg_wood_0122_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_60d1193e-cd56-4c53-9d02-1be4b20b3111.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4ea5137e564b1b4f"
+    },
+    {
+      "id": 123,
+      "filename": "neg_wood_0123_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_61084e2c-81fe-4ff5-a741-cba4d3964967.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc8c8200820f7232"
+    },
+    {
+      "id": 124,
+      "filename": "neg_wood_0124_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_61084e2c-81fe-4ff5-a741-cba4d3964967.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x240806263d258e44"
+    },
+    {
+      "id": 125,
+      "filename": "neg_wood_0125_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_61c1ff26-e08f-4209-a164-8e653f665964.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xced64fe3e4462427"
+    },
+    {
+      "id": 126,
+      "filename": "neg_wood_0126_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_61c1ff26-e08f-4209-a164-8e653f665964.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4b4890101814312f"
+    },
+    {
+      "id": 127,
+      "filename": "neg_wood_0127_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_61f95246-7c10-4086-9831-882ae61771bc.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x104327371fcd4d2c"
+    },
+    {
+      "id": 128,
+      "filename": "neg_wood_0128_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_61f95246-7c10-4086-9831-882ae61771bc.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9fcff6b676322230"
+    },
+    {
+      "id": 129,
+      "filename": "neg_chairs_0129_center.jpg",
+      "category": "chairs",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_62e6fa45-423c-41d5-8d39-8aa8ee77ffd8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3e3e1f7f3430b036"
+    },
+    {
+      "id": 130,
+      "filename": "neg_chairs_0130_detail.jpg",
+      "category": "chairs",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_62e6fa45-423c-41d5-8d39-8aa8ee77ffd8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xfff3308080d4949c"
+    },
+    {
+      "id": 131,
+      "filename": "neg_wood_0131_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_63c59ea8-6981-483d-abe4-9a2ed5940f50.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1c1e0c0330190d0b"
+    },
+    {
+      "id": 132,
+      "filename": "neg_wood_0132_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_63c59ea8-6981-483d-abe4-9a2ed5940f50.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x470ea6e7f36b766e"
+    },
+    {
+      "id": 133,
+      "filename": "neg_wood_0133_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_6710e50a-7f8f-4286-9ca3-9192ce2c500d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5a9f5d273e9f0f31"
+    },
+    {
+      "id": 134,
+      "filename": "neg_wood_0134_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_6710e50a-7f8f-4286-9ca3-9192ce2c500d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb51ebfbcdf7fe0d3"
+    },
+    {
+      "id": 135,
+      "filename": "neg_wood_0135_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_68b8fa46-d1c6-4bd3-a378-c80aa11f6598.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x40c081e2fc1d0028"
+    },
+    {
+      "id": 136,
+      "filename": "neg_wood_0136_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_68b8fa46-d1c6-4bd3-a378-c80aa11f6598.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1624c9f913813125"
+    },
+    {
+      "id": 137,
+      "filename": "neg_cables_0137_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_691546b2-0e67-4d6b-98f3-4c254ae8fd11.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2d010e2126262127"
+    },
+    {
+      "id": 138,
+      "filename": "neg_cables_0138_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_691546b2-0e67-4d6b-98f3-4c254ae8fd11.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6395952c8d41030f"
+    },
+    {
+      "id": 139,
+      "filename": "neg_wood_0139_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_6c85b856-5edd-47af-ac4e-156964d908b6.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xad9f96c4e0c0848d"
+    },
+    {
+      "id": 140,
+      "filename": "neg_wood_0140_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_6c85b856-5edd-47af-ac4e-156964d908b6.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa0a0202080041551"
+    },
+    {
+      "id": 141,
+      "filename": "neg_tables_0141_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_6d1df908-3481-48cb-895c-d5d9d4a28fbd.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf0f0706020e06000"
+    },
+    {
+      "id": 142,
+      "filename": "neg_tables_0142_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_6d1df908-3481-48cb-895c-d5d9d4a28fbd.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8890010002808000"
+    },
+    {
+      "id": 143,
+      "filename": "neg_cables_0143_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_708c71b2-3754-4a16-9fb5-4d752fbf7e3d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd98999c9c9f14901"
+    },
+    {
+      "id": 144,
+      "filename": "neg_cables_0144_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_708c71b2-3754-4a16-9fb5-4d752fbf7e3d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x62627212d2b23212"
+    },
+    {
+      "id": 145,
+      "filename": "neg_chairs_0145_center.jpg",
+      "category": "chairs",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_724e4e33-0b41-4e99-b41a-3ab9770536c4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf3c2e3737270c187"
+    },
+    {
+      "id": 146,
+      "filename": "neg_chairs_0146_detail.jpg",
+      "category": "chairs",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_724e4e33-0b41-4e99-b41a-3ab9770536c4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xcadac4cd89a34f9d"
+    },
+    {
+      "id": 147,
+      "filename": "neg_furniture_0147_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_726ad10f-21d7-4aae-996e-399f80381392.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3819d9f9f3534545"
+    },
+    {
+      "id": 148,
+      "filename": "neg_furniture_0148_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_726ad10f-21d7-4aae-996e-399f80381392.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x71834f46d6121b4a"
+    },
+    {
+      "id": 149,
+      "filename": "neg_wood_0149_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_74b717f9-783e-40b5-a811-1a59a20d6f02.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc744e4c444442437"
+    },
+    {
+      "id": 150,
+      "filename": "neg_wood_0150_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_74b717f9-783e-40b5-a811-1a59a20d6f02.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x105014113814739f"
+    },
+    {
+      "id": 151,
+      "filename": "neg_chairs_0151_center.jpg",
+      "category": "chairs",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_7633f0dd-f929-477d-9b17-f073e697b391.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x93909032321d421f"
+    },
+    {
+      "id": 152,
+      "filename": "neg_chairs_0152_detail.jpg",
+      "category": "chairs",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_7633f0dd-f929-477d-9b17-f073e697b391.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x818484027fc007de"
+    },
+    {
+      "id": 153,
+      "filename": "neg_wood_0153_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_768eea1d-f62f-49df-9d7e-bce6e2b7372b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe1190d8d8e4c891b"
+    },
+    {
+      "id": 154,
+      "filename": "neg_wood_0154_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_768eea1d-f62f-49df-9d7e-bce6e2b7372b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x52327878254bd3d6"
+    },
+    {
+      "id": 155,
+      "filename": "neg_wood_0155_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_76bf91ca-adcf-4145-92c3-61b05423553e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd7de2c28a02040c"
+    },
+    {
+      "id": 156,
+      "filename": "neg_wood_0156_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_76bf91ca-adcf-4145-92c3-61b05423553e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x44c0a16948db860"
+    },
+    {
+      "id": 157,
+      "filename": "neg_wood_0157_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_774ff97a-471d-45a0-bc58-d410143cd177.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8cc98880ce496f66"
+    },
+    {
+      "id": 158,
+      "filename": "neg_wood_0158_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_774ff97a-471d-45a0-bc58-d410143cd177.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x21a2226d613f3a28"
+    },
+    {
+      "id": 159,
+      "filename": "neg_tables_0159_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_78beb88d-d1c7-4648-a877-376db645723b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3c38380080b840b0"
+    },
+    {
+      "id": 160,
+      "filename": "neg_tables_0160_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_78beb88d-d1c7-4648-a877-376db645723b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x200000e001000082"
+    },
+    {
+      "id": 161,
+      "filename": "neg_furniture_0161_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_7a007048-7327-43b9-a553-f5a821b28501.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xfe4d0d9d931b9292"
+    },
+    {
+      "id": 162,
+      "filename": "neg_furniture_0162_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_7a007048-7327-43b9-a553-f5a821b28501.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x33cb5b62b21ec684"
+    },
+    {
+      "id": 163,
+      "filename": "neg_wood_0163_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_7cec3bda-1048-4e0c-83cc-c3bb3ef22a53.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7ce2e3e4e0e1a565"
+    },
+    {
+      "id": 164,
+      "filename": "neg_wood_0164_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_7cec3bda-1048-4e0c-83cc-c3bb3ef22a53.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9010090511191913"
+    },
+    {
+      "id": 165,
+      "filename": "neg_wood_0165_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_7de82a67-43c0-4a6e-b033-d1abcac43d08.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6485cb43860d1f1c"
+    },
+    {
+      "id": 166,
+      "filename": "neg_wood_0166_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_7de82a67-43c0-4a6e-b033-d1abcac43d08.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x160f1f19336e7c30"
+    },
+    {
+      "id": 167,
+      "filename": "neg_wood_0167_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_7f86ff20-9d36-471f-9ece-09161ce08b93.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5051309b54f0283"
+    },
+    {
+      "id": 168,
+      "filename": "neg_wood_0168_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_7f86ff20-9d36-471f-9ece-09161ce08b93.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6239b2b530d0d27"
+    },
+    {
+      "id": 169,
+      "filename": "neg_furniture_0169_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_81508a83-fb05-4cbb-b4d9-d25c54ec592d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x71b84c21d3a32363"
+    },
+    {
+      "id": 170,
+      "filename": "neg_furniture_0170_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_81508a83-fb05-4cbb-b4d9-d25c54ec592d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1007d64faf944b27"
+    },
+    {
+      "id": 171,
+      "filename": "neg_wood_0171_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_8445d20d-f179-4670-bf3f-031680e0b57d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1020c0f01c050809"
+    },
+    {
+      "id": 172,
+      "filename": "neg_wood_0172_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_8445d20d-f179-4670-bf3f-031680e0b57d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x14c4f91b41906561"
+    },
+    {
+      "id": 173,
+      "filename": "neg_wood_0173_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_844b574d-2d44-4088-979d-69d22a38a517.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1c1cae4e6f2e3c1c"
+    },
+    {
+      "id": 174,
+      "filename": "neg_wood_0174_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_844b574d-2d44-4088-979d-69d22a38a517.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3c7e326a74f8f800"
+    },
+    {
+      "id": 175,
+      "filename": "neg_wood_0175_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_8783079d-27d7-4158-9b52-70eb0a144839.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x97402533129d8d6b"
+    },
+    {
+      "id": 176,
+      "filename": "neg_wood_0176_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_8783079d-27d7-4158-9b52-70eb0a144839.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x95cfc8f3b3377367"
+    },
+    {
+      "id": 177,
+      "filename": "neg_furniture_0177_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_87f056cd-99dc-4669-8104-b282e1fb496e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf9fb1234341ca430"
+    },
+    {
+      "id": 178,
+      "filename": "neg_furniture_0178_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_87f056cd-99dc-4669-8104-b282e1fb496e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x69a9a9c8789809a2"
+    },
+    {
+      "id": 179,
+      "filename": "neg_wood_0179_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_88457efb-d0b4-49a4-9fd4-f35c64df5964.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x320907371f0e0f3f"
+    },
+    {
+      "id": 180,
+      "filename": "neg_wood_0180_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_88457efb-d0b4-49a4-9fd4-f35c64df5964.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9f96b75d3d3fe9fd"
+    },
+    {
+      "id": 181,
+      "filename": "neg_wood_0181_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_8971cb0b-6b09-497a-9c44-351505028271.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3a5a9dcd8d430f37"
+    },
+    {
+      "id": 182,
+      "filename": "neg_wood_0182_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_8971cb0b-6b09-497a-9c44-351505028271.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6529532b733efcc6"
+    },
+    {
+      "id": 183,
+      "filename": "neg_wood_0183_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_89756316-d2a5-4a73-9128-ccfd8b58ef58.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x88c898888d896f4e"
+    },
+    {
+      "id": 184,
+      "filename": "neg_wood_0184_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_89756316-d2a5-4a73-9128-ccfd8b58ef58.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x504225654b6f7e58"
+    },
+    {
+      "id": 185,
+      "filename": "neg_tables_0185_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_8a91b650-f215-4472-be34-bc0c1998ee1b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc528181910000004"
+    },
+    {
+      "id": 186,
+      "filename": "neg_tables_0186_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_8a91b650-f215-4472-be34-bc0c1998ee1b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd0c1804000400078"
+    },
+    {
+      "id": 187,
+      "filename": "neg_wood_0187_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_8ab312d2-a4f4-4978-87b0-9fa92f4621e5.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1d11030303030501"
+    },
+    {
+      "id": 188,
+      "filename": "neg_wood_0188_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_8ab312d2-a4f4-4978-87b0-9fa92f4621e5.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4f47070703931349"
+    },
+    {
+      "id": 189,
+      "filename": "neg_wood_0189_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_8d494adf-3fa5-4989-a625-78d94ded362d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9e832f3832362f3c"
+    },
+    {
+      "id": 190,
+      "filename": "neg_wood_0190_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_8d494adf-3fa5-4989-a625-78d94ded362d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x78c5a488fa3e79d8"
+    },
+    {
+      "id": 191,
+      "filename": "neg_wood_0191_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_8d5d847f-2cf8-4a6c-80ce-c625f2465e40.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x303034b0f0d0a494"
+    },
+    {
+      "id": 192,
+      "filename": "neg_wood_0192_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_8d5d847f-2cf8-4a6c-80ce-c625f2465e40.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x809090c0800890d8"
+    },
+    {
+      "id": 193,
+      "filename": "neg_wood_0193_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_8eccfe9f-1e87-498f-b2a3-43eeecbdbccc.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x190307070f4f3f3f"
+    },
+    {
+      "id": 194,
+      "filename": "neg_wood_0194_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_8eccfe9f-1e87-498f-b2a3-43eeecbdbccc.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1f1f9e3e3ff7f6d6"
+    },
+    {
+      "id": 195,
+      "filename": "neg_tables_0195_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_91702330-730d-4ebd-a235-f39260dae381.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x362723262f1b0390"
+    },
+    {
+      "id": 196,
+      "filename": "neg_tables_0196_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_91702330-730d-4ebd-a235-f39260dae381.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2d5e5ab2e66a0ee0"
+    },
+    {
+      "id": 197,
+      "filename": "neg_chairs_0197_center.jpg",
+      "category": "chairs",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_92b2ca03-42ec-494a-b01a-bcf28912bcde.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x81982965e5e26273"
+    },
+    {
+      "id": 198,
+      "filename": "neg_chairs_0198_detail.jpg",
+      "category": "chairs",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_92b2ca03-42ec-494a-b01a-bcf28912bcde.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x333319150c0c0e4e"
+    },
+    {
+      "id": 199,
+      "filename": "neg_wood_0199_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_933e5c55-1f7b-46c8-85af-bb7e1570f5b2.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xad9fc7c4cc44262e"
+    },
+    {
+      "id": 200,
+      "filename": "neg_wood_0200_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_933e5c55-1f7b-46c8-85af-bb7e1570f5b2.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x943030a91a123434"
+    },
+    {
+      "id": 201,
+      "filename": "neg_wood_0201_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_93a2f245-ca1d-4177-ac21-fc66ce1864f9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb84a1ec9cdc94f36"
+    },
+    {
+      "id": 202,
+      "filename": "neg_wood_0202_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_93a2f245-ca1d-4177-ac21-fc66ce1864f9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe52525532b033edc"
+    },
+    {
+      "id": 203,
+      "filename": "neg_wood_0203_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_93c16ca8-2af0-4212-92b7-6d7c4b041a1a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8bc347e0e0402026"
+    },
+    {
+      "id": 204,
+      "filename": "neg_wood_0204_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_93c16ca8-2af0-4212-92b7-6d7c4b041a1a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x24a424800808181a"
+    },
+    {
+      "id": 205,
+      "filename": "neg_furniture_0205_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_94ba2ee9-393e-4855-90a3-d1be9d539c6b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3c7d7ff9f3f29a2e"
+    },
+    {
+      "id": 206,
+      "filename": "neg_furniture_0206_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_94ba2ee9-393e-4855-90a3-d1be9d539c6b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa3a10d85c590665c"
+    },
+    {
+      "id": 207,
+      "filename": "neg_furniture_0207_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_9584bc61-ebc2-4ce3-ab9c-de9b25e194c5.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb19d871f172f05cd"
+    },
+    {
+      "id": 208,
+      "filename": "neg_furniture_0208_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_9584bc61-ebc2-4ce3-ab9c-de9b25e194c5.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3bfb5f0f2b5b1366"
+    },
+    {
+      "id": 209,
+      "filename": "neg_wood_0209_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_9650ceee-4152-43da-9dc2-4b1ba898bfc2.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x964e0f3e3c95d5cc"
+    },
+    {
+      "id": 210,
+      "filename": "neg_wood_0210_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_9650ceee-4152-43da-9dc2-4b1ba898bfc2.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xffd8dad29ac6b83a"
+    },
+    {
+      "id": 211,
+      "filename": "neg_wood_0211_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_96bc25b7-1c24-482d-b9f3-9bebad3cc48d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe6a3e3a486840c0c"
+    },
+    {
+      "id": 212,
+      "filename": "neg_wood_0212_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_96bc25b7-1c24-482d-b9f3-9bebad3cc48d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1510141028b474f9"
+    },
+    {
+      "id": 213,
+      "filename": "neg_furniture_0213_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_99ffed8d-1c89-4d80-9b50-5a9fc69f47dc.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb79b1f0f0b1317a5"
+    },
+    {
+      "id": 214,
+      "filename": "neg_furniture_0214_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_99ffed8d-1c89-4d80-9b50-5a9fc69f47dc.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x76d5b72ecfcf9ba2"
+    },
+    {
+      "id": 215,
+      "filename": "neg_wood_0215_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_9a47857c-1e54-4d0a-981a-230fd242b045.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5fb38acbc0e0c084"
+    },
+    {
+      "id": 216,
+      "filename": "neg_wood_0216_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_9a47857c-1e54-4d0a-981a-230fd242b045.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2f4b595908a0a0a8"
+    },
+    {
+      "id": 217,
+      "filename": "neg_wood_0217_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_9baf94ec-9b8d-4175-8840-bf72ab285588.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6061bc1e4a8c7e4"
+    },
+    {
+      "id": 218,
+      "filename": "neg_wood_0218_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_9baf94ec-9b8d-4175-8840-bf72ab285588.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc112213143261c32"
+    },
+    {
+      "id": 219,
+      "filename": "neg_wood_0219_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_9db87a51-f148-44be-be13-d880655561bf.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5bda98b0f0f85132"
+    },
+    {
+      "id": 220,
+      "filename": "neg_wood_0220_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_9db87a51-f148-44be-be13-d880655561bf.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe4e840201181a2c0"
+    },
+    {
+      "id": 221,
+      "filename": "neg_wood_0221_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_9fbde811-d251-4e9d-aa81-88a6e3c17473.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x86e09c9f9b164c2f"
+    },
+    {
+      "id": 222,
+      "filename": "neg_wood_0222_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_9fbde811-d251-4e9d-aa81-88a6e3c17473.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xdf0726ee1c3830bf"
+    },
+    {
+      "id": 223,
+      "filename": "neg_cables_0223_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_a2c984a7-b026-4b53-8fb2-29bdbf80279d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5f03033f4b4f0b03"
+    },
+    {
+      "id": 224,
+      "filename": "neg_cables_0224_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_a2c984a7-b026-4b53-8fb2-29bdbf80279d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xbbab5b7b333b0206"
+    },
+    {
+      "id": 225,
+      "filename": "neg_wood_0225_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_a2fc6683-43d6-4d6b-99dc-4fd1fd23e597.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x784e4e2c2d2b2903"
+    },
+    {
+      "id": 226,
+      "filename": "neg_wood_0226_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_a2fc6683-43d6-4d6b-99dc-4fd1fd23e597.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7c356b636773eb27"
+    },
+    {
+      "id": 227,
+      "filename": "neg_wood_0227_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_a8d9fb0f-d0c9-460d-8fd0-0a46b635c9a3.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa040099f3b367dca"
+    },
+    {
+      "id": 228,
+      "filename": "neg_wood_0228_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_a8d9fb0f-d0c9-460d-8fd0-0a46b635c9a3.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xbe786edd899836c4"
+    },
+    {
+      "id": 229,
+      "filename": "neg_wood_0229_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_ab07836b-4cbb-4165-bf4b-06d4b54a82f6.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xddccc6c5cd8d0c1d"
+    },
+    {
+      "id": 230,
+      "filename": "neg_wood_0230_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_ab07836b-4cbb-4165-bf4b-06d4b54a82f6.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xad2d393371495871"
+    },
+    {
+      "id": 231,
+      "filename": "neg_tables_0231_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_afb1d97a-820f-4adc-9b5e-5005fce55d3a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4f2a67278f030e3e"
+    },
+    {
+      "id": 232,
+      "filename": "neg_tables_0232_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_afb1d97a-820f-4adc-9b5e-5005fce55d3a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8e3e6b661f7f6dfc"
+    },
+    {
+      "id": 233,
+      "filename": "neg_tables_0233_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_afe6d430-6fd8-49d8-9e3c-8401472a3e2b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe04121313bb3f3f3"
+    },
+    {
+      "id": 234,
+      "filename": "neg_tables_0234_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_afe6d430-6fd8-49d8-9e3c-8401472a3e2b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8383d3d78796c70f"
+    },
+    {
+      "id": 235,
+      "filename": "neg_wood_0235_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_b2aa4da2-dd18-4328-965f-4772011927ad.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf0600b9090c8bcf"
+    },
+    {
+      "id": 236,
+      "filename": "neg_wood_0236_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_b2aa4da2-dd18-4328-965f-4772011927ad.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa6d232713976261f"
+    },
+    {
+      "id": 237,
+      "filename": "neg_tables_0237_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_b318637f-8177-4b49-9065-11694fabb179.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x70606060606051e"
+    },
+    {
+      "id": 238,
+      "filename": "neg_tables_0238_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_b318637f-8177-4b49-9065-11694fabb179.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1e0e1e1c0b1b3bac"
+    },
+    {
+      "id": 239,
+      "filename": "neg_chairs_0239_center.jpg",
+      "category": "chairs",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_b4148938-7a74-4661-8101-591cb40cf3a8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe4e3c89192133131"
+    },
+    {
+      "id": 240,
+      "filename": "neg_chairs_0240_detail.jpg",
+      "category": "chairs",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_b4148938-7a74-4661-8101-591cb40cf3a8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa643c8c7c38383a3"
+    },
+    {
+      "id": 241,
+      "filename": "neg_wood_0241_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_b422d6de-fad7-4bf5-9653-b5046dccff8b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xdfb4879fc5c4c880"
+    },
+    {
+      "id": 242,
+      "filename": "neg_wood_0242_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_b422d6de-fad7-4bf5-9653-b5046dccff8b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5cd796901020a0a1"
+    },
+    {
+      "id": 243,
+      "filename": "neg_floor_textures_0243_center.jpg",
+      "category": "floor_textures",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_b50c6be1-5807-4300-b6eb-8721a0cafa2b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc3810f0b030d0e0c"
+    },
+    {
+      "id": 244,
+      "filename": "neg_floor_textures_0244_detail.jpg",
+      "category": "floor_textures",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_b50c6be1-5807-4300-b6eb-8721a0cafa2b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x676717535b7c3818"
+    },
+    {
+      "id": 245,
+      "filename": "neg_wood_0245_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_b5803181-bed1-4505-8ca5-e05729b61d32.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc064e0c9fcac6562"
+    },
+    {
+      "id": 246,
+      "filename": "neg_wood_0246_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_b5803181-bed1-4505-8ca5-e05729b61d32.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1360e870c20a0966"
+    },
+    {
+      "id": 247,
+      "filename": "neg_tables_0247_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_b5a049d5-b397-40b2-9399-b53b4887ee92.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x72374d66c6f373b1"
+    },
+    {
+      "id": 248,
+      "filename": "neg_tables_0248_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_b5a049d5-b397-40b2-9399-b53b4887ee92.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x719c0c0fcfc2c341"
+    },
+    {
+      "id": 249,
+      "filename": "neg_wood_0249_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_b973429f-7da2-4e0e-9b75-4722dc846062.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x241713c1b3270793"
+    },
+    {
+      "id": 250,
+      "filename": "neg_wood_0250_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_b973429f-7da2-4e0e-9b75-4722dc846062.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8467d78c060ecfcf"
+    },
+    {
+      "id": 251,
+      "filename": "neg_floor_textures_0251_center.jpg",
+      "category": "floor_textures",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_b9c281b9-65ad-465b-86c2-fd99bd373754.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x437b79391f1f0fed"
+    },
+    {
+      "id": 252,
+      "filename": "neg_floor_textures_0252_detail.jpg",
+      "category": "floor_textures",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_b9c281b9-65ad-465b-86c2-fd99bd373754.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe1e3dc5f5f3f3bb3"
+    },
+    {
+      "id": 253,
+      "filename": "neg_floor_textures_0253_center.jpg",
+      "category": "floor_textures",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_baaf798c-d028-4bd1-8782-6c31623fa5b9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x387070bebcbefc7f"
+    },
+    {
+      "id": 254,
+      "filename": "neg_floor_textures_0254_detail.jpg",
+      "category": "floor_textures",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_baaf798c-d028-4bd1-8782-6c31623fa5b9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa87ef85abcfce15f"
+    },
+    {
+      "id": 255,
+      "filename": "neg_wood_0255_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_bca4a6d6-65f6-41e1-9a61-892b4d7d2be0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd11816110b898de"
+    },
+    {
+      "id": 256,
+      "filename": "neg_wood_0256_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_bca4a6d6-65f6-41e1-9a61-892b4d7d2be0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x63d9c4606078fc"
+    },
+    {
+      "id": 257,
+      "filename": "neg_wood_0257_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_bcbdf1bb-2f95-4b7a-a40d-3360fa411408.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9e98f3e2e4834ac4"
+    },
+    {
+      "id": 258,
+      "filename": "neg_wood_0258_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_bcbdf1bb-2f95-4b7a-a40d-3360fa411408.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x88919127270f5c3d"
+    },
+    {
+      "id": 259,
+      "filename": "neg_cables_0259_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_bf1769da-2962-4dbb-9645-2a9d7729f6d8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x433c4c6e3a3b3826"
+    },
+    {
+      "id": 260,
+      "filename": "neg_cables_0260_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_bf1769da-2962-4dbb-9645-2a9d7729f6d8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2ca8664e4fb2591c"
+    },
+    {
+      "id": 261,
+      "filename": "neg_tables_0261_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_c34f10fc-c3b2-4e8d-97af-3538beb10cd7.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe2333424270785d3"
+    },
+    {
+      "id": 262,
+      "filename": "neg_tables_0262_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_c34f10fc-c3b2-4e8d-97af-3538beb10cd7.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x91109f138d1962c7"
+    },
+    {
+      "id": 263,
+      "filename": "neg_furniture_0263_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_c3e00c25-b0fa-4609-8019-9a2df2cd0e1d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8293d35335b4f1e"
+    },
+    {
+      "id": 264,
+      "filename": "neg_furniture_0264_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_c3e00c25-b0fa-4609-8019-9a2df2cd0e1d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb3b3d3437616fffe"
+    },
+    {
+      "id": 265,
+      "filename": "neg_wood_0265_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_c46f66b2-e995-4eb0-bc86-ba43f686cfc4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x97c5c4e48044444e"
+    },
+    {
+      "id": 266,
+      "filename": "neg_wood_0266_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_c46f66b2-e995-4eb0-bc86-ba43f686cfc4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x30b08014515010b6"
+    },
+    {
+      "id": 267,
+      "filename": "neg_wood_0267_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_c5758311-8763-4514-a683-154cffcd167c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x848f4fe44444262e"
+    },
+    {
+      "id": 268,
+      "filename": "neg_wood_0268_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_c5758311-8763-4514-a683-154cffcd167c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5410302011123a34"
+    },
+    {
+      "id": 269,
+      "filename": "neg_wood_0269_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_c68d494c-1a77-4c9a-b8e6-a4ffaa40dfc8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x30d1723a6e46c7c"
+    },
+    {
+      "id": 270,
+      "filename": "neg_wood_0270_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_c68d494c-1a77-4c9a-b8e6-a4ffaa40dfc8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x870b8c1898b4b0b8"
+    },
+    {
+      "id": 271,
+      "filename": "neg_chairs_0271_center.jpg",
+      "category": "chairs",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_c7dc3115-c099-4cfa-8c3d-c2293c707621.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2d091811098b1b1b"
+    },
+    {
+      "id": 272,
+      "filename": "neg_chairs_0272_detail.jpg",
+      "category": "chairs",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_c7dc3115-c099-4cfa-8c3d-c2293c707621.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd0436562266767e6"
+    },
+    {
+      "id": 273,
+      "filename": "neg_wood_0273_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_c9870ab4-b170-4b9f-bd8a-741d0ed3aac8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc9c147a0e0602026"
+    },
+    {
+      "id": 274,
+      "filename": "neg_wood_0274_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_c9870ab4-b170-4b9f-bd8a-741d0ed3aac8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1484a4800808091a"
+    },
+    {
+      "id": 275,
+      "filename": "neg_wood_0275_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_c9a23b2f-807f-4bd0-8797-0dc5e2e96a78.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3dcdcc4fec4c4d0d"
+    },
+    {
+      "id": 276,
+      "filename": "neg_wood_0276_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_c9a23b2f-807f-4bd0-8797-0dc5e2e96a78.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7a7e303020653539"
+    },
+    {
+      "id": 277,
+      "filename": "neg_wall_textures_0277_center.jpg",
+      "category": "wall_textures",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_capture_demo_hist_01.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x406010180c0400"
+    },
+    {
+      "id": 278,
+      "filename": "neg_wall_textures_0278_detail.jpg",
+      "category": "wall_textures",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_capture_demo_hist_01.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8042602412080c00"
+    },
+    {
+      "id": 279,
+      "filename": "neg_wall_textures_0279_center.jpg",
+      "category": "wall_textures",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_capture_demo_hist_03.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x90c864323a0d1402"
+    },
+    {
+      "id": 280,
+      "filename": "neg_wall_textures_0280_detail.jpg",
+      "category": "wall_textures",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_capture_demo_hist_03.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9048e8e412492d02"
+    },
+    {
+      "id": 281,
+      "filename": "neg_wood_0281_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_cbfe28e0-7d1d-44c9-9f59-98a4d1e327de.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe29f1f2b3e4c6b79"
+    },
+    {
+      "id": 282,
+      "filename": "neg_wood_0282_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_cbfe28e0-7d1d-44c9-9f59-98a4d1e327de.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7b67dc786166e6e3"
+    },
+    {
+      "id": 283,
+      "filename": "neg_tables_0283_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_cd3a5b35-a450-401a-be39-edd89458e34b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xdedcf9f8f8f140a0"
+    },
+    {
+      "id": 284,
+      "filename": "neg_tables_0284_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_cd3a5b35-a450-401a-be39-edd89458e34b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe2e0e04241848486"
+    },
+    {
+      "id": 285,
+      "filename": "neg_wood_0285_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_cf19010b-e7eb-4fae-9339-3381faeefc79.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd91006198888edc"
+    },
+    {
+      "id": 286,
+      "filename": "neg_wood_0286_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_cf19010b-e7eb-4fae-9339-3381faeefc79.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x221486020687cdc"
+    },
+    {
+      "id": 287,
+      "filename": "neg_cables_0287_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_d25986b9-d3a7-4299-b42b-f8740dd76f83.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc7cdc9e9e1d1c148"
+    },
+    {
+      "id": 288,
+      "filename": "neg_cables_0288_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_d25986b9-d3a7-4299-b42b-f8740dd76f83.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x33333393d3923360"
+    },
+    {
+      "id": 289,
+      "filename": "neg_tables_0289_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_d4441dfa-abf7-4f4f-b270-8c421bb383e3.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8ec6e2a11959e86c"
+    },
+    {
+      "id": 290,
+      "filename": "neg_tables_0290_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_d4441dfa-abf7-4f4f-b270-8c421bb383e3.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6a3a1b02331301c"
+    },
+    {
+      "id": 291,
+      "filename": "neg_wood_0291_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_d49786c5-5278-4351-8594-80337b9a848c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6b8f5e27179f8f19"
+    },
+    {
+      "id": 292,
+      "filename": "neg_wood_0292_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_d49786c5-5278-4351-8594-80337b9a848c.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x969fbfbed13f3cc3"
+    },
+    {
+      "id": 293,
+      "filename": "neg_tables_0293_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_d59896c0-3ab7-4abb-8a36-58dd36302203.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x70c58b5c19332f3d"
+    },
+    {
+      "id": 294,
+      "filename": "neg_tables_0294_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_d59896c0-3ab7-4abb-8a36-58dd36302203.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6cd1c3cf8f9e3ff3"
+    },
+    {
+      "id": 295,
+      "filename": "neg_furniture_0295_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_d649e6e8-36b0-49cd-9b07-403eb427a3d8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf1ea303118989b89"
+    },
+    {
+      "id": 296,
+      "filename": "neg_furniture_0296_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_d649e6e8-36b0-49cd-9b07-403eb427a3d8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xcdc9e1d0c4cb3325"
+    },
+    {
+      "id": 297,
+      "filename": "neg_furniture_0297_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_d6f82cbe-ef2d-4a6c-97ae-474a714ff3a0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x103b3b3e0e1ffe80"
+    },
+    {
+      "id": 298,
+      "filename": "neg_furniture_0298_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_d6f82cbe-ef2d-4a6c-97ae-474a714ff3a0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe6167f7003ff8003"
+    },
+    {
+      "id": 299,
+      "filename": "neg_wood_0299_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_d829a8ae-5952-45f7-9b05-52190298e0f9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa9a8c8a88084c84f"
+    },
+    {
+      "id": 300,
+      "filename": "neg_wood_0300_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_d829a8ae-5952-45f7-9b05-52190298e0f9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x440008a0b05420bf"
+    },
+    {
+      "id": 301,
+      "filename": "neg_wood_0301_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_d9ea8eb3-441f-4366-ad26-76898ce40531.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x383c3e1b13e0e006"
+    },
+    {
+      "id": 302,
+      "filename": "neg_wood_0302_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_d9ea8eb3-441f-4366-ad26-76898ce40531.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xefc707832084283c"
+    },
+    {
+      "id": 303,
+      "filename": "neg_wood_0303_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_db50f20e-4bab-4d63-ab1a-ac7875a5cc33.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x70652d1b0f07071b"
+    },
+    {
+      "id": 304,
+      "filename": "neg_wood_0304_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_db50f20e-4bab-4d63-ab1a-ac7875a5cc33.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf7736f1f1f3f5f27"
+    },
+    {
+      "id": 305,
+      "filename": "neg_cables_0305_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_db635ac5-8c66-4d43-8e14-42cee2e3a42b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3586c745474593f"
+    },
+    {
+      "id": 306,
+      "filename": "neg_cables_0306_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_db635ac5-8c66-4d43-8e14-42cee2e3a42b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x18d9d898dd6373fe"
+    },
+    {
+      "id": 307,
+      "filename": "neg_cables_0307_center.jpg",
+      "category": "cables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_dc078900-7138-476e-b4f0-405c2b30caca.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xbc706df3c7878ccc"
+    },
+    {
+      "id": 308,
+      "filename": "neg_cables_0308_detail.jpg",
+      "category": "cables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_dc078900-7138-476e-b4f0-405c2b30caca.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2b8f1b1b4f24b038"
+    },
+    {
+      "id": 309,
+      "filename": "neg_wood_0309_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_dcdf421f-9e1d-432b-ae56-9f731bda334a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4c2a6c8c0e9ebc98"
+    },
+    {
+      "id": 310,
+      "filename": "neg_wood_0310_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_dcdf421f-9e1d-432b-ae56-9f731bda334a.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb0302efedcb05049"
+    },
+    {
+      "id": 311,
+      "filename": "neg_wood_0311_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_dd1ebb28-5ae9-4d43-b6ed-bfff53325dac.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xdfe1edfd4c3f07c0"
+    },
+    {
+      "id": 312,
+      "filename": "neg_wood_0312_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_dd1ebb28-5ae9-4d43-b6ed-bfff53325dac.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7ab1b9bbcb3a0e40"
+    },
+    {
+      "id": 313,
+      "filename": "neg_furniture_0313_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_e0a52ef8-35f4-4472-b9ee-3dbef2029891.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9b0460f892000100"
+    },
+    {
+      "id": 314,
+      "filename": "neg_furniture_0314_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_e0a52ef8-35f4-4472-b9ee-3dbef2029891.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xa0e0468081020202"
+    },
+    {
+      "id": 315,
+      "filename": "neg_wood_0315_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_e32ee370-2a7d-4321-b960-c5ff1c10380b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe4c74b4f272f37b7"
+    },
+    {
+      "id": 316,
+      "filename": "neg_wood_0316_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_e32ee370-2a7d-4321-b960-c5ff1c10380b.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7f6e6e6f6e6d8e04"
+    },
+    {
+      "id": 317,
+      "filename": "neg_tables_0317_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_e380f884-1956-45f4-a548-ca667f3ba6e0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd6f5eb8f1f3e4ecd"
+    },
+    {
+      "id": 318,
+      "filename": "neg_tables_0318_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_e380f884-1956-45f4-a548-ca667f3ba6e0.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4dfef6f9b87e3193"
+    },
+    {
+      "id": 319,
+      "filename": "neg_furniture_0319_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_e391ccdc-f9b2-4566-b118-c737910ac6de.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7485c383c60f0f1e"
+    },
+    {
+      "id": 320,
+      "filename": "neg_furniture_0320_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_e391ccdc-f9b2-4566-b118-c737910ac6de.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x564f0f1c3b366c38"
+    },
+    {
+      "id": 321,
+      "filename": "neg_wood_0321_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_e4a6d1e3-86cd-4e9c-b16d-2f0fcb53144e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1fd4fe3acfe1140e"
+    },
+    {
+      "id": 322,
+      "filename": "neg_wood_0322_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_e4a6d1e3-86cd-4e9c-b16d-2f0fcb53144e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf6f636873389e43c"
+    },
+    {
+      "id": 323,
+      "filename": "neg_tables_0323_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_e5a5a733-0d18-4048-ac80-32654b6605f7.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5716168e4e6c8c9d"
+    },
+    {
+      "id": 324,
+      "filename": "neg_tables_0324_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_e5a5a733-0d18-4048-ac80-32654b6605f7.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x5819fcbd38b83161"
+    },
+    {
+      "id": 325,
+      "filename": "neg_tables_0325_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_eafe2cc9-a53c-4831-bfd4-da0b4151bdb8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x241c10108a06464"
+    },
+    {
+      "id": 326,
+      "filename": "neg_tables_0326_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_eafe2cc9-a53c-4831-bfd4-da0b4151bdb8.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x303412121212020"
+    },
+    {
+      "id": 327,
+      "filename": "neg_wood_0327_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_eb816aa3-360a-447e-896f-b9102ff2a765.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1c0305231b0fce46"
+    },
+    {
+      "id": 328,
+      "filename": "neg_wood_0328_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_eb816aa3-360a-447e-896f-b9102ff2a765.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x97cb4f7b5b79591c"
+    },
+    {
+      "id": 329,
+      "filename": "neg_furniture_0329_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_ed4ab08e-da71-476d-ae69-fea5ea940036.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7f2b2b1e222e1b07"
+    },
+    {
+      "id": 330,
+      "filename": "neg_furniture_0330_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_ed4ab08e-da71-476d-ae69-fea5ea940036.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3af60e3e3eb6563e"
+    },
+    {
+      "id": 331,
+      "filename": "neg_wood_0331_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_f4c03412-5961-42c9-b4fc-ccda1eb143ba.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x23267e7de9f394fe"
+    },
+    {
+      "id": 332,
+      "filename": "neg_wood_0332_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_f4c03412-5961-42c9-b4fc-ccda1eb143ba.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc579e966cad9f4ec"
+    },
+    {
+      "id": 333,
+      "filename": "neg_tables_0333_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_f4d50e13-0fd4-4838-86b0-59357f5cd418.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3b3f1f1f0f2723a3"
+    },
+    {
+      "id": 334,
+      "filename": "neg_tables_0334_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_f4d50e13-0fd4-4838-86b0-59357f5cd418.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7e7f7f7e1e07070b"
+    },
+    {
+      "id": 335,
+      "filename": "neg_furniture_0335_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_f4e6dbcb-84a5-44b0-910f-d0c08713825e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x68684c7e1e3cff7f"
+    },
+    {
+      "id": 336,
+      "filename": "neg_furniture_0336_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_f4e6dbcb-84a5-44b0-910f-d0c08713825e.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xbce07cfaf887ffe3"
+    },
+    {
+      "id": 337,
+      "filename": "neg_wood_0337_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_f6ab7112-163d-4889-a8d7-b189c7ff3c7d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe0df0e0e08f0d2d"
+    },
+    {
+      "id": 338,
+      "filename": "neg_wood_0338_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_f6ab7112-163d-4889-a8d7-b189c7ff3c7d.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8024c02637d9312b"
+    },
+    {
+      "id": 339,
+      "filename": "neg_furniture_0339_center.jpg",
+      "category": "furniture",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_f6d5b239-c2e9-4b0c-bee5-8ce18651af88.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x28202070e260b060"
+    },
+    {
+      "id": 340,
+      "filename": "neg_furniture_0340_detail.jpg",
+      "category": "furniture",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_f6d5b239-c2e9-4b0c-bee5-8ce18651af88.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x800840c20c48800"
+    },
+    {
+      "id": 341,
+      "filename": "neg_wood_0341_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_f7d4c8ee-a374-4b90-b15d-c103361a6a87.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x919297f6f090c019"
+    },
+    {
+      "id": 342,
+      "filename": "neg_wood_0342_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_f7d4c8ee-a374-4b90-b15d-c103361a6a87.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x984cc090d0d213e3"
+    },
+    {
+      "id": 343,
+      "filename": "neg_chairs_0343_center.jpg",
+      "category": "chairs",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_fa42c25f-4bbe-4766-8aa3-0cedce614bc9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc383499990242333"
+    },
+    {
+      "id": 344,
+      "filename": "neg_chairs_0344_detail.jpg",
+      "category": "chairs",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_fa42c25f-4bbe-4766-8aa3-0cedce614bc9.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe8e28198180f8e93"
+    },
+    {
+      "id": 345,
+      "filename": "neg_wood_0345_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_fb948078-4ef8-4810-991a-9a9ff2946b64.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x66c5c503870e0db6"
+    },
+    {
+      "id": 346,
+      "filename": "neg_wood_0346_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_fb948078-4ef8-4810-991a-9a9ff2946b64.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc3070f1e1b371f9c"
+    },
+    {
+      "id": 347,
+      "filename": "neg_wood_0347_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_fd341b58-8a5f-4c42-8448-0880f2cb7571.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x240807b31f060763"
+    },
+    {
+      "id": 348,
+      "filename": "neg_wood_0348_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_fd341b58-8a5f-4c42-8448-0880f2cb7571.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x4887f6fc0d169686"
+    },
+    {
+      "id": 349,
+      "filename": "neg_tables_0349_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_fd4e8094-f33b-4b3a-af67-68360a981b51.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x78ec0c1c1c0c1831"
+    },
+    {
+      "id": 350,
+      "filename": "neg_tables_0350_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_fd4e8094-f33b-4b3a-af67-68360a981b51.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x707b79b870e4c141"
+    },
+    {
+      "id": 351,
+      "filename": "neg_chairs_0351_center.jpg",
+      "category": "chairs",
+      "crop_type": "center",
+      "source": "phone_capture",
+      "original_file": "capture_fdcb58f9-e1c4-4f1d-90b1-04766e6a06f4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd140848c384d5dcd"
+    },
+    {
+      "id": 352,
+      "filename": "neg_chairs_0352_detail.jpg",
+      "category": "chairs",
+      "crop_type": "detail",
+      "source": "phone_capture",
+      "original_file": "capture_fdcb58f9-e1c4-4f1d-90b1-04766e6a06f4.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xb230e1717afb6b3b"
+    },
+    {
+      "id": 353,
+      "filename": "neg_tables_0353_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790408260879.png",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2547073334c63222"
+    },
+    {
+      "id": 354,
+      "filename": "neg_tables_0354_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790408260879.png",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xcbced8590cce0c20"
+    },
+    {
+      "id": 355,
+      "filename": "neg_tables_0355_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790408274587.png",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x3467071b1a4633b2"
+    },
+    {
+      "id": 356,
+      "filename": "neg_tables_0356_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790408274587.png",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xefc76c7c0c45a6a0"
+    },
+    {
+      "id": 357,
+      "filename": "neg_wood_0357_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790422154549.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe1f1d08c0e0bc88"
+    },
+    {
+      "id": 358,
+      "filename": "neg_wood_0358_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790422154549.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x7161584480f4b630"
+    },
+    {
+      "id": 359,
+      "filename": "neg_tables_0359_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790437175316.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf75794949494959"
+    },
+    {
+      "id": 360,
+      "filename": "neg_tables_0360_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790437175316.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xe373336357576773"
+    },
+    {
+      "id": 361,
+      "filename": "neg_tables_0361_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790437180817.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x2345594979717359"
+    },
+    {
+      "id": 362,
+      "filename": "neg_tables_0362_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790437180817.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6363cbc3e7e7f763"
+    },
+    {
+      "id": 363,
+      "filename": "neg_tables_0363_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790437185374.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x165d594949595359"
+    },
+    {
+      "id": 364,
+      "filename": "neg_tables_0364_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790437185374.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x33636773d7c7a767"
+    },
+    {
+      "id": 365,
+      "filename": "neg_tables_0365_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790437191002.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf2b1b4b5b6b7b1b"
+    },
+    {
+      "id": 366,
+      "filename": "neg_tables_0366_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790437191002.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6333c363474fe3e3"
+    },
+    {
+      "id": 367,
+      "filename": "neg_tables_0367_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790451408842.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd9d8d4f5f3d12130"
+    },
+    {
+      "id": 368,
+      "filename": "neg_tables_0368_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790451408842.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xc9cb92b6931262c0"
+    },
+    {
+      "id": 369,
+      "filename": "neg_tables_0369_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790453931404.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x636330b4c2bc2d6d"
+    },
+    {
+      "id": 370,
+      "filename": "neg_tables_0370_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790453931404.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x981004d8f9b333b3"
+    },
+    {
+      "id": 371,
+      "filename": "neg_tables_0371_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790453942028.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x8192978d2a8e9e38"
+    },
+    {
+      "id": 372,
+      "filename": "neg_tables_0372_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790453942028.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x1337243c7cd4d5e0"
+    },
+    {
+      "id": 373,
+      "filename": "neg_tables_0373_center.jpg",
+      "category": "tables",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790453950099.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xd75616068cf9f7b5"
+    },
+    {
+      "id": 374,
+      "filename": "neg_tables_0374_detail.jpg",
+      "category": "tables",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790453950099.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x6c38329242ced9d9"
+    },
+    {
+      "id": 375,
+      "filename": "neg_wood_0375_center.jpg",
+      "category": "wood",
+      "crop_type": "center",
+      "source": "user_upload",
+      "original_file": "media_1790458853717.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0xf4d9dff6d6567486"
+    },
+    {
+      "id": 376,
+      "filename": "neg_wood_0376_detail.jpg",
+      "category": "wood",
+      "crop_type": "detail",
+      "source": "user_upload",
+      "original_file": "media_1790458853717.jpg",
+      "label": "negative",
+      "dimensions": [
+        160,
+        160,
+        3
+      ],
+      "dhash": "0x9a9ebc9cd8588808"
+    }
+  ]
+}

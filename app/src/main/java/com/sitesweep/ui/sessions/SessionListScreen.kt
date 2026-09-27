@@ -1,5 +1,6 @@
 package com.sitesweep.ui.sessions
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -63,6 +64,7 @@ fun SessionListScreen(
     viewModel: SessionListViewModel,
     onStartSweep: (String) -> Unit,
     onSessionClick: (String) -> Unit,
+    onOpenDashboard: () -> Unit = {},
     onOpenSettings: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -120,30 +122,56 @@ fun SessionListScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Start Sweep primary action button
-        Button(
-            onClick = {
-                scope.launch {
-                    val sessionId = viewModel.createNewSession()
-                    onStartSweep(sessionId)
-                }
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = PaletteSafetyOrange,
-                contentColor = PaletteInk
-            ),
-            shape = RoundedCornerShape(2.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
+        // Action Buttons: Start Sweep & Engineer Dashboard
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(
-                text = "START SWEEP",
-                fontSize = 14.sp,
-                fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 1.sp
-            )
+            Button(
+                onClick = {
+                    scope.launch {
+                        val sessionId = viewModel.createNewSession()
+                        onStartSweep(sessionId)
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = PaletteSafetyOrange,
+                    contentColor = PaletteInk
+                ),
+                shape = RoundedCornerShape(2.dp),
+                modifier = Modifier
+                    .weight(1.2f)
+                    .height(48.dp)
+            ) {
+                Text(
+                    text = "START SWEEP",
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 1.sp
+                )
+            }
+
+            Button(
+                onClick = onOpenDashboard,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = PaletteInkElevated,
+                    contentColor = TextLightPrimary
+                ),
+                border = BorderStroke(1.dp, PaletteSlateBorder),
+                shape = RoundedCornerShape(2.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp)
+            ) {
+                Text(
+                    text = "DASHBOARD",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.5.sp
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))

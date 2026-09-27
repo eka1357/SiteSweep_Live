@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -20,6 +22,42 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Safe resolution of OpenRouter API Key from .env / local.properties / env (not committed to git)
+        val openRouterApiKey: String = run {
+            val localProps = rootProject.file("local.properties")
+            if (localProps.exists()) {
+                val p = Properties()
+                p.load(localProps.inputStream())
+                val k = p.getProperty("OPENROUTER_API_KEY")
+                if (!k.isNullOrBlank()) return@run k
+            }
+            val envFile = rootProject.file(".env")
+            if (envFile.exists()) {
+                for (line in envFile.readLines()) {
+                    val trimmed = line.trim()
+                    if (trimmed.startsWith("OPENROUTER_API_KEY=")) {
+                        val k = trimmed.substringAfter("OPENROUTER_API_KEY=").trim().trim('"', '\'')
+                        if (k.isNotBlank()) return@run k
+                    }
+                }
+            }
+            System.getenv("OPENROUTER_API_KEY") ?: ""
+        }
+
+        val openRouterModel: String = run {
+            val localProps = rootProject.file("local.properties")
+            if (localProps.exists()) {
+                val p = Properties()
+                p.load(localProps.inputStream())
+                val m = p.getProperty("OPENROUTER_MODEL")
+                if (!m.isNullOrBlank()) return@run m
+            }
+            System.getenv("OPENROUTER_MODEL") ?: "google/gemini-2.5-flash"
+        }
+
+        buildConfigField("String", "OPENROUTER_API_KEY", "\"$openRouterApiKey\"")
+        buildConfigField("String", "OPENROUTER_MODEL", "\"$openRouterModel\"")
     }
 
     buildTypes {
@@ -48,6 +86,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     packaging {

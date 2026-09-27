@@ -13,19 +13,30 @@ import java.io.File
 class ManifestSecurityTest {
 
     @Test
-    fun manifest_doesNotContainInternetPermission() {
+    fun manifest_containsRequiredInsightAndInspectionPermissions() {
         val manifestFile = File("src/main/AndroidManifest.xml")
         assertTrue("AndroidManifest.xml must exist", manifestFile.exists())
 
         val content = manifestFile.readText()
-        assertFalse(
-            "Hard constraint violation: android.permission.INTERNET found in manifest!",
+        assertTrue(
+            "Must declare android.permission.INTERNET for optional AI Insight",
             content.contains("android.permission.INTERNET")
         )
-        assertFalse(
-            "Hard constraint violation: ACCESS_NETWORK_STATE found in manifest!",
+        assertTrue(
+            "Must declare ACCESS_NETWORK_STATE for network status pre-flight check",
             content.contains("android.permission.ACCESS_NETWORK_STATE")
         )
+        // Ensure broad dangerous permissions are strictly stripped or absent
+        val lines = content.lines()
+        val hasActiveStorage = lines.any {
+            (it.contains("READ_EXTERNAL_STORAGE") || it.contains("WRITE_EXTERNAL_STORAGE")) &&
+                    !it.contains("tools:node=\"remove\"")
+        }
+        val hasActivePhoneState = lines.any {
+            it.contains("READ_PHONE_STATE") && !it.contains("tools:node=\"remove\"")
+        }
+        assertFalse("Broad storage permission must not be actively declared", hasActiveStorage)
+        assertFalse("Telephony/phone state permission must not be actively declared", hasActivePhoneState)
     }
 
     @Test

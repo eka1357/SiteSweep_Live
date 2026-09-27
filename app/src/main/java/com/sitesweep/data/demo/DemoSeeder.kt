@@ -11,7 +11,9 @@ import android.util.Log
 import com.sitesweep.capture.FrameStore
 import com.sitesweep.capture.GeoTagger
 import com.sitesweep.data.local.entity.CaptureEntity
+import com.sitesweep.data.local.entity.IssueEntity
 import com.sitesweep.data.local.entity.SessionEntity
+import com.sitesweep.data.model.IssueStatus
 import com.sitesweep.data.repository.SiteSweepRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -35,11 +37,14 @@ class DemoSeeder(
 
     companion object {
         const val PREFS_NAME = "sitesweep_demo_prefs"
-        const val KEY_DEMO_SEEDED = "key_demo_seeded"
+        const val KEY_DEMO_SEEDED = "key_demo_seeded_v3"
         const val DEMO_SESSION_ID = "session_demo_historical_01"
         const val CAPTURE_1_ID = "capture_demo_hist_01"
         const val CAPTURE_2_ID = "capture_demo_hist_02"
         const val CAPTURE_3_ID = "capture_demo_hist_03"
+        const val DEMO_ISSUE_1_ID = "DEMO-ISS-01"
+        const val DEMO_ISSUE_2_ID = "ISS-002"
+        const val DEMO_ISSUE_3_ID = "ISS-003"
     }
 
     private val prefs = customPrefs ?: context?.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -71,7 +76,7 @@ class DemoSeeder(
                 val lat = GeoTagger.DEFAULT_LAT
                 val lng = GeoTagger.DEFAULT_LNG
 
-                // 1. Reading 1: 6 weeks ago -> STABLE (Hairline / faint fissure)
+                // 1. Reading 1: 6 weeks ago -> STABLE (18% NONE)
                 val bmp1 = createConcreteCrackBitmap(crackWidthPx = 2f, crackIntensity = 0.3f)
                 val path1 = frameStore.saveFrame(bmp1, CAPTURE_1_ID)
                 val capture1 = CaptureEntity(
@@ -82,12 +87,12 @@ class DemoSeeder(
                     lng = lng,
                     timestamp = timeReading1,
                     severity = "STABLE",
-                    confidence = 0.38f,
+                    confidence = 0.18f,
                     locationKey = location
                 )
                 repository.insertCapture(capture1)
 
-                // 2. Reading 2: 3 weeks ago -> MONITOR (Developing crack)
+                // 2. Reading 2: 3 weeks ago -> MONITOR (76% HAIRLINE)
                 val bmp2 = createConcreteCrackBitmap(crackWidthPx = 5f, crackIntensity = 0.65f)
                 val path2 = frameStore.saveFrame(bmp2, CAPTURE_2_ID)
                 val capture2 = CaptureEntity(
@@ -98,12 +103,12 @@ class DemoSeeder(
                     lng = lng,
                     timestamp = timeReading2,
                     severity = "MONITOR",
-                    confidence = 0.68f,
+                    confidence = 0.76f,
                     locationKey = location
                 )
                 repository.insertCapture(capture2)
 
-                // 3. Reading 3: Recent -> STRUCTURAL (Wide open shear fissure)
+                // 3. Reading 3: Recent -> STRUCTURAL (94% STRUCTURAL)
                 val bmp3 = createConcreteCrackBitmap(crackWidthPx = 10f, crackIntensity = 0.95f)
                 val path3 = frameStore.saveFrame(bmp3, CAPTURE_3_ID)
                 val capture3 = CaptureEntity(
@@ -114,10 +119,28 @@ class DemoSeeder(
                     lng = lng,
                     timestamp = timeReading3,
                     severity = "STRUCTURAL",
-                    confidence = 0.91f,
+                    confidence = 0.94f,
                     locationKey = location
                 )
                 repository.insertCapture(capture3)
+
+                // 4. Seed single compelling example demo issue:
+                // Building A - South Shear Wall (Col C-12) [DEMO]
+                val demoIssue = IssueEntity(
+                    id = DEMO_ISSUE_1_ID,
+                    originCaptureId = CAPTURE_1_ID,
+                    latestCaptureId = CAPTURE_3_ID,
+                    locationKey = location,
+                    title = "Building A - South Shear Wall (Col C-12) [DEMO]",
+                    status = IssueStatus.RESOLVED.name,
+                    assignedTo = "Civil Unit 1 (Structural)",
+                    engineerNotes = "Critical shear fracture propagating on column C-12 face. Low-pressure epoxy injection and carbon-wrap applied.",
+                    resolutionNotes = "Engineer sign-off: Epoxy sealed & surface stabilized. Monitored stable.",
+                    createdAt = timeReading1,
+                    updatedAt = timeReading3,
+                    resolvedAt = timeReading3
+                )
+                repository.insertIssue(demoIssue)
 
                 prefs?.edit()?.putBoolean(KEY_DEMO_SEEDED, true)?.apply()
                 true
@@ -143,6 +166,10 @@ class DemoSeeder(
 
     private suspend fun clearInternal() {
         repository.deleteSession(DEMO_SESSION_ID)
+        repository.deleteIssue(DEMO_ISSUE_1_ID)
+        repository.deleteIssue("ISS-001")
+        repository.deleteIssue(DEMO_ISSUE_2_ID)
+        repository.deleteIssue(DEMO_ISSUE_3_ID)
         // Also clean up image files
         frameStore.deleteFrame(CAPTURE_1_ID)
         frameStore.deleteFrame(CAPTURE_2_ID)

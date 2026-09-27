@@ -66,6 +66,7 @@ fun RevisitScreen(
     locationKey: String,
     targetCaptureId: String? = null,
     onBack: () -> Unit,
+    onCreateIssue: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     LaunchedEffect(locationKey, targetCaptureId) {
@@ -74,6 +75,7 @@ fun RevisitScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val exportStatus by viewModel.exportStatus.collectAsStateWithLifecycle()
+    val aiInsightState by viewModel.aiInsightState.collectAsStateWithLifecycle()
     val screenTopPadding = getScreenTopPadding()
 
     Column(
@@ -92,7 +94,7 @@ fun RevisitScreen(
                 modifier = Modifier
                     .background(PaletteSlate, RoundedCornerShape(2.dp))
                     .clickable(onClick = onBack)
-                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                    .padding(horizontal = 10.dp, vertical = 6.dp)
             ) {
                 Text(
                     text = "< BACK",
@@ -103,29 +105,43 @@ fun RevisitScreen(
                 )
             }
 
-            Text(
-                text = "REVISIT ANALYSIS",
-                color = TextLightSecondary,
-                fontSize = 12.sp,
-                fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.Bold
-            )
-
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                // Geohash badge
+                // Optional Online AI Insight Button
                 Box(
                     modifier = Modifier
                         .background(PaletteInkElevated, RoundedCornerShape(2.dp))
-                        .border(1.dp, PaletteSlateBorder, RoundedCornerShape(2.dp))
+                        .border(1.dp, PaletteSafetyOrange, RoundedCornerShape(2.dp))
+                        .clickable(onClick = { viewModel.requestAiInsight() })
                         .padding(horizontal = 8.dp, vertical = 6.dp)
                 ) {
                     Text(
-                        text = locationKey.take(8),
+                        text = "AI INSIGHT",
                         color = PaletteSafetyOrange,
-                        fontSize = 11.sp,
+                        fontSize = 10.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                // Create Issue Button
+                Box(
+                    modifier = Modifier
+                        .background(PaletteSlate, RoundedCornerShape(2.dp))
+                        .clickable(onClick = {
+                            val capId = uiState.targetCaptureId ?: uiState.captures.lastOrNull()?.id
+                            if (capId != null) {
+                                onCreateIssue(capId)
+                            }
+                        })
+                        .padding(horizontal = 8.dp, vertical = 6.dp)
+                ) {
+                    Text(
+                        text = "+ ISSUE",
+                        color = TextLightPrimary,
+                        fontSize = 10.sp,
                         fontFamily = FontFamily.Monospace,
                         fontWeight = FontWeight.Bold
                     )
@@ -136,12 +152,12 @@ fun RevisitScreen(
                     modifier = Modifier
                         .background(PaletteSafetyOrange, RoundedCornerShape(2.dp))
                         .clickable(onClick = { viewModel.exportSession() })
-                        .padding(horizontal = 10.dp, vertical = 6.dp)
+                        .padding(horizontal = 8.dp, vertical = 6.dp)
                 ) {
                     Text(
                         text = "EXPORT",
                         color = PaletteInk,
-                        fontSize = 11.sp,
+                        fontSize = 10.sp,
                         fontFamily = FontFamily.Monospace,
                         fontWeight = FontWeight.Bold
                     )
@@ -309,6 +325,14 @@ fun RevisitScreen(
                 }
             }
         }
+    }
+
+    if (aiInsightState !is com.sitesweep.insight.AiInsightState.Idle) {
+        com.sitesweep.insight.AiInsightDialog(
+            state = aiInsightState,
+            onRetry = { viewModel.requestAiInsight() },
+            onDismiss = { viewModel.dismissAiInsight() }
+        )
     }
 }
 

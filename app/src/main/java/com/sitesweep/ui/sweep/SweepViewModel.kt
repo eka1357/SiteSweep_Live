@@ -48,8 +48,43 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
     val frameStore = FrameStore(application)
     val geoTagger = GeoTagger(application)
 
+    val aiInsightManager = com.sitesweep.insight.AiInsightManager(application)
+    val aiInsightState = aiInsightManager.state
+
     private val _uiState = MutableStateFlow(SweepUiState())
     val uiState: StateFlow<SweepUiState> = _uiState.asStateFlow()
+
+    fun requestAiInsight(userNotes: String? = null) {
+        val state = _uiState.value
+        val recentCaptures = state.captures.takeLast(5)
+        val loc = geoTagger.getCachedLocation()
+
+        val evidence = com.sitesweep.insight.InspectionEvidence(
+            currentCrackProbability = state.crackProbability,
+            currentSeverity = state.currentSeverity.label,
+            currentClass = state.currentClass.displayName,
+            timestamp = System.currentTimeMillis(),
+            locationKey = loc.locationKey,
+            historicalObservations = recentCaptures.map {
+                com.sitesweep.insight.HistoricalObservation(
+                    timestamp = it.timestamp,
+                    crackProbability = it.confidence,
+                    severity = it.severity
+                )
+            },
+            trendStatus = when (state.currentSeverity) {
+                Severity.STRUCTURAL -> "STRUCTURAL ALERT"
+                Severity.MONITOR -> "MONITORING"
+                Severity.STABLE -> "STABLE"
+            },
+            userNotes = userNotes
+        )
+        aiInsightManager.requestInsight(evidence, viewModelScope)
+    }
+
+    fun dismissAiInsight() {
+        aiInsightManager.reset()
+    }
 
     private val frameThrottler = FrameThrottler(targetFps = 5)
     private var smoothedProbability: Float = -1f
@@ -290,11 +325,12 @@ class SweepViewModel(application: Application) : AndroidViewModel(application) {
             currentSeverity = _uiState.value.currentSeverity
         )
 
-        val displayConfidence = if (stabilizedClass != CrackClass.NONE) {
-            smoothed
-        } else {
-            (1.0f - smoothed).coerceIn(0.0f, 1.0f)
-        }
+        // ONE source of truth: displayConfidence is the unified smoothed crack probability.
+        // Previously, inverting (1.0f - smoothed) when class was NONE produced contradictory
+        // percentages between the reticle overlay (e.g. 60%) and the telemetry bar (e.g. 38.5%).
+        // Hysteresis in SeverityClassifier independently governs stabilizedClass and stabilizedSeverity
+        // without distorting the displayed probability metric.
+        val displayConfidence = smoothed
 
         return result.copy(
             crackClass = stabilizedClass,
